@@ -270,7 +270,7 @@ namespace DAndRElectronics.Annotations
   ///
   ///   string _name;
   /// 
-  ///   public string Name {
+  ///   public string ButtonName {
   ///     get { return _name; }
   ///     set { _name = value; NotifyChanged("LastName"); /* Warning */ }
   ///   }

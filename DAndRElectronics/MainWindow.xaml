@@ -7,6 +7,11 @@
         xmlns:view="clr-namespace:DAndRElectronics.View"
         mc:Ignorable="d"
         Title="DAndRElectronics" Height="450" Width="800">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="34" />
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
         <ResourceDictionary>
 
@@ -66,7 +71,7 @@
 
     <Border Background="{StaticResource BackgroundMediumLightBrush}" x:Name="MainWindowBorder">
 
-        <Grid x:Name="parentContainer" Background="LightBlue">
+        <Grid x:Name="parentContainer" Background="{StaticResource BackgroundMediumLightBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height ="Auto"/>
@@ -77,8 +82,8 @@
             <Grid Grid.Row="0" Height="30" Background="#F999">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <!--App icon-->
-                    <Image Source="/DAndRElectronics;component/Images/AppIcon.png" Width="18" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBlock Text="Sweet App" FontFamily="Arial" Margin="4 3 0 0" />
+                    <Image Source="/Images/AppIcon.ico"  Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <TextBlock Text="DAndRElectronics" FontFamily="Arial" Margin="4 3 0 0" />
                 </StackPanel>
 
                 <!--Caption buttons-->
@@ -96,7 +101,9 @@
 
             <!--App content-->
             <Grid Grid.Row="1" x:Name="AppArea">
+               
                 <view:KeyboardView DataContext="{StaticResource ViewModel}"></view:KeyboardView>
+
             </Grid>
 
         </Grid>

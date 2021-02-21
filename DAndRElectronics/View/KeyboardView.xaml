@@ -4,22 +4,81 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DAndRElectronics.View"
+             xmlns:dAndRElectronics="clr-namespace:DAndRElectronics"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="Grid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-        </Grid.ColumnDefinitions> 
+
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
+
+        <TabControl Background="{StaticResource BackgroundMediumLightBrush}">
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.KeysTabHeader}">
+            <Grid x:Name="GridKeys">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.InputsTabHeader}">
+            <Grid x:Name="GridInputs">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
+
+
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.EventsTabHeader}">
+            <Grid x:Name="GridEvents">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                    <ColumnDefinition Width="70"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
+    </TabControl>
+
+
+        <DockPanel Grid.Row="1">
+            <Button Content ="Save" Width="60" Margin="5" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding SaveCommand}"></Button>
+            <Button Content ="Save as" Width="60" Margin="5" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding SaveAsCommand}"></Button>
+        </DockPanel>
     </Grid>
+
 </UserControl>

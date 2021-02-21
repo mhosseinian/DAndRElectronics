@@ -37,7 +37,7 @@
             <Button.Content>
                 <!--<ControlTemplate>-->
                     <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
-                        <TextBlock Text="{Binding Name}" Foreground="White" 
+                        <TextBlock Text="{Binding ButtonName}" Foreground="White" 
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    Margin="0,5,0,0"

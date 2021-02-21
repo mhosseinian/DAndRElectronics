@@ -7,16 +7,43 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\AppIcon.ico" />
     <None Remove="Images\AppIcon.png" />
     <None Remove="Images\CompanyLogo.png" />
+    <None Remove="Images\watermelon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\AppIcon.png" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\AppIcon.ico" />
+    <Resource Include="Images\watermelon.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <SplashScreen Include="Images\CompanyLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ResourceStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResourceStrings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ResourceStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

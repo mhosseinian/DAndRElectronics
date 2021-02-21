@@ -27,11 +27,25 @@ namespace DAndRElectronics.View
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             var vm = DataContext as KeyboardViewModel;
-            foreach (var buttonVm in vm.Buttons)
+            foreach (var buttonVm in vm.KeyButtons)
             {
-                var buttonView = new CustomButton();
-                buttonView.DataContext = buttonVm;
-                Grid.Children.Add(buttonView);
+                var buttonView = new CustomButton {DataContext = buttonVm};
+                GridKeys.Children.Add(buttonView);
+                Grid.SetColumn(buttonView, buttonVm.Column);
+                Grid.SetRow(buttonView, buttonVm.Row);
+            }
+
+            foreach (var buttonVm in vm.InputButtons)
+            {
+                var buttonView = new CustomButton { DataContext = buttonVm };
+                GridInputs.Children.Add(buttonView);
+                Grid.SetColumn(buttonView, buttonVm.Column);
+                Grid.SetRow(buttonView, buttonVm.Row);
+            }
+            foreach (var buttonVm in vm.EventButtons)
+            {
+                var buttonView = new CustomButton { DataContext = buttonVm };
+                GridEvents.Children.Add(buttonView);
                 Grid.SetColumn(buttonView, buttonVm.Column);
                 Grid.SetRow(buttonView, buttonVm.Row);
             }
