@@ -1,0 +1,278 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <!--MAIN FOREGROUND-->
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundLightBrush" Color="White"/>
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundDarkBrush" Color="Black"/>
+
+    <!--MAIN BACKGROUND-->
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundLightBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFD6D9E2"/>
+        <GradientStop Color="#FF3D3D3D"/>
+        <GradientStop Color="#FFB6B5B5"/>
+        <GradientStop Color="#FFEDEDED"/>
+        <GradientStop Color="#FFEDEDED" Offset="0.513"/>
+        <GradientStop Color="White" Offset="0.991"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush  PresentationOptions:Freeze="true" x:Key="BackgroundMediumLightBrush"  EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF3D3D3D"/>
+        <GradientStop Color="#FFB6B5B5"/>
+        <GradientStop Color="#FFEDEDED" Offset="0.065"/>
+        <GradientStop Color="#FF898989" Offset="0.986"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush  PresentationOptions:Freeze="true" x:Key="BackgroundMediumLightHorizontalBrush" EndPoint="1,0.5" StartPoint="0,0.5" >
+        <GradientStop Color="#FF3D3D3D"/>
+        <GradientStop Color="#FFB6B5B5"/>
+        <GradientStop Color="#FFEDEDED" Offset="0.065"/>
+        <GradientStop Color="#FF898989" Offset="0.986"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundMediumBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFD6D9E2"/>
+        <GradientStop Color="#FF3D3D3D"/>
+        <GradientStop Color="#FF626262"/>
+        <GradientStop Color="#FF3D3C3C" Offset="1"/>
+        <GradientStop Color="#FF979797"/>
+        <GradientStop Color="#FF626161" Offset="0.522"/>
+    </LinearGradientBrush>
+
+    <!--<LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundMediumBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFD6D9E2"/>
+        <GradientStop Color="#FF3D3D3D"/>
+        <GradientStop Color="#FF626262"/>
+        <GradientStop Color="#FF474646" Offset="1"/>
+        <GradientStop Color="#FFAFAFAF"/>
+    </LinearGradientBrush>-->
+    
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundDarkBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF696969"/>
+    </LinearGradientBrush>
+
+    <!--ACTIVE-->
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundActiveBrush" Color="White"/>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundActiveBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF002B83" Offset="1"/>
+        <GradientStop Color="#FF1366B3"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundActiveBorderBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF20499D" Offset="1"/>
+        <GradientStop Color="#FF20499F"/>
+        <GradientStop Color="#FF487EEB" Offset="0.484"/>
+    </LinearGradientBrush>
+
+    <!--SELECTED-->
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundSelectedBrush" Color="Black"/>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundSelectedBrush" EndPoint="0.5,1" StartPoint="0.5,-0.142">
+        <GradientStop Color="#FFF9BF41" />
+        <GradientStop Color="#FFF3DAA2" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundSelectedBorderBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFC48F1C"/>
+        <GradientStop Color="#FFC48F1C" Offset="1"/>
+        <GradientStop Color="#FFDA990B" Offset="0.508"/>
+    </LinearGradientBrush>
+
+    <!--HIGHLIGHT-->
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundHighlightBrush" Color="Black"/>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundHighlightBrush"  EndPoint="0.5,1" StartPoint="0.5,-0.142">
+        <GradientStop Color="#FFF9BF41" />
+        <GradientStop Color="#99F3DAA2" />
+        <GradientStop Color="#99FFDF98" Offset="1"/>
+        <GradientStop Color="#FFFFFEFB" Offset="0.224"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundHighlightTabBrush"  EndPoint="0.5,1" StartPoint="0.5,-0.142">
+        <GradientStop Color="#FFF9BF41" />
+        <GradientStop Color="#99F3DAA2" />
+        <GradientStop Color="#99FFDF98" Offset="1"/>
+        <GradientStop Color="#00FFFEFB" Offset="0.224"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundHighlightBorderBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFC48F1C"/>
+        <GradientStop Color="#FFC48F1C" Offset="1"/>
+        <GradientStop Color="#FFDA990B" Offset="0.508"/>
+    </LinearGradientBrush>
+
+    <!--USER ENTRY-->
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundUserEntryBrush" Color="Black"/>
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="BackgroundUserEntryBrush" Color="White"/>
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="BackgroundUserEntryBorderBrush" Color="DarkGray"/>
+
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundUserContentBrush" EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox">
+        <GradientStop Color="WhiteSmoke" Offset="1"/>
+        <GradientStop Color="Transparent"/>
+    </LinearGradientBrush>
+
+    <!--READONLY -->
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundReadOnlyBrush" Color="Black"/>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundReadOnlyBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFE0E0E0"/>
+    </LinearGradientBrush>
+
+    <!--DISABLED -->
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundDisabledBrush" Color="#FFA9A9A9"/>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundDisabledBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFDDDDDD"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundDisabledBorderBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF696969" />
+    </LinearGradientBrush>
+
+    <!-- EXPANDER HEADER -->
+
+  <!--SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundExpanderHeaderPageHeaderBrush" Color="#FF4469C7"/>
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundExpanderHeaderDarkBrush" Color="#FF717171"/-->
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundExpanderHeaderPageHeaderBrush" Color="#FF4469C7"/>
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="ForegroundExpanderHeaderDarkBrush" Color="#FF4469C7"/>
+
+  <!-- GRID HEADER / COLUMN -->
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFDCDEDE"/>
+        <GradientStop Color="#FFB6BABA" Offset="1"/>
+        <GradientStop Color="#FFB6BABA" Offset="0.845"/>
+        <GradientStop Color="#FFADAFAF" Offset="0.853"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridInterlacingBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFC6CEC6"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridFilterBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFFF9ED" Offset="0.853"/>
+        <!--<GradientStop Color="#FFF3E0B9" Offset="0.853"/>-->
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridBorderBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFADAFAF" Offset="0.853"/>
+    </LinearGradientBrush>
+
+    <VisualBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridDisabledBrush" 
+                 TileMode="Tile"  Viewport="0,0,10,10" ViewportUnits="Absolute" Viewbox="0,0,10,10" ViewboxUnits="Absolute">
+        <VisualBrush.Visual>
+            <Canvas>
+                <Path Stroke="{StaticResource BackgroundDisabledBorderBrush}" Data="M 0 10 l 10 -10" />
+            </Canvas>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <VisualBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridSelectedDisabledBrush" 
+                 TileMode="Tile"  Viewport="0,0,10,10" ViewportUnits="Absolute" Viewbox="0,0,10,10" ViewboxUnits="Absolute">
+        <VisualBrush.Visual>
+            <Canvas>
+                <Path Stroke="{StaticResource BackgroundSelectedBrush}" Data="M 0 10 l 10 -10" />
+            </Canvas>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridRowSelectedBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFC5CFDA"/>
+        <!--<GradientStop Color="#FFDCDEDE"/>-->
+    </LinearGradientBrush>
+
+
+    <VisualBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridRowSelectedDisabledBrush" 
+                 TileMode="Tile"  Viewport="0,0,10,10" ViewportUnits="Absolute" Viewbox="0,0,10,10" ViewboxUnits="Absolute">
+        <VisualBrush.Visual>
+            <Canvas>
+                <Path Stroke="{StaticResource BackgroundGridRowSelectedBrush}" Data="M 0 10 l 10 -10" />
+            </Canvas>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="true" x:Key="BackgroundGridRowSelectedBorderBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF487EEB"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="BackgroundChartBrush" Color="#FFEAEAEA"/>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="BackgroundTabHighlightBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#989896" />
+        <GradientStop Color="#716D63" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush PresentationOptions:Freeze="True" x:Key="BackgroundTabHighlightBrush" StartPoint="0,0" EndPoint="0,1">
+        <!--<GradientStop Color="#989896" />
+        <GradientStop Color="#716D63" Offset="1" />-->
+        <!--<GradientStop Color="Transparent" Offset="0.2" />
+        <GradientStop Color="Transparent" Offset="1"/>-->
+        <GradientStop Color="#00c0c0c0" Offset="0" />
+        <GradientStop Color="#40c0c0c0" Offset="0.87" />
+    </LinearGradientBrush>
+ 
+    <!-- RIBBON -->
+    <SolidColorBrush PresentationOptions:Freeze="true" x:Key="RibbonBackstageItemForegroundBrush" Color="#FF808080"/>
+
+    <!--<RadialGradientBrush PresentationOptions:Freeze="True" x:Key="BackgroundTabHighlightBrush" Center="0.5,0.2" GradientOrigin="0.5,0.2" RadiusX="0.8" RadiusY="0.8">
+        <GradientStop Color="Transparent" Offset="0.2" />
+        <GradientStop Color="Transparent" Offset="1"/>
+    </RadialGradientBrush>-->
+   
+  
+    <!-- RANDOM COLOR PALLETTE -->
+    
+    <!--sage green-->
+    <LinearGradientBrush x:Key="ColorPallette1" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFB9CF6F" Offset="0"/>
+        <GradientStop Color="#FF9DB743" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!--light blue -->
+    <LinearGradientBrush x:Key="ColorPallette2" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF3D7ABF" Offset="1"/>
+        <GradientStop Color="#FF74A4CD"/>
+    </LinearGradientBrush>
+
+    <!--mauve -->
+    <LinearGradientBrush x:Key="ColorPallette3" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFB46B6F" Offset="1"/>
+        <GradientStop Color="#FFCCA2A4"/>
+    </LinearGradientBrush>
+
+    <!--dark orange -->
+    <LinearGradientBrush x:Key="ColorPallette4" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFDDC9A6" Offset="1"/>
+        <GradientStop Color="#FFF7A74C" />
+    </LinearGradientBrush>
+
+    <!-- mellow yellow -->
+    <LinearGradientBrush x:Key="ColorPallette5" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFF0EBD8"/>
+        <GradientStop Color="#FFFCD72B" Offset="0.989"/>
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="LargeVerticalSeparatorBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#00d7d7d7" Offset="0" />
+        <GradientStop Color="#d7d7d7" Offset="0.1" />
+        <GradientStop Color="#d7d7d7" Offset="0.9" />
+        <GradientStop Color="#00d7d7d7" Offset="1" />
+    </LinearGradientBrush>
+
+    <ImageBrush x:Key="AppBackgroundImage" ImageSource="/Slb.Production.Engineering.UI;component/Images/AppBackground.png"/>
+
+    <Pen x:Key="TransparentPen" Thickness="0" Brush="{x:Static Brushes.Transparent}"/>
+
+
+
+</ResourceDictionary>

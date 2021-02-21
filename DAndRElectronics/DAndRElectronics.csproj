@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\AppIcon.png" />
+    <None Remove="Images\CompanyLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\AppIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Images\CompanyLogo.png" />
+  </ItemGroup>
+
+</Project>
