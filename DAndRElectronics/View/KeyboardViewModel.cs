@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using DAndRElectronics.Helpers;
+using DAndRElectronics.Services;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -10,6 +11,10 @@ namespace DAndRElectronics.View
 {
     public class KeyboardViewModel:ViewModel
     {
+        private const string KeyBaseName = "KEY";
+        private const string InputBaseName = "INPUT";
+        private const string EventBaseName = "CAN EVENT";
+
         private List<ButtonViewModel> _keyButtons = new List<ButtonViewModel>();
         private List<ButtonViewModel> _inputButtons = new List<ButtonViewModel>();
         private List<ButtonViewModel> _eventButtons = new List<ButtonViewModel>();
@@ -28,9 +33,12 @@ namespace DAndRElectronics.View
             SaveCommand = new RelayCommand(OnSave);
             SaveAsCommand = new RelayCommand(OnSaveAs);
             OpenCommand = new RelayCommand(OnOpen);
-            PopulateKeyButtons();
-            PopulateInputButtons();
-            PopulateEventButtons();
+            PopulateButtons(_keyButtons, 21, KeyBaseName);
+            PopulateButtons(_inputButtons, 16, InputBaseName);
+            PopulateButtons(_eventButtons, 5, EventBaseName);
+            //PopulateKeyButtons();
+            //PopulateInputButtons();
+            //PopulateEventButtons();
         }
 
         private void OnSave(object obj)
@@ -48,12 +56,14 @@ namespace DAndRElectronics.View
 
             var content = File.ReadAllText(openFileDialog.FileName);
             var allItems = JsonConvert.DeserializeObject<List<ButtonViewModel>>(content);
-            _keyButtons = allItems.Where(i => i.ButtonName.StartsWith("Key")).ToList();
-            _inputButtons = allItems.Where(i => i.ButtonName.StartsWith("Input")).ToList();
-            _eventButtons = allItems.Where(i => i.ButtonName.StartsWith("Can")).ToList();
-            OnPropertyChanged(nameof(KeyButtons));
-            OnPropertyChanged(nameof(InputButtons));
-            OnPropertyChanged(nameof(EventButtons));
+            _keyButtons = allItems.Where(i => i.ButtonName.StartsWith(KeyBaseName)).ToList();
+            _inputButtons = allItems.Where(i => i.ButtonName.StartsWith(InputBaseName)).ToList();
+            _eventButtons = allItems.Where(i => i.ButtonName.StartsWith(EventBaseName)).ToList();
+            var stateService = ServiceDirectory.Instance.GetService<IStateService>();
+            SetRowColumnForButtons(_keyButtons);
+            SetRowColumnForButtons(_inputButtons);
+            SetRowColumnForButtons(_eventButtons);
+            stateService.OnStateChanged(StateChangedTypes.ProjectOpened);
 
         }
         private void OnSaveAs(object obj)
@@ -71,97 +81,48 @@ namespace DAndRElectronics.View
 
         }
 
-        private void PopulateKeyButtons()
-        {
-
-            var row = 0;
-            var col = 0;
-            _keyButtons.Add(new ButtonViewModel("KEY1", col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY2", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY3", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY4", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY5", ++col, row));
-            col = 0;
-            row++;
-            _keyButtons.Add(new ButtonViewModel("KEY6",  col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY7",  ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY8",  ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY9",  ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY10", ++col, row));
-            col = 0;
-            row++;
-            _keyButtons.Add(new ButtonViewModel("KEY6",  col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY7",  ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY8",  ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY9",  ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY10", ++col, row));
-            col = 0;
-            row++;
-            _keyButtons.Add(new ButtonViewModel("KEY11", col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY12", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY13", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY14", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY15", ++col, row));
-            col = 0;
-            row++;
-            _keyButtons.Add(new ButtonViewModel("KEY16", col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY17", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY18", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY19", ++col, row));
-            _keyButtons.Add(new ButtonViewModel("KEY20", ++col, row));
-
-
-
-        }
-
-
-        private void PopulateInputButtons()
+        private static void SetRowColumnForButtons(List<ButtonViewModel> viewModels)
         {
             var row = 0;
-            var col = 0;
-            _inputButtons.Add(new ButtonViewModel("Input1", col, row));
-            _inputButtons.Add(new ButtonViewModel("Input2", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input3", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input4", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input5", ++col, row));
-            col = 0;
-            row++;
-            _inputButtons.Add(new ButtonViewModel("Input6", col, row));
-            _inputButtons.Add(new ButtonViewModel("Input7", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input8", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input9", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input10", ++col, row));
-            col = 0;
-            row++;
-            _inputButtons.Add(new ButtonViewModel("Input6", col, row));
-            _inputButtons.Add(new ButtonViewModel("Input7", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input8", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input9", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input10", ++col, row));
-            col = 0;
-            row++;
-            _inputButtons.Add(new ButtonViewModel("Input11", col, row));
-            _inputButtons.Add(new ButtonViewModel("Input12", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input13", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input14", ++col, row));
-            _inputButtons.Add(new ButtonViewModel("Input15", ++col, row));
-            col = 0;
-            row++;
-            _inputButtons.Add(new ButtonViewModel("Input16", col, row));
+            for (var j = 0; j < 30; j +=5)
+            {
+                var col = 0;
+                for (var i = j; i < j+5 ; i++)
+                {
+                    if (i >= viewModels.Count)
+                    {
+                        return;
+                    }
+                    viewModels[i].Column = col;
+                    viewModels[i].Row = row;
+                    col++;
+                }
+                row++;
+            }
         }
 
-
-        private void PopulateEventButtons()
+        private static void PopulateButtons(List<ButtonViewModel> viewModels, int maxModels, string baseName)
         {
             var row = 0;
-            var col = 0;
-            _eventButtons.Add(new ButtonViewModel("Can Event1", col, row));
-            _eventButtons.Add(new ButtonViewModel("Can Event2", ++col, row));
-            _eventButtons.Add(new ButtonViewModel("Can Event3", ++col, row));
-            _eventButtons.Add(new ButtonViewModel("Can Event4", ++col, row));
-            _eventButtons.Add(new ButtonViewModel("Can Event5", ++col, row));
-           
+            var counter = 1;
+            for (var j = 0; j < 30; j += 5)
+            {
+                var col = 0;
+                for (var i = j; i < j + 5; i++)
+                {
+                    if (i >= maxModels)
+                    {
+                        return;
+                    }
+
+                    var vm = new ButtonViewModel($"{baseName}{counter++}", col, row);
+                    viewModels.Add(vm);
+                    col++;
+                }
+                row++;
+            }
         }
+
 
         #endregion
     }

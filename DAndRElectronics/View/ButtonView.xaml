@@ -4,9 +4,138 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DAndRElectronics.View"
+             xmlns:helpers="clr-namespace:DAndRElectronics.Helpers"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:dAndRElectronics="clr-namespace:DAndRElectronics"
+             xmlns:converters="clr-namespace:DAndRElectronics.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="600" Width="600"
+             d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource BackgroundMediumLightBrush}">
+
+    <UserControl.Resources>
+        <system:Boolean x:Key="FalseValue">False</system:Boolean>
+        <system:Boolean x:Key="TrueValue">True</system:Boolean>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ComboBox 
+            ItemsSource="{Binding SubButtons}" 
+            DisplayMemberPath="ButtonName" 
+            IsEnabled="{Binding SubButtonsEnabled}"
+            SelectedItem="{Binding SelectedViewModel}">
+
+        </ComboBox>
+
+        <TabControl Grid.Row="1" Background="{StaticResource BackgroundMediumLightBrush}" DataContext="{Binding SelectedViewModel}">
+            <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.PropsTabHeader}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="{x:Static dAndRElectronics:ResourceStrings.NameLabel}"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.TypeLabel}"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.PriorityLabel}"></Label>
+                    <Label Grid.Row="3" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.OffBackgroundColorLabel}"></Label>
+                    <Label Grid.Row="4" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.OnBackgroundColorLabel}"></Label>
+                    <Label Grid.Row="5" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.PatternLabel}"></Label>
+
+                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding PossibleNames}" SelectedItem="{Binding Name}"></ComboBox>
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding EquipmentType}"></ComboBox>
+                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossiblePriorities}" SelectedItem="{Binding Priority}"></ComboBox>
+
+                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Path=OffBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
+                          SelectedValuePath="Value"
+                          
+                          SelectedValue="{Binding Path=OffBackgroundColor}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" >
+                                    <Rectangle x:Name="rect" Fill="{Binding Path=Color}" Height="20" Width="100"
+                                           StrokeThickness="1" RadiusX="0" RadiusY="0"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+                    <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Path=OnBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
+                          SelectedValuePath="Value"
+                          
+                          SelectedValue="{Binding Path=OnBackgroundColor}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" >
+                                    <Rectangle x:Name="rect" Fill="{Binding Path=Color}" Height="20" Width="100"
+                                           StrokeThickness="1" RadiusX="0" RadiusY="0"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+
+                    <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}"></ComboBox>
+
+                </Grid>
+            </TabItem>
+
+
+            <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.OutsTabHeader}">
+
+                <Grid  Background="{StaticResource BackgroundMediumLightBrush}" Margin="3" >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <helpers:CustomDataGrid AutoGenerateColumns="False" Height="Auto" 
+                  RowHeight="30"
+                  SelectionUnit="FullRow"
+                  ItemsSource="{Binding Outs}"  
+                  Background="{StaticResource BackgroundMediumLightBrush}">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Background" 
+                            Value="{StaticResource BackgroundMediumLightBrush}" />
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="Auto"/>
+
+
+                            <DataGridTemplateColumn Header="On/Off" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=On, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </helpers:CustomDataGrid>
+
+                    <DockPanel Grid.Row="1" Margin="3">
+                        <Button Content="All On" Command="{Binding AllOnOffCommand}" CommandParameter="{StaticResource TrueValue}" HorizontalAlignment="Left" Margin="3" Width="50"></Button>
+                        <Button Content="All Off" Command="{Binding AllOnOffCommand}" CommandParameter="{StaticResource FalseValue}" HorizontalAlignment="Left" Margin="3" Width="50"></Button>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

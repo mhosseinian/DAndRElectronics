@@ -33,7 +33,7 @@
     </UserControl.Resources>
     <Grid>
 
-        <Button Command="{Binding OnEdit}" Margin="3" Style="{StaticResource TransparentStyle}">
+        <Button  Margin="3" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick">
             <Button.Content>
                 <!--<ControlTemplate>-->
                     <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">

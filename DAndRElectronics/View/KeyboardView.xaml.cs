@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DAndRElectronics.Services;
 
 namespace DAndRElectronics.View
 {
@@ -21,11 +22,26 @@ namespace DAndRElectronics.View
         public KeyboardView()
         {
             InitializeComponent();
+            var stateService = ServiceDirectory.Instance.GetService<IStateService>();
+            stateService.Subscribe(this,OnStateChanged);
             this.DataContextChanged +=OnDataContextChanged;
+        }
+
+        private void OnStateChanged(StateChangedTypes obj)
+        {
+            PopulateGrids();
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            PopulateGrids();
+        }
+
+        private void PopulateGrids()
+        {
+            GridKeys.Children.Clear();
+            GridInputs.Children.Clear();
+            GridEvents.Children.Clear();
             var vm = DataContext as KeyboardViewModel;
             foreach (var buttonVm in vm.KeyButtons)
             {
@@ -37,14 +53,15 @@ namespace DAndRElectronics.View
 
             foreach (var buttonVm in vm.InputButtons)
             {
-                var buttonView = new CustomButton { DataContext = buttonVm };
+                var buttonView = new CustomButton {DataContext = buttonVm};
                 GridInputs.Children.Add(buttonView);
                 Grid.SetColumn(buttonView, buttonVm.Column);
                 Grid.SetRow(buttonView, buttonVm.Row);
             }
+
             foreach (var buttonVm in vm.EventButtons)
             {
-                var buttonView = new CustomButton { DataContext = buttonVm };
+                var buttonView = new CustomButton {DataContext = buttonVm};
                 GridEvents.Children.Add(buttonView);
                 Grid.SetColumn(buttonView, buttonVm.Column);
                 Grid.SetRow(buttonView, buttonVm.Row);

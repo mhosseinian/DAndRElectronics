@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/DAndRElectronics;component/Styles/BrushStyle.xaml"/>
+                <ResourceDictionary Source="/DAndRElectronics;component/Styles/ControlStyles.xaml"/>
+                <ResourceDictionary Source="/DAndRElectronics;component/Converters/Converters.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -126,4 +126,28 @@
   <data name="KeysTabHeader" xml:space="preserve">
     <value>Keys</value>
   </data>
+  <data name="OutsTabHeader" xml:space="preserve">
+    <value>Outs</value>
+  </data>
+  <data name="PropsTabHeader" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="PriorityLabel" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="OffBackgroundColorLabel" xml:space="preserve">
+    <value>Off background color</value>
+  </data>
+  <data name="OnBackgroundColorLabel" xml:space="preserve">
+    <value>On background color</value>
+  </data>
+  <data name="PatternLabel" xml:space="preserve">
+    <value>Pattern</value>
+  </data>
 </root>

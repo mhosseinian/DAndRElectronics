@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DAndRElectronics.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DAndRElectronics
 {
@@ -13,5 +15,13 @@ namespace DAndRElectronics
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            ServiceDirectory.Instance.AddSingleton<IStateService>(new StateService());
+           
+            base.OnStartup(e);
+        }
     }
+
+    
 }

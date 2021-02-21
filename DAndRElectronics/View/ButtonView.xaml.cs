@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,15 @@ namespace DAndRElectronics.View
         public ButtonView()
         {
             InitializeComponent();
+        }
+
+        public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register(
+            "SelectedItems", typeof(IList), typeof(ButtonView), new PropertyMetadata(default(IList)));
+
+        public IList SelectedItems
+        {
+            get { return (IList) GetValue(SelectedItemsProperty); }
+            set { SetValue(SelectedItemsProperty, value); }
         }
     }
 }

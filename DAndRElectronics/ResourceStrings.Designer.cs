@@ -86,5 +86,77 @@ namespace DAndRElectronics {
                 return ResourceManager.GetString("KeysTabHeader", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string NameLabel {
+            get {
+                return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off background color.
+        /// </summary>
+        public static string OffBackgroundColorLabel {
+            get {
+                return ResourceManager.GetString("OffBackgroundColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On background color.
+        /// </summary>
+        public static string OnBackgroundColorLabel {
+            get {
+                return ResourceManager.GetString("OnBackgroundColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outs.
+        /// </summary>
+        public static string OutsTabHeader {
+            get {
+                return ResourceManager.GetString("OutsTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pattern.
+        /// </summary>
+        public static string PatternLabel {
+            get {
+                return ResourceManager.GetString("PatternLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Priority.
+        /// </summary>
+        public static string PriorityLabel {
+            get {
+                return ResourceManager.GetString("PriorityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string PropsTabHeader {
+            get {
+                return ResourceManager.GetString("PropsTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string TypeLabel {
+            get {
+                return ResourceManager.GetString("TypeLabel", resourceCulture);
+            }
+        }
     }
 }

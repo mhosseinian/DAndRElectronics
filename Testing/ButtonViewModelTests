@@ -16,7 +16,7 @@ namespace EngineeringTesting
         public void ReadWriteButtonViewModel()
         {
             
-            var vm = new ButtonViewModel("Masud", 0, 1){ BackgroundColor = "Red",EquipmentType = "SF42",Pattern = "MyPattern",Priority = 3, Name = "MyName"};
+            var vm = new ButtonViewModel("Masud", 0, 1){ OffBackgroundColor = SupportedColors.Blue ,EquipmentType = "SF42",Pattern = "MyPattern",Priority = 3, Name = "MyName"};
             var filename = Path.GetTempFileName();
             File.WriteAllText(filename, JsonConvert.SerializeObject(vm, Formatting.Indented));
 
@@ -24,7 +24,7 @@ namespace EngineeringTesting
             {
                 string json = r.ReadToEnd();
                 var vmNew = JsonConvert.DeserializeObject<ButtonViewModel>(json);
-                Assert.IsTrue(vmNew.BackgroundColor.Equals("Red"));
+                Assert.IsTrue(vmNew.OffBackgroundColor.Equals(SupportedColors.Blue));
                 Assert.IsTrue(vmNew.EquipmentType.Equals("SF42"));
                 Assert.IsTrue(vmNew.Pattern.Equals("MyPattern"));
                 Assert.IsTrue(vmNew.Priority.Equals(3));
