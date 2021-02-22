@@ -61,6 +61,24 @@ namespace DAndRElectronics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analog.
+        /// </summary>
+        public static string AnalogTabHeader {
+            get {
+                return ResourceManager.GetString("AnalogTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delay time.
+        /// </summary>
+        public static string DelayLabel {
+            get {
+                return ResourceManager.GetString("DelayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can events.
         /// </summary>
         public static string EventsTabHeader {
@@ -147,6 +165,24 @@ namespace DAndRElectronics {
         public static string PropsTabHeader {
             get {
                 return ResourceManager.GetString("PropsTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slider.
+        /// </summary>
+        public static string SlideresTabHeader {
+            get {
+                return ResourceManager.GetString("SlideresTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        public static string TimerTabHeader {
+            get {
+                return ResourceManager.GetString("TimerTabHeader", resourceCulture);
             }
         }
         

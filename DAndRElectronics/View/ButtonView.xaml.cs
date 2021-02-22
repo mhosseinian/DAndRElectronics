@@ -32,5 +32,10 @@ namespace DAndRElectronics.View
             get { return (IList) GetValue(SelectedItemsProperty); }
             set { SetValue(SelectedItemsProperty, value); }
         }
+
+        private void KeyCombo_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+           // KeyCombo.IsDropDownOpen = true;
+        }
     }
 }

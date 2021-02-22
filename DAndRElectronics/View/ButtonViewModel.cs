@@ -48,25 +48,26 @@ namespace DAndRElectronics.View
                 _equipmentType = value;
                 PopulateAdditionalViewModels();
                 OnPropertyChanged(nameof(SubButtonsEnabled));
+                OnPropertyChanged(nameof(DelayVisible));
             }
         }
 
         private void PopulateAdditionalViewModels()
         {
-            if (SubButtons.Count == 1)
+            if (SubButtons.Count == 1 && SubButtonsEnabled)
             {
                 var counter = 1;
                 var items = new List<ButtonViewModel>
                 {
                     this,
-                    new ButtonViewModel($"{ButtonName}_{counter++}", 0, 0),
-                    new ButtonViewModel($"{ButtonName}_{counter++}", 0, 0),
-                    new ButtonViewModel($"{ButtonName}_{counter}", 0, 0),
+                    new ButtonViewModel($"{ButtonName}_{counter++}", 0, 0){IsSubKey = true},
+                    new ButtonViewModel($"{ButtonName}_{counter++}", 0, 0){IsSubKey = true},
+                    new ButtonViewModel($"{ButtonName}_{counter}", 0, 0){IsSubKey = true},
                 };
                 SubButtons = new ObservableCollection<ButtonViewModel>(items);
-                OnPropertyChanged(nameof(SubButtons));
-                OnPropertyChanged(nameof(SelectedViewModel));
             }
+            OnPropertyChanged(nameof(SubButtons));
+            OnPropertyChanged(nameof(SelectedViewModel));
         }
 
         [JsonIgnore] private ButtonViewModel _selectedViewModel;
@@ -81,8 +82,10 @@ namespace DAndRElectronics.View
             }
         }
 
-        [JsonIgnore] public bool SubButtonsEnabled => EquipmentType == "SEQUENTIAL";
-        
+        [JsonIgnore] public bool SubButtonsEnabled => IsSubKey || EquipmentType == EquipmentTypes.SEQUENTIAL;
+        [JsonIgnore] public bool DelayVisible => EquipmentType == EquipmentTypes.DELAY;
+        [JsonIgnore] public bool EquipmentTypeVisible => !IsSubKey;
+        public bool IsSubKey { get; set; }
         [JsonIgnore]public int Priority { get => _priority; set => _priority = value; }
 
         [JsonIgnore]
@@ -124,15 +127,17 @@ namespace DAndRElectronics.View
             "Ali",
             "Hassan"
         };
-        
-        [JsonIgnore] public static List<string> PossibleTypes { get; }=new List<string>
+
+        [JsonIgnore] public IEnumerable<string> PossibleTypes => EquipmentTypes.PossibleTypes;
+
+        [JsonIgnore]
+        public IEnumerable<int> PossibleDelays
         {
-            "MOMENTARY",
-            "TOGGLE",
-            "SEQUENTIAL",
-            "DELAY",
-            "NOT USE",
-        };
+            get
+            {
+                return ButtonName.StartsWith(KeyboardViewModel.AnalogBaseName) ? Enumerable.Range(1, 34) : Enumerable.Range(1, 200);
+            }
+        }
 
         [JsonIgnore] public static List<int> PossiblePriorities { get; } = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9};
         

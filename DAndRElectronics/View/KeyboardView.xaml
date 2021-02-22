@@ -34,6 +34,18 @@
                 </Grid.RowDefinitions>
             </Grid>
         </TabItem>
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.SlideresTabHeader}">
+            <Grid x:Name="GridSlide">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
 
         <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.InputsTabHeader}">
             <Grid x:Name="GridInputs">
@@ -49,6 +61,31 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.AnalogTabHeader}">
+            <Grid x:Name="GridAnalog">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.TimerTabHeader}">
+            <Grid x:Name="GridTimer">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
                     <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
             </Grid>

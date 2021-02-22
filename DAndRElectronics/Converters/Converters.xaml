@@ -3,5 +3,10 @@
                     xmlns:local="clr-namespace:DAndRElectronics.Converters">
 
     <ColorConverter x:Key="EnumToColor" />
-    
+
+    <local:BoolToVisibilityConverter x:Key="BoolToVisHidden" Reverse="False" Hide="true" />
+    <local:BoolToVisibilityConverter x:Key="BoolToVis" Reverse="False" />
+    <local:BoolToVisibilityConverter x:Key="InvBoolToVis" Reverse="True"/>
+    <local:BoolToVisibilityConverter x:Key="InvBoolToVisHidden" Reverse="True" Hide="True"/>
+
 </ResourceDictionary>

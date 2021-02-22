@@ -9,30 +9,41 @@
              xmlns:dAndRElectronics="clr-namespace:DAndRElectronics"
              xmlns:converters="clr-namespace:DAndRElectronics.Converters"
              mc:Ignorable="d" 
-             Height="600" Width="600"
+             
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource BackgroundMediumLightBrush}">
 
     <UserControl.Resources>
         <system:Boolean x:Key="FalseValue">False</system:Boolean>
         <system:Boolean x:Key="TrueValue">True</system:Boolean>
     </UserControl.Resources>
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ComboBox 
-            ItemsSource="{Binding SubButtons}" 
-            DisplayMemberPath="ButtonName" 
-            IsEnabled="{Binding SubButtonsEnabled}"
-            SelectedItem="{Binding SelectedViewModel}">
 
-        </ComboBox>
+        <DockPanel>
+            
+                    <ComboBox 
+                              ItemsSource="{Binding SubButtons}" Width="100"
+                              DisplayMemberPath="ButtonName" 
+                              IsEnabled="{Binding SubButtonsEnabled}"
+                              SelectedItem="{Binding SelectedViewModel}">
 
-        <TabControl Grid.Row="1" Background="{StaticResource BackgroundMediumLightBrush}" DataContext="{Binding SelectedViewModel}">
-            <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.PropsTabHeader}">
+                    </ComboBox>
+               
+            
+        </DockPanel>
+        
+            <TabControl Grid.Row="1" Background="{StaticResource BackgroundMediumLightBrush}" DataContext="{Binding SelectedViewModel}">
+            
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="{x:Static dAndRElectronics:ResourceStrings.PropsTabHeader}" FontSize="16" />
+                </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -50,17 +61,19 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Content="{x:Static dAndRElectronics:ResourceStrings.NameLabel}"></Label>
-                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.TypeLabel}"></Label>
-                    <Label Grid.Row="2" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.PriorityLabel}"></Label>
-                    <Label Grid.Row="3" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.OffBackgroundColorLabel}"></Label>
-                    <Label Grid.Row="4" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.OnBackgroundColorLabel}"></Label>
-                    <Label Grid.Row="5" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.PatternLabel}"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.TypeLabel}" Visibility="{Binding EquipmentTypeVisible, Converter={StaticResource BoolToVis}}"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.DelayLabel}" Visibility="{Binding DelayVisible, Converter={StaticResource BoolToVis}}"></Label>
+                    <Label Grid.Row="3" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.PriorityLabel}"></Label>
+                    <Label Grid.Row="4" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.OffBackgroundColorLabel}"></Label>
+                    <Label Grid.Row="5" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.OnBackgroundColorLabel}"></Label>
+                    <Label Grid.Row="6" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.PatternLabel}"></Label>
 
                     <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding PossibleNames}" SelectedItem="{Binding Name}"></ComboBox>
-                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding EquipmentType}"></ComboBox>
-                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossiblePriorities}" SelectedItem="{Binding Priority}"></ComboBox>
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding EquipmentType}" Visibility="{Binding EquipmentTypeVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
+                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossibleDelays}" SelectedItem="{Binding DelayTime}" Visibility="{Binding DelayVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
+                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding PossiblePriorities}" SelectedItem="{Binding Priority}"></ComboBox>
 
-                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Path=OffBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
+                    <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Path=OffBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
                           SelectedValuePath="Value"
                           
                           SelectedValue="{Binding Path=OffBackgroundColor}">
@@ -75,7 +88,7 @@
                         </ComboBox.ItemTemplate>
 
                     </ComboBox>
-                    <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Path=OnBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
+                    <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Path=OnBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
                           SelectedValuePath="Value"
                           
                           SelectedValue="{Binding Path=OnBackgroundColor}">
@@ -91,14 +104,16 @@
 
                     </ComboBox>
 
-                    <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}"></ComboBox>
+                    <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}"></ComboBox>
 
                 </Grid>
             </TabItem>
 
 
-            <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.OutsTabHeader}">
-
+            <TabItem >
+                <TabItem.Header>
+                    <TextBlock Text="{x:Static dAndRElectronics:ResourceStrings.OutsTabHeader}" FontSize="16"/>
+                </TabItem.Header>
                 <Grid  Background="{StaticResource BackgroundMediumLightBrush}" Margin="3" >
 
                     <Grid.RowDefinitions>

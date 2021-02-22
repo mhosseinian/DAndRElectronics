@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DAndRElectronics.Services;
 
 namespace DAndRElectronics.View
 {
@@ -25,10 +26,9 @@ namespace DAndRElectronics.View
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var buttonView = new ButtonView(){DataContext = this.DataContext, Height = 600, Width = 600};
-            var w = new HelperWindow() { SizeToContent = SizeToContent.WidthAndHeight, Title = (DataContext as ButtonViewModel).ButtonName, Height = 600, Width = 600};
-           w.SetContent(buttonView);
-            w.ShowDialog();
+            var buttonView = new ButtonView(){DataContext = this.DataContext};
+            var editorService = ServiceDirectory.Instance.GetService<IEditorService>();
+            editorService.SetContent(buttonView, (DataContext as ButtonViewModel).ButtonName);
         }
     }
 }

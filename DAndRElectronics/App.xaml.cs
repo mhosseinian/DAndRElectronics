@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DAndRElectronics.Helpers;
 using DAndRElectronics.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,7 @@ namespace DAndRElectronics
         protected override void OnStartup(StartupEventArgs e)
         {
             ServiceDirectory.Instance.AddSingleton<IStateService>(new StateService());
+            ServiceDirectory.Instance.AddSingleton<IEditorService>(new EditorService());
            
             base.OnStartup(e);
         }

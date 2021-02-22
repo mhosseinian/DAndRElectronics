@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DAndRElectronics.View"
         mc:Ignorable="d"
-        Background="{StaticResource BackgroundMediumLightBrush}" SizeToContent="WidthAndHeight">
+        Background="{StaticResource BackgroundMediumLightBrush}" >
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="34" />
-    </WindowChrome.WindowChrome>
+    <!--<WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="64" />
+    </WindowChrome.WindowChrome>-->
 
-    
-    <Window.Resources>
+
+    <!--<Window.Resources>
         <ResourceDictionary>
-            <!--Base style for title bar buttons-->
+
+            --><!--Base style for title bar buttons--><!--
             <Style x:Key="CaptionButtonStyle" TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -35,25 +36,22 @@
                 </Setter>
             </Style>
 
-            <!--Minimize-->
+            --><!--Minimize--><!--
             <Style x:Key="MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
                 <Setter Property="Content" Value="&#xE949;"/>
-                <Setter Property="Visibility" Value="Collapsed"/>
             </Style>
 
-            <!--Maximize-->
+            --><!--Maximize--><!--
             <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
                 <Setter Property="Content" Value="&#xE739;"/>
-                <Setter Property="Visibility" Value="Collapsed"/>
             </Style>
 
-            <!--Restore-->
+            --><!--Restore--><!--
             <Style x:Key="RestoreButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
                 <Setter Property="Content" Value="&#xE923;"/>
-                <Setter Property="Visibility" Value="Collapsed"/>
             </Style>
 
-            <!--Close-->
+            --><!--Close--><!--
             <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
                 <Setter Property="Content" Value="&#xE106;"/>
             </Style>
@@ -61,13 +59,13 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <!--Title bar button commands-->
+    --><!--Title bar button commands--><!--
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
         <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Maximize" />
         <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Minimize" />
         <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
-    </Window.CommandBindings>
+    </Window.CommandBindings>-->
 
 
     <Border Background="{StaticResource BackgroundMediumLightBrush}" x:Name="MainWindowBorder">
@@ -80,13 +78,13 @@
             </Grid.RowDefinitions>
 
             <!--Window chrome-->
-            <Grid Grid.Row="0" Height="30" Background="#F999">
+            <!--<Grid Grid.Row="0" Height="30" Background="#F999">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <!--App icon-->
+                    --><!--App icon--><!--
                     <TextBlock FontFamily="Arial" Margin="4 3 0 0"    Text="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType=local:HelperWindow}}"/>
                 </StackPanel>
 
-                <!--Caption buttons-->
+                --><!--Caption buttons--><!--
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                     <Button Style="{StaticResource MinimizeButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Minimize"
                             Command="{x:Static SystemCommands.MinimizeWindowCommand}"/>
@@ -97,13 +95,14 @@
                     <Button Style="{StaticResource CloseButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Close"
                             Command="{x:Static SystemCommands.CloseWindowCommand}"/>
                 </StackPanel>
-            </Grid>
+            </Grid>-->
 
             <!--App content-->
-            <Grid Grid.Row="1" x:Name="AppArea">
+            <DockPanel LastChildFill="True" Grid.Row="1" x:Name="AppArea" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></DockPanel>
+            <!--<Grid Grid.Row="1" x:Name="AppArea" >
 
                 
-            </Grid>
+            </Grid>-->
 
         </Grid>
 

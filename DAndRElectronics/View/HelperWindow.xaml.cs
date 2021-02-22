@@ -20,9 +20,6 @@ namespace DAndRElectronics.View
         public HelperWindow()
         {
             InitializeComponent();
-            RestoreButton.Visibility = Visibility.Collapsed;
-            MaximizeButton.Visibility = Visibility.Collapsed;
-            
             StateChanged += MainWindowStateChangeRaised;
         }
 
@@ -68,22 +65,25 @@ namespace DAndRElectronics.View
 
         private void MainWindowStateChangeRaised(object sender, EventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
-            {
-                MainWindowBorder.BorderThickness = new Thickness(8);
-                RestoreButton.Visibility = Visibility.Collapsed;
-                MaximizeButton.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                MainWindowBorder.BorderThickness = new Thickness(0);
-                RestoreButton.Visibility = Visibility.Collapsed;
-                MaximizeButton.Visibility = Visibility.Collapsed;
-            }
+            //if (WindowState == WindowState.Maximized)
+            //{
+            //    MainWindowBorder.BorderThickness = new Thickness(8);
+            //    RestoreButton.Visibility = Visibility.Visible;
+            //    MaximizeButton.Visibility = Visibility.Collapsed;
+            //}
+            //else
+            //{
+            //    MainWindowBorder.BorderThickness = new Thickness(0);
+            //    RestoreButton.Visibility = Visibility.Collapsed;
+            //    MaximizeButton.Visibility = Visibility.Visible;
+            //}
         }
 
-        public void SetContent(UIElement content)
+        public void SetContent(FrameworkElement content)
         {
+            AppArea.Children.Clear();
+            content.HorizontalAlignment = HorizontalAlignment.Stretch;
+            content.VerticalAlignment = VerticalAlignment.Stretch;
             AppArea.Children.Add(content);
         }
 

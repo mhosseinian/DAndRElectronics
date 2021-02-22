@@ -138,6 +138,9 @@
   <data name="TypeLabel" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="DelayLabel" xml:space="preserve">
+    <value>Delay time</value>
+  </data>
   <data name="PriorityLabel" xml:space="preserve">
     <value>Priority</value>
   </data>
@@ -149,5 +152,14 @@
   </data>
   <data name="PatternLabel" xml:space="preserve">
     <value>Pattern</value>
+  </data>
+  <data name="AnalogTabHeader" xml:space="preserve">
+    <value>Analog</value>
+  </data>
+  <data name="SlideresTabHeader" xml:space="preserve">
+    <value>Slider</value>
+  </data>
+  <data name="TimerTabHeader" xml:space="preserve">
+    <value>Timer</value>
   </data>
 </root>

@@ -42,27 +42,25 @@ namespace DAndRElectronics.View
             GridKeys.Children.Clear();
             GridInputs.Children.Clear();
             GridEvents.Children.Clear();
+            GridSlide.Children.Clear();
+            GridAnalog.Children.Clear();
+            GridTimer.Children.Clear();
             var vm = DataContext as KeyboardViewModel;
-            foreach (var buttonVm in vm.KeyButtons)
-            {
-                var buttonView = new CustomButton {DataContext = buttonVm};
-                GridKeys.Children.Add(buttonView);
-                Grid.SetColumn(buttonView, buttonVm.Column);
-                Grid.SetRow(buttonView, buttonVm.Row);
-            }
+            
+            SetupGrid(GridKeys, vm.KeyButtons);
+            SetupGrid(GridInputs, vm.InputButtons);
+            SetupGrid(GridEvents, vm.EventButtons);
+            SetupGrid(GridSlide, vm.SlideButtons);
+            SetupGrid(GridAnalog, vm.AnalogButtons);
+            SetupGrid(GridTimer, vm.TimerButtons);
+        }
 
-            foreach (var buttonVm in vm.InputButtons)
+        private void SetupGrid(Grid grid, IEnumerable<ButtonViewModel> buttons)
+        {
+            foreach (var buttonVm in buttons)
             {
-                var buttonView = new CustomButton {DataContext = buttonVm};
-                GridInputs.Children.Add(buttonView);
-                Grid.SetColumn(buttonView, buttonVm.Column);
-                Grid.SetRow(buttonView, buttonVm.Row);
-            }
-
-            foreach (var buttonVm in vm.EventButtons)
-            {
-                var buttonView = new CustomButton {DataContext = buttonVm};
-                GridEvents.Children.Add(buttonView);
+                var buttonView = new CustomButton { DataContext = buttonVm };
+                grid.Children.Add(buttonView);
                 Grid.SetColumn(buttonView, buttonVm.Column);
                 Grid.SetRow(buttonView, buttonVm.Row);
             }
