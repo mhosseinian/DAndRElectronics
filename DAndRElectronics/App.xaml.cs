@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using DAndRElectronics.ButtonViewModels;
 using DAndRElectronics.Helpers;
 using DAndRElectronics.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +15,7 @@ namespace DAndRElectronics
         {
             ServiceDirectory.Instance.AddSingleton<IStateService>(new StateService());
             ServiceDirectory.Instance.AddSingleton<IEditorService>(new EditorService());
+            ServiceDirectory.Instance.AddSingleton<IButtonViewModelFactoryService>(new ButtonViewModelFactoryService());
            
             base.OnStartup(e);
         }

@@ -31,11 +31,13 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid>
 
-        <Button  Margin="3" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick">
-            <Button.Content>
-                <!--<ControlTemplate>-->
+
+    <Grid>
+        <Grid Visibility="{Binding CanDelete, Converter={StaticResource InvBoolToVis}}">
+            <Button  Grid.Column="0" Margin="3" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick">
+                <Button.Content>
+                    <!--<ControlTemplate>-->
                     <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
                         <TextBlock Text="{Binding ButtonName}" Foreground="White" 
                                    HorizontalAlignment="Center"
@@ -44,9 +46,35 @@
                                    
                                    ></TextBlock>
                     </Border>
-                <!--</ControlTemplate>-->
-            </Button.Content>
-            
-        </Button>
+                    <!--</ControlTemplate>-->
+                </Button.Content>
+            </Button>
+        </Grid>
+
+
+        <DockPanel  Visibility="{Binding CanDelete, Converter={StaticResource BoolToVis}}">
+            <Button  Margin="0" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick"  Width="85">
+                <Button.Content>
+                    <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
+                        <TextBlock Text="{Binding ButtonName}" Foreground="White" 
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                    ></TextBlock>
+                    </Border>
+                </Button.Content>
+            </Button>
+
+            <Button HorizontalAlignment="Left"
+                Height="30" Width="25" Margin="0" ToolTip="{Binding DeleteText}"
+                Click="OnDelete"
+                Style="{StaticResource TransparentStyle}">
+                <Button.Content>
+                     <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
+                         <Image Source="/DAndRElectronics;component/Images/cancel_16.png" Height="25" Width="25"/>
+                     </Border>
+                </Button.Content>
+            </Button>
+        </DockPanel>
+
     </Grid>
 </UserControl>

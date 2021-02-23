@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:DAndRElectronics"
         xmlns:view="clr-namespace:DAndRElectronics.View"
         mc:Ignorable="d"
-        Title="DAndRElectronics" Height="450" Width="800">
+
+        Title="DAndRElectronics" Height="450" Width="450">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="34" />

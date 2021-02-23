@@ -79,6 +79,15 @@ namespace DAndRElectronics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event.
+        /// </summary>
+        public static string EventLabel {
+            get {
+                return ResourceManager.GetString("EventLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can events.
         /// </summary>
         public static string EventsTabHeader {
@@ -169,11 +178,56 @@ namespace DAndRElectronics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to G value.
+        /// </summary>
+        public static string SensorLabel {
+            get {
+                return ResourceManager.GetString("SensorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to G sensor.
+        /// </summary>
+        public static string SensorTabHeader {
+            get {
+                return ResourceManager.GetString("SensorTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slider.
         /// </summary>
         public static string SlideresTabHeader {
             get {
                 return ResourceManager.GetString("SlideresTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature.
+        /// </summary>
+        public static string TemperatureLabel {
+            get {
+                return ResourceManager.GetString("TemperatureLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temperature.
+        /// </summary>
+        public static string TemperatureTabHeader {
+            get {
+                return ResourceManager.GetString("TemperatureTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        public static string TimerLabel {
+            get {
+                return ResourceManager.GetString("TimerLabel", resourceCulture);
             }
         }
         
@@ -187,11 +241,29 @@ namespace DAndRElectronics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tone.
+        /// </summary>
+        public static string ToneLabel {
+            get {
+                return ResourceManager.GetString("ToneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string TypeLabel {
             get {
                 return ResourceManager.GetString("TypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voltage.
+        /// </summary>
+        public static string VoltageLabel {
+            get {
+                return ResourceManager.GetString("VoltageLabel", resourceCulture);
             }
         }
     }

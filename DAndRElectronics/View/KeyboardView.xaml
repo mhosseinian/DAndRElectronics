@@ -92,8 +92,52 @@
         </TabItem>
 
 
-        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.EventsTabHeader}">
-            <Grid x:Name="GridEvents">
+            <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.EventsTabHeader}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="GridEvents" Grid.Column="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="190"></ColumnDefinition>
+                            <ColumnDefinition Width="190"></ColumnDefinition>
+                            <ColumnDefinition Width="190"></ColumnDefinition>
+                            <ColumnDefinition Width="190"></ColumnDefinition>
+                            <ColumnDefinition Width="190"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="50"></RowDefinition>
+                        </Grid.RowDefinitions>
+                    </Grid>
+                    <Button Grid.Column="1" Content="   +   " Command="{Binding AddEventCommand}" Height="25" Width="65" VerticalAlignment="Top"></Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.SensorTabHeader}">
+            <Grid x:Name="GridSensor">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.TemperatureTabHeader}">
+            <Grid x:Name="GridTemperature">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90"></ColumnDefinition>
                     <ColumnDefinition Width="90"></ColumnDefinition>

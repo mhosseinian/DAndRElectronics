@@ -3,12 +3,15 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Images\AppIcon.ico" />
     <None Remove="Images\AppIcon.png" />
+    <None Remove="Images\cancel_16.png" />
+    <None Remove="Images\cancel_32.png" />
     <None Remove="Images\CompanyLogo.png" />
     <None Remove="Images\watermelon.ico" />
   </ItemGroup>
@@ -22,7 +25,8 @@
 
   <ItemGroup>
     <Resource Include="Images\AppIcon.ico" />
-    <Resource Include="Images\watermelon.ico" />
+    <Resource Include="Images\cancel_16.png" />
+    <Resource Include="Images\cancel_32.png" />
   </ItemGroup>
 
   <ItemGroup>

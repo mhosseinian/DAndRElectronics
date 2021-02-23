@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using DAndRElectronics.ButtonViewModels;
+using DAndRElectronics.Enums;
 using DAndRElectronics.Services;
 
 namespace DAndRElectronics.View
@@ -27,9 +20,17 @@ namespace DAndRElectronics.View
             this.DataContextChanged +=OnDataContextChanged;
         }
 
-        private void OnStateChanged(StateChangedTypes obj)
+        private void OnStateChanged(StateChangedTypes stateType)
         {
-            PopulateGrids();
+            if (stateType == StateChangedTypes.ProjectOpened)
+            {
+                PopulateGrids();
+            }
+            else if (stateType == StateChangedTypes.EventButtonAdded)
+            {
+                var vm = DataContext as KeyboardViewModel;
+                SetupGrid(GridEvents, vm.EventButtons);
+            }
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -39,12 +40,6 @@ namespace DAndRElectronics.View
 
         private void PopulateGrids()
         {
-            GridKeys.Children.Clear();
-            GridInputs.Children.Clear();
-            GridEvents.Children.Clear();
-            GridSlide.Children.Clear();
-            GridAnalog.Children.Clear();
-            GridTimer.Children.Clear();
             var vm = DataContext as KeyboardViewModel;
             
             SetupGrid(GridKeys, vm.KeyButtons);
@@ -53,10 +48,17 @@ namespace DAndRElectronics.View
             SetupGrid(GridSlide, vm.SlideButtons);
             SetupGrid(GridAnalog, vm.AnalogButtons);
             SetupGrid(GridTimer, vm.TimerButtons);
+            SetupGrid(GridSensor, vm.SensorButtons);
+            SetupGrid(GridTemperature, vm.TemperatureButtons);
         }
 
         private void SetupGrid(Grid grid, IEnumerable<ButtonViewModel> buttons)
         {
+            if (buttons == null)
+            {
+                return;
+            }
+            grid.Children.Clear();
             foreach (var buttonVm in buttons)
             {
                 var buttonView = new CustomButton { DataContext = buttonVm };
@@ -65,5 +67,7 @@ namespace DAndRElectronics.View
                 Grid.SetRow(buttonView, buttonVm.Row);
             }
         }
+
+       
     }
 }

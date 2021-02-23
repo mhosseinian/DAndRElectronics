@@ -7,7 +7,6 @@ namespace DAndRElectronics.Helpers
 {
     public class EditorService: IEditorService
     {
-        private bool _isLoaded;
         private HelperWindow _helperWindow;
 
         private HelperWindow EditorWindow => _helperWindow;
@@ -16,8 +15,7 @@ namespace DAndRElectronics.Helpers
         public void SetContent(object uiElement, string title)
         {
             CreateHelperWindow();
-            var view = uiElement as FrameworkElement;
-            if (view == null)
+            if (!(uiElement is FrameworkElement view))
             {
                 throw new ArgumentException("UiElement is null");
             }
@@ -31,20 +29,14 @@ namespace DAndRElectronics.Helpers
 
         public EditorService()
         {
-            CreateHelperWindow();
         }
 
         #endregion
-        private void EditorWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            _isLoaded = true;
-        }
+       
         private void EditorWindowUnLoaded(object sender, RoutedEventArgs e)
         {
-            EditorWindow.Loaded -= EditorWindowLoaded;
             EditorWindow.Unloaded -= EditorWindowUnLoaded;
             _helperWindow = null;
-            _isLoaded = false;
         }
 
         private void CreateHelperWindow()
@@ -54,9 +46,12 @@ namespace DAndRElectronics.Helpers
                 return;
             }
 
-            //_helperWindow = new HelperWindow { SizeToContent = SizeToContent.WidthAndHeight, Height = 640, Width = 1000 };
-            _helperWindow = new HelperWindow {  Height = 640, Width = 1000 };
-            _helperWindow.Loaded += EditorWindowLoaded;
+            var owner = Application.Current.MainWindow;
+            _helperWindow = new HelperWindow {  Height = 640, Width = 350 };
+            _helperWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            _helperWindow.Left = owner.Left + owner.Width;
+            _helperWindow.Top = owner.Top;
+            _helperWindow.Owner = owner;
             _helperWindow.Unloaded += EditorWindowUnLoaded;
         }
     }

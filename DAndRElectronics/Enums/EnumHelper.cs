@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using DAndRElectronics.Converters;
 
-namespace DAndRElectronics.Helpers
+namespace DAndRElectronics.Enums
 {
     public class ValueDescription
     {

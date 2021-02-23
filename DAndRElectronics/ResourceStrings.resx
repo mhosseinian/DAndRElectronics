@@ -120,6 +120,12 @@
   <data name="EventsTabHeader" xml:space="preserve">
     <value>Can events</value>
   </data>
+  <data name="SensorTabHeader" xml:space="preserve">
+    <value>G sensor</value>
+  </data>
+  <data name="TemperatureTabHeader" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
   <data name="InputsTabHeader" xml:space="preserve">
     <value>Inputs</value>
   </data>
@@ -160,6 +166,24 @@
     <value>Slider</value>
   </data>
   <data name="TimerTabHeader" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="ToneLabel" xml:space="preserve">
+    <value>Tone</value>
+  </data>
+  <data name="VoltageLabel" xml:space="preserve">
+    <value>Voltage</value>
+  </data>
+  <data name="SensorLabel" xml:space="preserve">
+    <value>G value</value>
+  </data>
+  <data name="TemperatureLabel" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="EventLabel" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="TimerLabel" xml:space="preserve">
     <value>Timer</value>
   </data>
 </root>

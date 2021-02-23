@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
-using DAndRElectronics.View;
+using DAndRElectronics.Enums;
 
 namespace DAndRElectronics.Converters
 {
