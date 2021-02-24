@@ -20,6 +20,10 @@ namespace DAndRElectronics.Helpers
         public const string TemperatureBaseName = "TEMPERATURE";
         public const string SensorBaseName = "G SENSOR";
 
+        public const string ON = "On";
+        public const string OFF = "Off";
+        public const string NOTUSED = "Not used";
+
         public static List<string> PossibleTypes { get; } = new List<string>
         {
             MOMENTARY,
@@ -33,6 +37,20 @@ namespace DAndRElectronics.Helpers
             MOMENTARY,
             DELAY,
             NOTUSE,
+        };
+
+        public static Dictionary<string, int> OnOffNotUseMappings = new Dictionary<string, int>
+        {
+            {OFF, 0},
+            {ON, 1},
+            {NOTUSED, 2},
+        };
+
+        public static Dictionary<int, string> OnOffNotUseMappingsReversed = new Dictionary<int, string>
+        {
+            {0, OFF},
+            {1, ON},
+            {2, NOTUSED},
         };
 
 
@@ -64,5 +82,7 @@ namespace DAndRElectronics.Helpers
         public const string JsonG = "g";
         public const string JsonSequence = "sequence";
         public const string JsonNumSequence = "nSequences";
+        public const string JsonIgnition = "ignition";
+        public const string JsonSync = "sync";
     }
 }

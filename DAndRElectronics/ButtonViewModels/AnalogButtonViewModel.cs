@@ -16,7 +16,6 @@ namespace DAndRElectronics.ButtonViewModels
             NameVisible = false;
             VoltageVisible = true;
             PatternVisible = false;
-            PercentsVisible = false;
         }
 
         public override bool EquipmentTypeVisible => false;

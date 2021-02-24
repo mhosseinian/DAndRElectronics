@@ -19,5 +19,7 @@ namespace DAndRElectronics.ButtonViewModels
         }
 
         public override bool EquipmentTypeVisible => false;
+
+        public override string DisplayButtonName => ButtonName.EndsWith("17") ? "Horn ring" : base.DisplayButtonName;
     }
 }

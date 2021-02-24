@@ -17,7 +17,6 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <FrameworkElement x:Name="percentVisibility" Visibility="{Binding PercentsVisible, Converter={StaticResource BoolToVis}}"></FrameworkElement>
         <helpers:CustomDataGrid AutoGenerateColumns="False" Height="Auto" 
                   RowHeight="30"
                   SelectionUnit="FullRow"
@@ -42,7 +41,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="% power" Width="*" Visibility="{Binding Visibility, Source={x:Reference percentVisibility}}">
+                <DataGridTemplateColumn Header="% power" Width="*">
                                        
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -56,9 +55,9 @@
                 </DataGridTemplateColumn>
 
 
-                <DataGridTextColumn Header="Key Name" Binding="{Binding ButtonName}" Width="Auto" Visibility="{Binding Visibility, Source={x:Reference percentVisibility}}"/>
+                <DataGridTextColumn Header="Key Name" Binding="{Binding ButtonName}" Width="Auto" />
 
-                <DataGridTemplateColumn Header="On/Off" Width="*" Visibility="{Binding Visibility, Source={x:Reference percentVisibility}}">
+                <DataGridTemplateColumn Header="On/Off" Width="*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox ItemsSource ="{Binding PossibleKeyValues}" 
@@ -96,6 +95,9 @@
 
             <Label Grid.Row="3" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.ToneLabel}"></Label>
             <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding PossibleTones}" SelectedItem="{Binding Tone}"></ComboBox>
+
+            <Label Grid.Row="4" Grid.Column="0" Content="{x:Static dAndRElectronics:ResourceStrings.IgnitionLabel}"></Label>
+            <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding PossibleOnOffNotUsedValues}" SelectedItem="{Binding Ignition}"></ComboBox>
         </Grid>
     </Grid>
 </UserControl>

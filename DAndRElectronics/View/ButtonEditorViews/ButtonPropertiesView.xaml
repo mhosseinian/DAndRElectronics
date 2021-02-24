@@ -88,8 +88,15 @@
                 </Rectangle>
             </Button.Content>
         </Button>
-        
-        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}" Visibility="{Binding PatternVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
+
+        <DockPanel  Grid.Row="6" Grid.Column="1"   Visibility="{Binding PatternVisible, Converter={StaticResource BoolToVis}}">
+            <ComboBox ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}"></ComboBox>
+            <CheckBox Margin="6"
+                Content="{x:Static dAndRElectronics:ResourceStrings.SyncLabel}" 
+                IsChecked="{Binding Sync}"
+                Visibility="{Binding OutsEnabled, Converter={StaticResource InvBoolToVis}}"
+                ></CheckBox>
+        </DockPanel>
         <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleVoltages}" SelectedItem="{Binding Voltage}" Visibility="{Binding VoltageVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
         <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleEvents}" SelectedItem="{Binding EventNr}" Visibility="{Binding EventVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
 

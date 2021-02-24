@@ -49,7 +49,7 @@ namespace DAndRElectronics.View
             OpenCommand = new RelayCommand(OnOpen);
             AddEventCommand = new RelayCommand(OnAddEvent);
             PopulateButtons(_keyButtons, 21, Constants.KeyBaseName);
-            PopulateButtons(_inputButtons, 16, Constants.InputBaseName);
+            PopulateButtons(_inputButtons, 17, Constants.InputBaseName);
             //PopulateButtons(_eventButtons, 5, Constants.EventBaseName);
             PopulateButtons(_slideButtons, 3, Constants.SlideBaseName);
             PopulateButtons(_analogButtons, 2, Constants.AnalogBaseName);

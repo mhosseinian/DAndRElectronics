@@ -47,7 +47,7 @@ namespace DAndRElectronics.Helpers
             }
 
             var owner = Application.Current.MainWindow;
-            _helperWindow = new HelperWindow {  Height = 640, Width = 350 };
+            _helperWindow = new HelperWindow {  Height = 640, Width = 400 };
             _helperWindow.WindowStartupLocation = WindowStartupLocation.Manual;
             _helperWindow.Left = owner.Left + owner.Width;
             _helperWindow.Top = owner.Top;

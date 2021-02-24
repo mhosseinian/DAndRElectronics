@@ -8,25 +8,10 @@ namespace DAndRElectronics.View
 {
     public class OutViewModel : ViewModel
     {
-        private const string ON = "On";
-        private const string OFF = "Off";
-        private const string NOTUSED = "Not used";
-
-        private Dictionary<string,int> _valueMappings = new Dictionary<string, int>
-        {
-            {OFF, 0},
-            {ON, 1},
-            {NOTUSED, 2},
-        };
-        private Dictionary<int,string> _valueMappingsReversed = new Dictionary<int, string>
-        {
-            {0,OFF},
-            {1,ON},
-            {2,NOTUSED},
-        };
+        
         private readonly int _index;
         private readonly IOutputs _outputs;
-        
+
         #region Contructors
 
         public OutViewModel(int index, IOutputs outputs)
@@ -48,10 +33,10 @@ namespace DAndRElectronics.View
         }
         public string KeyOn
         {
-            get => _valueMappingsReversed[_outputs.OutputKeys[_index]] ;
+            get => Constants.OnOffNotUseMappingsReversed[_outputs.OutputKeys[_index]] ;
             set
             {
-                _outputs.OutputKeys[_index] = _valueMappings[value];
+                _outputs.OutputKeys[_index] = Constants.OnOffNotUseMappings[value];
                 OnPropertyChanged();
             }
         }
@@ -67,7 +52,7 @@ namespace DAndRElectronics.View
         }
 
         public IEnumerable<int> PossibleValues => Constants.RangedEnumeration(0, 100, 5);
-        public IEnumerable<string> PossibleKeyValues => _valueMappings.Keys;
+        public IEnumerable<string> PossibleKeyValues => Constants.OnOffNotUseMappings.Keys;
 
         public string Name => $"Out{_index + 1}";
 

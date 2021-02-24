@@ -43,7 +43,7 @@
             </TabItem>
 
 
-            <TabItem >
+            <TabItem Visibility="{Binding OutTabVisible, Converter={StaticResource BoolToVis}}">
                 <TabItem.Header>
                     <TextBlock Text="{x:Static dAndRElectronics:ResourceStrings.OutsTabHeader}" FontSize="16"/>
                 </TabItem.Header>

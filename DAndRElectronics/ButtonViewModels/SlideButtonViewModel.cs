@@ -10,7 +10,6 @@ namespace DAndRElectronics.ButtonViewModels
         public SlideButtonViewModel(string buttonName, int col, int row) : base(buttonName, col, row)
         {
             CheckButtonName(buttonName, Constants.SlideBaseName);
-            PercentsVisible = false;
         }
 
         public override ButtonViewModel Deserialize(string content)

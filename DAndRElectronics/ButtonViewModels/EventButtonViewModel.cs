@@ -19,7 +19,6 @@ namespace DAndRElectronics.ButtonViewModels
             TemperatureVisible = false;
             EventVisible = true;
             CanDelete = true;
-            PercentsVisible = false;
         }
 
         public override ButtonViewModel Deserialize(string content)

@@ -159,6 +159,9 @@
   <data name="PatternLabel" xml:space="preserve">
     <value>Pattern</value>
   </data>
+  <data name="SyncLabel" xml:space="preserve">
+    <value>Sync</value>
+  </data>
   <data name="AnalogTabHeader" xml:space="preserve">
     <value>Analog</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="ToneLabel" xml:space="preserve">
     <value>Tone</value>
+  </data>
+  <data name="IgnitionLabel" xml:space="preserve">
+    <value>Ignition</value>
   </data>
   <data name="VoltageLabel" xml:space="preserve">
     <value>Voltage</value>

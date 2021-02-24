@@ -16,7 +16,7 @@ namespace DAndRElectronics.ButtonViewModels
             PatternVisible = false;
             PriorityVisible = false;
             SensorVisible = true;
-            PercentsVisible = false;
+            OutTabVisible = false;
         }
 
         public override bool EquipmentTypeVisible => false;

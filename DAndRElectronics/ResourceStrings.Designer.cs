@@ -97,6 +97,15 @@ namespace DAndRElectronics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignition.
+        /// </summary>
+        public static string IgnitionLabel {
+            get {
+                return ResourceManager.GetString("IgnitionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inputs.
         /// </summary>
         public static string InputsTabHeader {
@@ -201,6 +210,15 @@ namespace DAndRElectronics {
         public static string SlideresTabHeader {
             get {
                 return ResourceManager.GetString("SlideresTabHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sync.
+        /// </summary>
+        public static string SyncLabel {
+            get {
+                return ResourceManager.GetString("SyncLabel", resourceCulture);
             }
         }
         

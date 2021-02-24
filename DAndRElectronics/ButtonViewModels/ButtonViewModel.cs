@@ -41,9 +41,11 @@ namespace DAndRElectronics.ButtonViewModels
 
         [JsonProperty(PropertyName = Constants.JsonOuts)] private bool[] _outs = new bool[MaxOuts];
         [JsonProperty(PropertyName = Constants.JsonOutsPercent)] private int[] _outPercents = new int[MaxOuts];
-        [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = new int[MaxOuts];
+        [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = Enumerable.Repeat(2, MaxOuts).ToArray();//Not use
         [JsonProperty(PropertyName = Constants.JsonNumSequence)] private int _numSequences;
         [JsonProperty(PropertyName = Constants.JsonSequence)] public ObservableCollection<ButtonViewModel> SubButtons { get; set; } = new ObservableCollection<ButtonViewModel>();
+        [JsonProperty(PropertyName = Constants.JsonSync)] private bool _sync;
+        [JsonProperty(PropertyName = Constants.JsonIgnition)] private int _ignition = 2;//Not used
 
 
         #endregion
@@ -81,9 +83,11 @@ namespace DAndRElectronics.ButtonViewModels
                 if (!TemperatureVisible) yield return Constants.JsonTemperature;
                 if (!EventVisible) yield return Constants.JsonEvent;
                 if (!SensorVisible) yield return Constants.JsonG;
-                if (!PercentsVisible) yield return Constants.JsonOutsPercent;
-                if (!PercentsVisible) yield return Constants.JsonOutsKeys;
+                if (!OutTabVisible) yield return Constants.JsonOutsPercent;
+                if (!OutTabVisible) yield return Constants.JsonOutsKeys;
+                if (!OutTabVisible) yield return Constants.JsonOuts;
                 if (!PriorityVisible) yield return Constants.JsonPriority;
+                if (!SyncVisible) yield return Constants.JsonSync;
                 if (SubButtons.Count <= 1) yield return Constants.JsonSequence;
             }
         }
@@ -149,8 +153,9 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public bool TemperatureVisible { get; set; } = false;
         [JsonIgnore] public bool EventVisible { get; set; } = false;
         [JsonIgnore] public bool SensorVisible { get; set; } = false;
-        [JsonIgnore] public bool PercentsVisible { get; set; } = true;
+        [JsonIgnore] public bool OutTabVisible { get; set; } = true;
         [JsonIgnore] public bool PriorityVisible { get; set; } = true;
+        [JsonIgnore] public bool SyncVisible { get; set; } = true;
         [JsonIgnore] public bool CanDelete { get; set; } = false;
 
         public bool IsSubKey { get; set; }
@@ -163,6 +168,21 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore]public int Voltage { get => _voltage; set => _voltage = value; }
         [JsonIgnore]public int Timer { get => _timer; set => _timer = value; }
         [JsonIgnore]public int EventNr { get => _eventNr; set => _eventNr = value; }
+
+        [JsonIgnore]
+        public string Ignition
+        {
+            get => Constants.OnOffNotUseMappingsReversed[_ignition];
+            set => _ignition = Constants.OnOffNotUseMappings[value];
+        }
+
+        [JsonIgnore]
+        public bool Sync
+        {
+            get => _sync;
+            set => _sync = value;
+        }
+
 
         [JsonIgnore]
         public float GValue
@@ -233,6 +253,7 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public ICommand TemperatureSignCommand { get; }
 
         [JsonIgnore] public string ButtonName { get => _buttonName; set => _buttonName = value; }
+        [JsonIgnore] public virtual string DisplayButtonName => _buttonName;
         [JsonIgnore] public string VoltageSign => _voltageGreaterThan ? " > " :  " < ";
         [JsonIgnore] public string TemperatureSign => _tempCentigrade ? " C " :  " F ";
 
@@ -329,7 +350,8 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public static IEnumerable<int> PossibleVoltages => Enumerable.Range(0, 32);
         [JsonIgnore] public static IEnumerable<int> PossibleEvents => Enumerable.Range(1, 250);
         [JsonIgnore] public static IEnumerable<int> PossibleSequences => Enumerable.Range(0, 10);
-        [JsonIgnore] public static IEnumerable<int> PossibleTimerValues => Constants.RangedEnumeration(1, 240, 5);
+        [JsonIgnore] public static IEnumerable<int> PossibleTimerValues => Constants.RangedEnumeration(5, 240, 5);
+        public IEnumerable<string> PossibleOnOffNotUsedValues => Constants.OnOffNotUseMappings.Keys;
 
         #endregion
 

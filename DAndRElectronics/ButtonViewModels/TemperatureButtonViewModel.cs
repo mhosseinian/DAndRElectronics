@@ -16,7 +16,6 @@ namespace DAndRElectronics.ButtonViewModels
             TimerVisible = false;
             PriorityVisible = false;
             TemperatureVisible = true;
-            PercentsVisible = false;
         }
 
         public override ButtonViewModel Deserialize(string content)

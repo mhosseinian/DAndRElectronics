@@ -17,7 +17,8 @@ namespace DAndRElectronics.ButtonViewModels
             VoltageVisible = false;
             TimerVisible = true;
             TemperatureVisible = false;
-            PercentsVisible = false;
+            SyncVisible = false;
+            OutTabVisible = false;
         }
 
         public override ButtonViewModel Deserialize(string content)
