@@ -42,6 +42,15 @@ namespace DAndRElectronics.ButtonViewModels
             return _mappings[key](buttonName, col, row);
         }
 
+        public ButtonViewModel CreateViewModelFromString(string content)
+        {
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(content);
+            var buttonName = map[Constants.JsonButtonName].ToString();
+            var key = _mappingsForJson.Keys.First(k => buttonName.StartsWith(k));
+            var vm = _mappingsForJson[key](content);
+            return vm;
+        }
+
         public IEnumerable<ButtonViewModel> ReadFile(string fileName)
         {
             var content = File.ReadAllText(fileName);
@@ -49,45 +58,8 @@ namespace DAndRElectronics.ButtonViewModels
             foreach (var jToken in jsonArray)
             {
                 var str = jToken.ToString();
-                var vm = ReadButtonViewModel(jToken.ToString(), out var map);
-                if (vm == null || map == null)
-                {
-                    Console.WriteLine("Read failed");
-                    yield break;
-                }
-                //Find out if there are any subKeys available
-                if (map.ContainsKey(Constants.JsonSequence))
-                {
-                    vm.SubButtons.Clear();
-                    vm.SubButtons.Add(vm);
-                    if (map[Constants.JsonSequence] is JArray seqsArray)
-                    {
-                        foreach (var jTokenElement in seqsArray)
-                        {
-                            var stringToken = jTokenElement.ToString();
-                            var subVm = ReadButtonViewModel(stringToken, out _);
-                            vm.SubButtons.Add(subVm);
-                        }
-                    }
-                }
+                var vm = ButtonViewSerializer.Deserialize(str);
                 yield return vm;
-            }
-        }
-
-        private ButtonViewModel ReadButtonViewModel(string str, out Dictionary<string, object> map)
-        {
-            try
-            {
-                map = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
-                var buttonName = map[Constants.JsonButtonName].ToString();
-                var key = _mappingsForJson.Keys.First(k => buttonName.StartsWith(k));
-                var vm = _mappingsForJson[key](str);
-                return vm;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
             }
         }
     }

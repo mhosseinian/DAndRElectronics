@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using DAndRElectronics.Helpers;
+using DAndRElectronics.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DAndRElectronics.ButtonViewModels
 {
@@ -28,12 +31,40 @@ namespace DAndRElectronics.ButtonViewModels
 
             return json;
         }
+
+        public static ButtonViewModel Deserialize(string content)
+        {
+            var service = ServiceDirectory.Instance.GetService<IButtonViewModelFactoryService>();
+            var vm = service.CreateViewModelFromString(content);
+            //Handle the subButtons
+            vm.SubButtons.Clear();
+            vm.SubButtons.Add(vm);
+            var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(content);
+            if (!map.ContainsKey(Constants.JsonSequence))
+            {
+                return vm;
+            }
+
+            if (!(map[Constants.JsonSequence] is JArray seqsArray))
+            {
+                return vm;
+            }
+
+            foreach (var jTokenElement in seqsArray)
+            {
+                var stringToken = jTokenElement.ToString();
+                var subVm = service.CreateViewModelFromString(stringToken);
+                vm.SubButtons.Add(subVm);
+            }
+            return vm;
+        }
     }
 
     public class SubButtonsConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
+            //Only if it is IsSubky we need to serialize it
             var objs = ((IEnumerable<ButtonViewModel>) value).Where(c => c.IsSubKey).ToArray();
             serializer.Serialize(writer, objs);
         }
