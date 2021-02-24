@@ -1,4 +1,8 @@
-﻿using DAndRElectronics.Helpers;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using DAndRElectronics.Helpers;
 using Newtonsoft.Json;
 
 namespace DAndRElectronics.ButtonViewModels
@@ -16,6 +20,7 @@ namespace DAndRElectronics.ButtonViewModels
             }
 
             var serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new SubButtonsConverter());
             serializerSettings.ContractResolver = jsonResolver;
             serializerSettings.Formatting = Formatting.Indented;
 
@@ -24,4 +29,34 @@ namespace DAndRElectronics.ButtonViewModels
             return json;
         }
     }
+
+    public class SubButtonsConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        {
+            var objs = ((IEnumerable<ButtonViewModel>) value).Where(c => c.IsSubKey).ToArray();
+            serializer.Serialize(writer, objs);
+        }
+
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            if (objectType.Name.Contains("ObservableCollection"))
+            {
+                return true;
+            }
+            var ret =  (objectType == typeof(ObservableCollection<>));
+            if (ret)
+            {
+
+            }
+            return ret;
+        }
+    }
+
+    
 }

@@ -35,13 +35,13 @@
 
     <Grid>
         <Grid Visibility="{Binding CanDelete, Converter={StaticResource InvBoolToVis}}">
-            <Button  Grid.Column="0" Margin="3" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick">
+            <Button  Grid.Column="0" Margin="3" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick" Height="25" VerticalContentAlignment="Center">
                 <Button.Content>
                     <!--<ControlTemplate>-->
                     <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
                         <TextBlock Text="{Binding ButtonName}" Foreground="White" 
                                    HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
+                                   VerticalAlignment="Top"
                                    Margin="0,5,0,0"
                                    
                                    ></TextBlock>
@@ -53,7 +53,7 @@
 
 
         <DockPanel  Visibility="{Binding CanDelete, Converter={StaticResource BoolToVis}}">
-            <Button  Margin="0" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick"  Width="85">
+            <Button  Margin="0" Style="{StaticResource TransparentStyle}" Click="ButtonBase_OnClick"  Width="85" Height="25" VerticalContentAlignment="Center">
                 <Button.Content>
                     <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
                         <TextBlock Text="{Binding ButtonName}" Foreground="White" 
@@ -65,7 +65,7 @@
             </Button>
 
             <Button HorizontalAlignment="Left"
-                Height="30" Width="25" Margin="0" ToolTip="{Binding DeleteText}"
+                Height="25" Width="25" Margin="0,0,5,0" ToolTip="{Binding DeleteText}"
                 Click="OnDelete"
                 Style="{StaticResource TransparentStyle}">
                 <Button.Content>

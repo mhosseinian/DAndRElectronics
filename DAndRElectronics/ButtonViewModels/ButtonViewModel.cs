@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
 using DAndRElectronics.Enums;
 using DAndRElectronics.Helpers;
 using DAndRElectronics.Services;
@@ -41,6 +42,9 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonProperty(PropertyName = Constants.JsonOuts)] private bool[] _outs = new bool[MaxOuts];
         [JsonProperty(PropertyName = Constants.JsonOutsPercent)] private int[] _outPercents = new int[MaxOuts];
         [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = new int[MaxOuts];
+        [JsonProperty(PropertyName = Constants.JsonNumSequence)] private int _numSequences;
+        [JsonProperty(PropertyName = Constants.JsonSequence)] public ObservableCollection<ButtonViewModel> SubButtons { get; set; } = new ObservableCollection<ButtonViewModel>();
+
 
         #endregion
 
@@ -80,12 +84,13 @@ namespace DAndRElectronics.ButtonViewModels
                 if (!PercentsVisible) yield return Constants.JsonOutsPercent;
                 if (!PercentsVisible) yield return Constants.JsonOutsKeys;
                 if (!PriorityVisible) yield return Constants.JsonPriority;
+                if (SubButtons.Count <= 1) yield return Constants.JsonSequence;
             }
         }
 
         #region Public properties
 
-        [JsonIgnore] private int _numSequences;
+        
 
         [JsonIgnore]
         public int NumSequences
@@ -221,6 +226,8 @@ namespace DAndRElectronics.ButtonViewModels
 
 
         
+        [JsonIgnore] public ICommand OffColorPickerCommand { get; }
+        [JsonIgnore] public ICommand OnColorPickerCommand { get; }
         [JsonIgnore] public ICommand AllOnOffCommand { get; }
         [JsonIgnore] public ICommand VoltageSignCommand { get; }
         [JsonIgnore] public ICommand TemperatureSignCommand { get; }
@@ -233,8 +240,54 @@ namespace DAndRElectronics.ButtonViewModels
 
         [JsonIgnore] public int Column { get; set; }
         [JsonIgnore] public int Row { get; set; }
-        [JsonIgnore]public ObservableCollection<ButtonViewModel> SubButtons { get; set; } = new ObservableCollection<ButtonViewModel>();
 
+        [JsonIgnore] private Color _offColor =Colors.Transparent;
+        [JsonIgnore]public Color OffColor
+        {
+            get
+            {
+                if(_offColor == Colors.Transparent)
+                {
+                    _offColor = IntToColor(_offBackgroundColor);
+                }
+
+                return _offColor;
+            }
+            set
+            {
+                _offColor = value;
+                _offBackgroundColor = _offColor.R << 16 | _offColor.G << 8 | _offColor.B;
+            }
+        }
+
+        private static Color IntToColor(int colorValue)
+        {
+            var blueValue = colorValue / 65536;
+            var greenValue = (colorValue - blueValue * 65536) / 256;
+            var redValue = colorValue - blueValue * 65536 - greenValue * 256;
+            var color = Color.FromRgb(Convert.ToByte(redValue), Convert.ToByte(greenValue), Convert.ToByte(blueValue));
+            return color;
+        }
+
+        [JsonIgnore] private Color _onColor = Colors.Transparent;
+        [JsonIgnore]
+        public Color OnColor
+        {
+            get
+            {
+                if (_onColor == Colors.Transparent)
+                {
+                    _onColor = IntToColor(_onBackgroundColor);
+                }
+
+                return _onColor;
+            }
+            set
+            {
+                _onColor = value;
+                _onBackgroundColor = _onColor.R << 16 | _onColor.G << 8 | _onColor.B;
+            }
+        }
         #endregion
 
         #region Possible dropdown values
@@ -290,6 +343,8 @@ namespace DAndRElectronics.ButtonViewModels
             Row = row;
             
             AllOnOffCommand = new RelayCommand(OnAllOnOrOff, AllOnOffEnabled);
+            OffColorPickerCommand = new RelayCommand(OnOffColor);
+            OnColorPickerCommand = new RelayCommand(OnOnColor);
             VoltageSignCommand = new RelayCommand(OnVoltageSign);
             TemperatureSignCommand = new RelayCommand(OnTemperatureSign);
             PopulateOutViewModels();
@@ -313,6 +368,7 @@ namespace DAndRElectronics.ButtonViewModels
             foreach (var outViewModel in Outs)
             {
                 outViewModel.On = false;
+                outViewModel.Percent = 0;
             }
         }
 
@@ -355,6 +411,7 @@ namespace DAndRElectronics.ButtonViewModels
             for (var i = 0; i < numViewsRequired; i++)
             {
                 var vm = factory.CreateViewModel($"{ButtonName}_{counter++}", 0, 0);
+                vm.SubButtons.Clear();
                 vm.IsSubKey = true;
                 SubButtons.Add(vm);
             }
@@ -367,6 +424,42 @@ namespace DAndRElectronics.ButtonViewModels
         private bool AllOnOffEnabled(object obj)
         {
             return true;
+        }
+
+        
+        private void OnOffColor(object obj)
+        {
+            var color = PickColor();
+            if (color == null)
+            {
+                return;
+            }
+
+            OffColor = color.Value;
+            OnPropertyChanged(nameof(OffColor));
+        }
+        private void OnOnColor(object obj)
+        {
+            var color = PickColor();
+            if (color == null)
+            {
+                return;
+            }
+
+            OnColor = color.Value;
+            OnPropertyChanged(nameof(OnColor));
+        }
+
+        private Color? PickColor()
+        {
+            System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
+            colorDialog.SolidColorOnly = true;
+            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                return Color.FromRgb(colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+            }
+
+            return null;
         }
 
         private void OnAllOnOrOff(object obj)

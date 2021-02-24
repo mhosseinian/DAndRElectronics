@@ -8,5 +8,6 @@
     <local:BoolToVisibilityConverter x:Key="BoolToVis" Reverse="False" />
     <local:BoolToVisibilityConverter x:Key="InvBoolToVis" Reverse="True"/>
     <local:BoolToVisibilityConverter x:Key="InvBoolToVisHidden" Reverse="True" Hide="True"/>
+    <local:ColorToSolidColorBrushValueConverter x:Key="ColorToBrush" />
 
 </ResourceDictionary>

@@ -67,37 +67,28 @@
                   Visibility="{Binding PriorityVisible, Converter={StaticResource BoolToVis}}"
                   ></ComboBox>
 
-        <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Path=OffBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
-                          SelectedValuePath="Value"
-                          Visibility="{Binding OffColorVisible, Converter={StaticResource BoolToVis}}"
-                          SelectedValue="{Binding Path=OffBackgroundColor}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" >
-                        <Rectangle x:Name="rect" Fill="{Binding Path=Color}" Height="20" Width="100"
-                                           StrokeThickness="1" RadiusX="0" RadiusY="0"/>
-                    </StackPanel>
 
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
 
-        </ComboBox>
-        <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Path=OnBackgroundColor, Converter={converters:EnumToCollectionConverter}, Mode=OneTime}"
-                          SelectedValuePath="Value"
-                          Visibility="{Binding OnColorVisible, Converter={StaticResource BoolToVis}}"
-                          SelectedValue="{Binding Path=OnBackgroundColor}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" >
-                        <Rectangle x:Name="rect" Fill="{Binding Path=Color}" Height="20" Width="100"
-                                           StrokeThickness="1" RadiusX="0" RadiusY="0"/>
-                    </StackPanel>
+        <Button Grid.Row="4" Grid.Column="1" Command="{Binding OffColorPickerCommand}"  Visibility="{Binding OffColorVisible, Converter={StaticResource BoolToVis}}">
+            <Button.Content>
+                <Rectangle Height="20" Width="100">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding OffColor}" />
+                </Rectangle.Fill>
+                </Rectangle>
+            </Button.Content>
+        </Button>
 
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-
-        </ComboBox>
-
+        <Button Grid.Row="5" Grid.Column="1" Command="{Binding OnColorPickerCommand}" Visibility="{Binding OnColorVisible, Converter={StaticResource BoolToVis}}">
+            <Button.Content>
+                <Rectangle Height="20" Width="100">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{Binding OnColor}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button.Content>
+        </Button>
+        
         <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}" Visibility="{Binding PatternVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
         <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleVoltages}" SelectedItem="{Binding Voltage}" Visibility="{Binding VoltageVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
         <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleEvents}" SelectedItem="{Binding EventNr}" Visibility="{Binding EventVisible, Converter={StaticResource BoolToVis}}"></ComboBox>

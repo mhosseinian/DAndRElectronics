@@ -49,11 +49,45 @@ namespace DAndRElectronics.ButtonViewModels
             foreach (var jToken in jsonArray)
             {
                 var str = jToken.ToString();
-                var map = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
+                var vm = ReadButtonViewModel(jToken.ToString(), out var map);
+                if (vm == null || map == null)
+                {
+                    Console.WriteLine("Read failed");
+                    yield break;
+                }
+                //Find out if there are any subKeys available
+                if (map.ContainsKey(Constants.JsonSequence))
+                {
+                    vm.SubButtons.Clear();
+                    vm.SubButtons.Add(vm);
+                    if (map[Constants.JsonSequence] is JArray seqsArray)
+                    {
+                        foreach (var jTokenElement in seqsArray)
+                        {
+                            var stringToken = jTokenElement.ToString();
+                            var subVm = ReadButtonViewModel(stringToken, out _);
+                            vm.SubButtons.Add(subVm);
+                        }
+                    }
+                }
+                yield return vm;
+            }
+        }
+
+        private ButtonViewModel ReadButtonViewModel(string str, out Dictionary<string, object> map)
+        {
+            try
+            {
+                map = JsonConvert.DeserializeObject<Dictionary<string, object>>(str);
                 var buttonName = map[Constants.JsonButtonName].ToString();
                 var key = _mappingsForJson.Keys.First(k => buttonName.StartsWith(k));
                 var vm = _mappingsForJson[key](str);
-                yield return vm;
+                return vm;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }

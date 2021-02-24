@@ -100,11 +100,11 @@
                     </Grid.ColumnDefinitions>
                     <Grid x:Name="GridEvents" Grid.Column="0" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="190"></ColumnDefinition>
-                            <ColumnDefinition Width="190"></ColumnDefinition>
-                            <ColumnDefinition Width="190"></ColumnDefinition>
-                            <ColumnDefinition Width="190"></ColumnDefinition>
-                            <ColumnDefinition Width="190"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"></RowDefinition>

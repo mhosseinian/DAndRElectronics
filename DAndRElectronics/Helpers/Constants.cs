@@ -62,5 +62,7 @@ namespace DAndRElectronics.Helpers
         public const string JsonTemperature = "temperature";
         public const string JsonEvent = "event";
         public const string JsonG = "g";
+        public const string JsonSequence = "sequence";
+        public const string JsonNumSequence = "nSequences";
     }
 }

@@ -85,32 +85,14 @@ namespace DAndRElectronics.View
 
         private void OnAddEvent(object obj)
         {
-            //System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
-            //colorDialog.SolidColorOnly = true;
-            //if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-                
-            //}
-
-            //var color = colorDialog.Color;
-            //var rr = color.R << 16 | color.G << 8 | color.B;
-            //var b = rr.GetType();
+           
             var col = 0;
             var row = 0;
-            if (_eventButtons.Count > 0)
-            {
-                var lastBtn = _eventButtons.Last();
-                if (lastBtn.Column >= 4)
-                {
-                    row = lastBtn.Row + 1;
-                }
-                else
-                {
-                    col = lastBtn.Column + 1;
-                }
-            }
+            
             var btnVm = new EventButtonViewModel($"{Constants.EventBaseName}{_eventButtons.Count + 1}", col, row);
             _eventButtons.Add(btnVm);
+            SetRowColumnForButtons(_eventButtons);
+
             OnPropertyChanged(nameof(EventButtons));
             var stateService = ServiceDirectory.Instance.GetService<IStateService>();
             stateService.OnStateChanged(StateChangedTypes.EventButtonAdded);
@@ -150,6 +132,7 @@ namespace DAndRElectronics.View
             SetRowColumnForButtons(_slideButtons);
             SetRowColumnForButtons(_analogButtons);
             SetRowColumnForButtons(_timerButtons);
+            SetRowColumnForButtons(_eventButtons);
 
             stateService.OnStateChanged(StateChangedTypes.ProjectOpened);
 
