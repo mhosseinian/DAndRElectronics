@@ -1,6 +1,4 @@
-﻿using System;
-using DAndRElectronics.Annotations;
-using DAndRElectronics.Helpers;
+﻿using Common.Helpers;
 using Newtonsoft.Json;
 
 namespace DAndRElectronics.ButtonViewModels

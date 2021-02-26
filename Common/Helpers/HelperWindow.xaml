@@ -1,0 +1,28 @@
+﻿<Window x:Class="Common.Helpers.HelperWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Background="{StaticResource BackgroundMediumLightBrush}" >
+
+    
+
+
+    <Border Background="{StaticResource BackgroundMediumLightBrush}" x:Name="MainWindowBorder">
+
+        <Grid x:Name="parentContainer" Background="{StaticResource BackgroundMediumLightBrush}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="*"/>
+            </Grid.RowDefinitions>
+
+
+            <!--App content-->
+            <DockPanel LastChildFill="True" Grid.Row="1" x:Name="AppArea" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></DockPanel>
+
+        </Grid>
+
+    </Border>
+</Window>

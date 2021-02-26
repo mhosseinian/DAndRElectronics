@@ -8,12 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\AppIcon.ico" />
-    <None Remove="Images\AppIcon.png" />
-    <None Remove="Images\cancel_16.png" />
-    <None Remove="Images\cancel_32.png" />
     <None Remove="Images\CompanyLogo.png" />
-    <None Remove="Images\watermelon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,13 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\AppIcon.ico" />
-    <Resource Include="Images\cancel_16.png" />
-    <Resource Include="Images\cancel_32.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <SplashScreen Include="Images\CompanyLogo.png" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +35,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Images\CompanyLogo.png" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DAndRElectronics.View.ButtonEditorViews"
              xmlns:dAndRElectronics="clr-namespace:DAndRElectronics"
-             xmlns:converters="clr-namespace:DAndRElectronics.Converters"
+             xmlns:converters="clr-namespace:Common.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>

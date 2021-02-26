@@ -83,7 +83,7 @@
             <Grid Grid.Row="0" Height="30" Background="#F999">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <!--App icon-->
-                    <Image Source="/Images/AppIcon.ico"  Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <Image Source="/Common;component/Images/AppIcon.ico"  Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     <TextBlock Text="DAndRElectronics" FontFamily="Arial" Margin="4 3 0 0" />
                 </StackPanel>
 

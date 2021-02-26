@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="PatternEditor.ViewModels.CyclesManageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PatternEditor.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DockPanel>
+            <Button Command="{Binding AddCommand}">Add</Button>
+            <ComboBox ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="CycleNumber"></ComboBox>
+            <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}">Delete</Button>
+        </DockPanel>
+
+        <local:DeviceManagerView Grid.Row="1" Grid.Column="0" DataContext="{Binding SelectedItem}"></local:DeviceManagerView>
+    </Grid>
+</UserControl>

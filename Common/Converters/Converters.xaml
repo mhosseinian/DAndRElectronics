@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Common.Converters">
+
+    <ColorConverter x:Key="EnumToColor" />
+
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisHidden" Reverse="False" Hide="true" />
+    <converters:BoolToVisibilityConverter x:Key="BoolToVis" Reverse="False" />
+    <converters:BoolToVisibilityConverter x:Key="InvBoolToVis" Reverse="True"/>
+    <converters:BoolToVisibilityConverter x:Key="InvBoolToVisHidden" Reverse="True" Hide="True"/>
+    <converters:ColorToSolidColorBrushValueConverter x:Key="ColorToBrush" />
+    <converters:IntToSolidColorBrushValueConverter x:Key="IntToBrush" />
+    <converters:IntToSolidColorBrushValueConverter x:Key="BrushToInt"  Reverse="True" />
+
+</ResourceDictionary>

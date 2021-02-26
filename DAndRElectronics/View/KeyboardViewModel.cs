@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Media;
+using Common;
+using Common.Services;
 using DAndRElectronics.ButtonViewModels;
-using DAndRElectronics.Enums;
-using DAndRElectronics.Helpers;
+using Common.Enums;
+using Common.Helpers;
 using DAndRElectronics.Services;
 using Microsoft.Win32;
-using Newtonsoft.Json;
-using Color = System.Drawing.Color;
 
 namespace DAndRElectronics.View
 {

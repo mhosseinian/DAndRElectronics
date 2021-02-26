@@ -4,10 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DAndRElectronics.View"
-             xmlns:helpers="clr-namespace:DAndRElectronics.Helpers"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:dAndRElectronics="clr-namespace:DAndRElectronics"
-             xmlns:converters="clr-namespace:DAndRElectronics.Converters"
+             xmlns:converters="clr-namespace:Common.Converters"
              xmlns:buttonEditorViews="clr-namespace:DAndRElectronics.View.ButtonEditorViews"
              mc:Ignorable="d" 
              

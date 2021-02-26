@@ -70,7 +70,7 @@
                 Style="{StaticResource TransparentStyle}">
                 <Button.Content>
                      <Border CornerRadius="10" Background="{StaticResource BackgroundMediumBrush}">
-                         <Image Source="/DAndRElectronics;component/Images/cancel_16.png" Height="25" Width="25"/>
+                        <Image Source="/Common;component/Images/cancel_16.png" Height="25" Width="25"/>
                      </Border>
                 </Button.Content>
             </Button>

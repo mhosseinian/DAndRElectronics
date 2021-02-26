@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using DAndRElectronics.ButtonViewModels;
-using DAndRElectronics.Enums;
+using Common.Enums;
 
 namespace DAndRElectronics.Services
 {

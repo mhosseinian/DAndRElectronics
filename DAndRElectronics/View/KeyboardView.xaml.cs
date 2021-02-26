@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Common.Services;
 using DAndRElectronics.ButtonViewModels;
-using DAndRElectronics.Enums;
+using Common.Enums;
 using DAndRElectronics.Services;
 
 namespace DAndRElectronics.View
