@@ -9,7 +9,19 @@ namespace Common.Services
 
         public static ServiceDirectory Instance
         {
-            get { return _instance ??= new ServiceDirectory(); }
+            get
+            {
+                if (_instance != null)
+                {
+                    return _instance ??= new ServiceDirectory();
+                }
+
+                _instance = new ServiceDirectory();
+                var logService = new LogService();
+                _instance.AddSingleton<ILogService>(logService);
+                logService.Info($"{System.AppDomain.CurrentDomain.FriendlyName} started");
+                return _instance ??= new ServiceDirectory();
+            }
         }
 
         private IServiceProvider _serviceProvider;

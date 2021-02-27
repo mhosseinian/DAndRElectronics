@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using Common.Services;
 using Newtonsoft.Json;
 using PatternEditor.ViewModels;
 
@@ -14,9 +16,20 @@ namespace PatternEditor
 
         public static IEnumerable<DeviceManagerViewModel> Deserialize(string content)
         {
+            var logger = ServiceDirectory.Instance.GetService<ILogService>();
+            logger.Info("Deserialing");
+            try
+            {
+                var items = JsonConvert.DeserializeObject<IEnumerable<DeviceManagerViewModel>>(content);
+                return items as IEnumerable<DeviceManagerViewModel>;
+            }
+            catch (Exception e)
+            {
+                logger.Error("Deserialize failed", e);
+                throw e;
+            }
+
             
-            var items = JsonConvert.DeserializeObject<IEnumerable<DeviceManagerViewModel>>(content);
-            return items as IEnumerable<DeviceManagerViewModel>;
         }
 
         public static void SerializeBinaryToFile(this CyclesManageViewModel vm, string filename)
