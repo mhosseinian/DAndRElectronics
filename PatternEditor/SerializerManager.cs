@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
-using Common.Helpers;
+using System.IO;
 using Newtonsoft.Json;
 using PatternEditor.ViewModels;
 
@@ -18,6 +17,20 @@ namespace PatternEditor
             
             var items = JsonConvert.DeserializeObject<IEnumerable<DeviceManagerViewModel>>(content);
             return items as IEnumerable<DeviceManagerViewModel>;
+        }
+
+        public static void SerializeBinaryToFile(this CyclesManageViewModel vm, string filename)
+        {
+            using var binWriter = new BinaryWriter(File.Open(filename, FileMode.Create));
+            binWriter.Write(vm.Cycles.Count);
+            foreach (var deviceManager in vm.Cycles)
+            {
+                binWriter.Write(deviceManager.Delay);
+                foreach (var deviceVm in deviceManager.Devices)
+                {
+                    deviceVm.SerializeBinary(binWriter);
+                }
+            }
         }
     }
 }

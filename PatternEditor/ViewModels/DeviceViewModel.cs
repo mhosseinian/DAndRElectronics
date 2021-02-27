@@ -27,6 +27,13 @@ namespace PatternEditor.ViewModels
 
         #endregion
 
+        public void SerializeBinary(BinaryWriter binWriter)
+        {
+            binWriter.Write(_r);
+            binWriter.Write(_g);
+            binWriter.Write(_b);
+        }
+
         [JsonIgnore]
         public int Color
         {
