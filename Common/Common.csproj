@@ -9,6 +9,7 @@
     <None Remove="Images\AppIcon.ico" />
     <None Remove="Images\cancel_16.png" />
     <None Remove="Images\cancel_32.png" />
+    <None Remove="Images\clone.png" />
     <None Remove="Images\CompanyLogo.png" />
   </ItemGroup>
 
@@ -23,6 +24,7 @@
     <Resource Include="Images\AppIcon.ico" />
     <Resource Include="Images\cancel_16.png" />
     <Resource Include="Images\cancel_32.png" />
+    <Resource Include="Images\clone.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -70,7 +70,7 @@
 
     <Border Background="{StaticResource BackgroundMediumLightBrush}" x:Name="MainWindowBorder">
 
-        <Grid x:Name="parentContainer" Background="{StaticResource BackgroundMediumLightBrush}">
+        <Grid  Background="{StaticResource BackgroundMediumLightBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height ="Auto"/>

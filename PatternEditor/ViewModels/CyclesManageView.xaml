@@ -4,24 +4,82 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PatternEditor.ViewModels"
+             xmlns:helpers="clr-namespace:Common.Helpers;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+
+    <helpers:AdornerControl IsAdorning="{Binding IsPreview}">
+        <helpers:AdornerControl.AdorningContent>
+            <helpers:BusyView />
+        </helpers:AdornerControl.AdorningContent>
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"  ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" x:Name="MainList"  Background="{StaticResource BackgroundMediumLightBrush}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Margin="3">
+                                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" Margin="3"/>
+                            </Border>
+                            <Button HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                Height="25" Width="25" Margin="5" ToolTip="{Binding DeleteText}"
+                                Command="{Binding Path=DataContext.DeleteCommand, ElementName=MainList}"
+                                CommandParameter="{Binding Path=DataContext,  RelativeSource={x:Static RelativeSource.Self}}"
+                                >
+                                <Button.Content>
+                                    <Image Source="/Common;component/Images/cancel_16.png" Height="15" Width="25"/>
+                                </Button.Content>
+                            </Button>
+                            <Button HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0" 
+                                Height="25" Width="25" Margin="5" ToolTip="{Binding CloneText}"
+                                Command="{Binding Path=DataContext.CloneCommand, ElementName=MainList}"
+                                CommandParameter="{Binding Path=DataContext,  RelativeSource={x:Static RelativeSource.Self}}"
+                                >
+                                <Button.Content>
+                                    <Image Source="/Common;component/Images/clone.png" Height="15" Width="25"/>
+                                </Button.Content>
+                            </Button>
+                        </DockPanel>
 
-        <DockPanel>
-            <Button Command="{Binding AddCommand}">Add</Button>
-            <ComboBox ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="CycleNumber"></ComboBox>
-            <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem}">Delete</Button>
-        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-        <local:DeviceManagerView Grid.Row="1" Grid.Column="0" DataContext="{Binding SelectedItem}"></local:DeviceManagerView>
-    </Grid>
+            <DockPanel Grid.Row="0" Grid.Column="1">
+                <Button Command="{Binding AddCommand}" Width="80" HorizontalAlignment="Center" ToolTip="Add another cycle" >   +   </Button>
+                <ComboBox ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Label"></ComboBox>
+                <!--<Button Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Center" Content="{Binding PreviewText}"></Button>-->
+                <Button  x:Name="PreviewButton" Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Right" Content="{Binding PreviewText}" Click="PreviewClicked"></Button>
+            </DockPanel>
+            <Grid Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedItem}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <local:DeviceManagerView  Margin="10,50,0,0"  Grid.Column="0" ></local:DeviceManagerView>
+
+                <Border Grid.Column="1" BorderBrush="Blue" BorderThickness="1" CornerRadius="5" Width="200" Height="150" Margin="0,60,10,0">
+                    <StackPanel Grid.Column="1" Margin="5,30,5,5">
+                        <Label Content="Repeat [100 milliseconds]"/>
+                        <Slider x:Name="SL2" Minimum="1" Maximum="100" Value="{Binding Delay}" />
+                        <TextBox  Text="{Binding ElementName=SL2, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </helpers:AdornerControl>
 </UserControl>

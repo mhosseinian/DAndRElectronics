@@ -12,6 +12,9 @@ namespace PatternEditor.ViewModels
         public List<DeviceViewModel> Devices { get; set; } = new List<DeviceViewModel>();
         public int NumDevices { get; set; } = 14;
         public int CycleNumber { get; set; }
+        public string DeleteText => $"Delete Cycle {CycleNumber}";
+        public string CloneText => $"Clone Cycle {CycleNumber}";
+        public string Label => $"Cycle # {CycleNumber}";
 
         public int Delay { get; set; }
 
@@ -20,6 +23,23 @@ namespace PatternEditor.ViewModels
         public DeviceManagerViewModel()
         {
             PopulateDevices();
+        }
+        public DeviceManagerViewModel(DeviceManagerViewModel src)
+        {
+            CloneSource(src);
+        }
+
+        private void CloneSource(DeviceManagerViewModel src)
+        {
+            foreach (var deviceViewModel in src.Devices)
+            {
+                var vm = DeviceViewModel.Clone(deviceViewModel);
+                Devices.Add(vm);
+            }
+
+            NumDevices = src.NumDevices;
+            
+            Delay = src.Delay;
         }
 
         #endregion

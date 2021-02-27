@@ -3,13 +3,14 @@ using System.Windows.Input;
 
 namespace Common.Helpers
 {
+    [Serializable]
     public class RelayCommand : ICommand
     {
         #region Fields
 
-        private readonly Action<object> _execute;
-        private readonly Predicate<object> _canExecute;
-        private EventHandler _internalCanExecuteChanged;
+        [NonSerialized] private readonly Action<object> _execute;
+        [NonSerialized] private readonly Predicate<object> _canExecute;
+        [NonSerialized] private EventHandler _internalCanExecuteChanged;
 
         #endregion // Fields
 

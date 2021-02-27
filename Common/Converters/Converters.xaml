@@ -11,5 +11,12 @@
     <converters:ColorToSolidColorBrushValueConverter x:Key="ColorToBrush" />
     <converters:IntToSolidColorBrushValueConverter x:Key="IntToBrush" />
     <converters:IntToSolidColorBrushValueConverter x:Key="BrushToInt"  Reverse="True" />
+    <converters:InverseBoolConverter x:Key="InvBool"></converters:InverseBoolConverter>
+    <converters:NullToBooleanConverter x:Key="NullToBool" Reverse="False"/>
+    <converters:NullToBooleanConverter x:Key="InvNullToBool" Reverse="True"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVis" Reverse="False"/>
+    <converters:NullToVisibilityConverter x:Key="InvNullToVis" Reverse="True"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVisHidden" Reverse="False" Hide="True" />
+    <converters:NullToVisibilityConverter x:Key="InvNullToVisHidden" Reverse="True" Hide="True"/>
 
 </ResourceDictionary>

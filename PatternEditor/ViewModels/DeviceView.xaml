@@ -7,6 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Control.Resources>
+        <Style  x:Key="MainButtonStyle1" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            
+        </Style>
+
+
+        <Style x:Key="MainButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="MyFocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -91,53 +114,53 @@
                  BorderBrush="Transparent"
                  BorderThickness="0" 
                  Margin="3"
+                 Style="{StaticResource MainButtonStyle}"
                  >
-            
+
+
             <Button.Content>
-
-
                 <Rectangle x:Name="Device"  RenderTransformOrigin="0.5,0.5"
                            Height="{Binding Height}" Width="{Binding Width}" Fill="{Binding Color, Converter={StaticResource IntToBrush}}">
-
                     <Rectangle.RenderTransform>
                         <RotateTransform CenterX="0" CenterY="0" Angle="{Binding RotateAngle}" />
                     </Rectangle.RenderTransform>
-             
+
                 </Rectangle>
             </Button.Content>
         </Button>
 
         <Popup x:Name="DropDownPopup" 
                AllowsTransparency="True" Focusable="True" StaysOpen="False"
+               IsOpen="{Binding ColorBoxOpen}"
                Placement="Bottom" PlacementTarget="{Binding ElementName=MainButton}"
                >
             <Border   MouseLeave="UIElement_OnMouseLeave" CornerRadius="2"  BorderBrush="Black" BorderThickness="1">
-            <Grid 
+                <Grid 
                 >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" Grid.Column="0" Width="45" Height="45" Style="{StaticResource CircleButton}" 
+                    <Button Grid.Row="0" Grid.Column="0" Width="45" Height="45" Style="{StaticResource CircleButton}" 
                         Background="Black"
                         Command ="{Binding ColorCommand}" 
                         CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Background, Converter={StaticResource BrushToInt}}"
                         ></Button>
-                <Button Grid.Row="0" Grid.Column="1" Width="45" Height="45" Style="{StaticResource CircleButton}"  
+                    <Button Grid.Row="0" Grid.Column="1" Width="45" Height="45" Style="{StaticResource CircleButton}"  
                         Background="Red"
                         Command ="{Binding ColorCommand}" 
                         CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Background, Converter={StaticResource BrushToInt}}"
                         ></Button>
-                <Button Grid.Row="0" Grid.Column="2" Width="45" Height="45" Style="{StaticResource CircleButton}"  
+                    <Button Grid.Row="0" Grid.Column="2" Width="45" Height="45" Style="{StaticResource CircleButton}"  
                         Background="Blue"
                         Command ="{Binding ColorCommand}" 
                         CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Background, Converter={StaticResource BrushToInt}}"
@@ -154,7 +177,7 @@
                             CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Background, Converter={StaticResource BrushToInt}}"
                         ></Button>
 
-                <!--<Button Grid.Column="0" Grid.Row="0" Click="ColorButtonClicked" Height="20" Width="35">
+                    <!--<Button Grid.Column="0" Grid.Row="0" Click="ColorButtonClicked" Height="20" Width="35">
                     <Button.Content>
                         <Rectangle  Height="20" Width="35" >
                             <Rectangle.Fill>
@@ -173,8 +196,8 @@
                     </Button.Content>
                 </Button>-->
 
-                
-            </Grid>
+
+                </Grid>
             </Border>
         </Popup>
 

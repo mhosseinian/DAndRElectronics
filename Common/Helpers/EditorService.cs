@@ -7,12 +7,15 @@ namespace Common.Helpers
     public class EditorService: IEditorService
     {
         private HelperWindow _helperWindow;
+        private Action _windowClosedAction;
+        private bool _isModal;
 
         private HelperWindow EditorWindow => _helperWindow;
                
 
-        public void SetContent(object uiElement, string title)
+        public void SetContent(object uiElement, string title, bool isModal = false)
         {
+            _isModal = isModal;
             CreateHelperWindow();
             if (!(uiElement is FrameworkElement view))
             {
@@ -21,7 +24,32 @@ namespace Common.Helpers
 
             EditorWindow.SetContent(view);
             EditorWindow.Title = title;
-            EditorWindow.Show();
+            if (_isModal)
+            {
+                EditorWindow.ShowDialog();
+            }
+            else
+            {
+                EditorWindow.Show();
+            }
+            
+        }
+
+        public void SetContent(object uiElement, string title, Action windowClosed, bool isModal = false)
+        {
+            _windowClosedAction = windowClosed;
+            SetContent(uiElement, title, isModal);
+        }
+
+        public void SetWidthAndHeight(double width, double height)
+        {
+            if (_helperWindow == null)
+            {
+                return;
+            }
+
+            _helperWindow.Width = width;
+            _helperWindow.Height = height;
         }
 
         #region Contructors
@@ -35,6 +63,7 @@ namespace Common.Helpers
         private void EditorWindowUnLoaded(object sender, RoutedEventArgs e)
         {
             EditorWindow.Unloaded -= EditorWindowUnLoaded;
+            _windowClosedAction?.Invoke();
             _helperWindow = null;
         }
 
