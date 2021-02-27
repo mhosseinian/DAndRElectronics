@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,12 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Common;
 using Common.Helpers;
+using Microsoft.Win32;
 
 namespace PatternEditor.ViewModels
 {
     public class CyclesManageViewModel : ViewModel
     {
         private int _numDevices = 1;
+        private string _savePath = string.Empty;
         private DeviceManagerViewModel _selectedItem;
         private bool _isPreview;
 
@@ -35,6 +40,9 @@ namespace PatternEditor.ViewModels
         public ICommand DeleteCommand { get; set; }
         public ICommand CloneCommand { get; set; }
         public ICommand PreviewCommand { get; set; }
+        public ICommand SaveCommand { get; }
+        public ICommand SaveAsCommand { get; }
+        public ICommand OpenCommand { get; }
 
         public bool IsPreview
         {
@@ -52,12 +60,15 @@ namespace PatternEditor.ViewModels
         {
             _numDevices = 14;
             Cycles = new ObservableCollection<DeviceManagerViewModel>();
-            Cycles.Add(new DeviceManagerViewModel { NumDevices = _numDevices, CycleNumber = 1});
+            Cycles.Add(new DeviceManagerViewModel(_numDevices) {  CycleNumber = 1});
             SelectedItem = Cycles.First();
             AddCommand = new RelayCommand(OnAddItem);
             DeleteCommand = new RelayCommand(OnDeleteItem);
             CloneCommand = new RelayCommand(OnCloneItem);
             PreviewCommand = new RelayCommand(OnPreview); 
+            SaveCommand = new RelayCommand(OnSave, o => !string.IsNullOrEmpty(_savePath));
+            SaveAsCommand = new RelayCommand(OnSaveAs);
+            OpenCommand = new RelayCommand(OnOpen);
         }
 
         #endregion
@@ -84,7 +95,7 @@ namespace PatternEditor.ViewModels
 
         private void OnAddItem(object obj)
         {
-            var item = new DeviceManagerViewModel {NumDevices = _numDevices, CycleNumber = Cycles .Count+1};
+            var item = new DeviceManagerViewModel(_numDevices) {CycleNumber = Cycles .Count+1};
             Cycles.Add(item);
             SelectedItem = item;
         }
@@ -120,6 +131,51 @@ namespace PatternEditor.ViewModels
             Cycles.Add(item);
             SelectedItem = item;
 
+        }
+
+        private void OnSave(object obj)
+        {
+            SaveInternal();
+        }
+
+        private void OnSaveAs(object obj)
+        {
+            var saveFileDialog = new SaveFileDialog { Filter = "Json files (*.json)|*.json|All files (*.*)|*.*" };
+            if (saveFileDialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            _savePath = saveFileDialog.FileName;
+            SaveInternal();
+        }
+
+        private void OnOpen(object obj)
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Json files (*.json)|*.json|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            _savePath = openFileDialog.FileName;
+
+            var items = SerializerManager.Deserialize(File.ReadAllText(_savePath));
+            foreach (var vm in items)
+            {
+                vm.PopulateDevices();
+            }
+            Cycles = new ObservableCollection<DeviceManagerViewModel>(items);
+            OnPropertyChanged(nameof(Cycles));
+            SelectedItem = Cycles.FirstOrDefault();
+        }
+
+
+        private void SaveInternal()
+        {
+            var content = this.SerializeToJson();
+            File.WriteAllText(_savePath, content);
         }
     }
 }

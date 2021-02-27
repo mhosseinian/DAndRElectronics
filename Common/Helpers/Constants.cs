@@ -86,6 +86,8 @@ namespace Common.Helpers
         public const string JsonSync = "sync";
 
         //Pattern project
+        public const string JsonCycles = "cycles";
+        public const string JsonDevices = "devices";
         public const string JsonNumDeviceColors = "nColors";
         public const string JsonColorR = "R";
         public const string JsonColorG = "G";

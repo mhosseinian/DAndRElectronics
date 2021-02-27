@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DAndRElectronics.View"
              xmlns:dAndRElectronics="clr-namespace:DAndRElectronics"
+             xmlns:helpers="clr-namespace:Common.Helpers;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -156,12 +157,7 @@
         </TabItem>
     </TabControl>
 
-
-        <DockPanel Grid.Row="1">
-            <Button Content ="Open" Width="60" Margin="5" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding OpenCommand}"></Button>
-            <Button Content ="Save" Width="60" Margin="5" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding SaveCommand}"></Button>
-            <Button Content ="Save as" Width="60" Margin="5" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding SaveAsCommand}"></Button>
-        </DockPanel>
+        <helpers:SaveOpenView Grid.Row="1"></helpers:SaveOpenView>
     </Grid>
 
 </UserControl>

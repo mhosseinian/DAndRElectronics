@@ -21,6 +21,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"  ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" x:Name="MainList"  Background="{StaticResource BackgroundMediumLightBrush}">
                 <ListBox.ItemTemplate>
@@ -80,6 +81,8 @@
                     </StackPanel>
                 </Border>
             </Grid>
+
+            <helpers:SaveOpenView Grid.Row="3" Grid.ColumnSpan="2"></helpers:SaveOpenView>
         </Grid>
     </helpers:AdornerControl>
 </UserControl>

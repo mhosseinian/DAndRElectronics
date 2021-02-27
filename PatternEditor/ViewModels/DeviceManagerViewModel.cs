@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Documents;
 using Common;
+using Common.Helpers;
+using Newtonsoft.Json;
 
 namespace PatternEditor.ViewModels
 {
     public class DeviceManagerViewModel: ViewModel
     {
-      
+
+        [JsonProperty(PropertyName = Constants.JsonDevices)]
         public List<DeviceViewModel> Devices { get; set; } = new List<DeviceViewModel>();
+
+
         public int NumDevices { get; set; } = 14;
         public int CycleNumber { get; set; }
-        public string DeleteText => $"Delete Cycle {CycleNumber}";
-        public string CloneText => $"Clone Cycle {CycleNumber}";
-        public string Label => $"Cycle # {CycleNumber}";
+        [JsonIgnore]public string DeleteText => $"Delete Cycle {CycleNumber}";
+        [JsonIgnore] public string CloneText => $"Clone Cycle {CycleNumber}";
+        [JsonIgnore] public string Label => $"Cycle # {CycleNumber}";
 
         public int Delay { get; set; }
 
@@ -22,6 +27,14 @@ namespace PatternEditor.ViewModels
 
         public DeviceManagerViewModel()
         {
+        }
+        public DeviceManagerViewModel(int numCycles)
+        {
+            NumDevices = numCycles;
+            for (var i = 0; i < NumDevices; i++)
+            {
+                Devices.Add(new DeviceViewModel{Index = i+1});
+            }
             PopulateDevices();
         }
         public DeviceManagerViewModel(DeviceManagerViewModel src)
@@ -44,15 +57,11 @@ namespace PatternEditor.ViewModels
 
         #endregion
 
-        private void PopulateDevices()
+        public void PopulateDevices()
         {
             //Always three on each side
             var numHorizontal = (NumDevices - 6) / 2;
 
-            for (var i = 0; i < NumDevices; i++)
-            {
-                Devices.Add(new DeviceViewModel{Index = i+1});
-            }
 
             var left = 100.0;
             for (var i=0; i < numHorizontal; i++)
