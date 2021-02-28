@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Services
@@ -19,6 +20,7 @@ namespace Common.Services
                 _instance = new ServiceDirectory();
                 var logService = new LogService();
                 _instance.AddSingleton<ILogService>(logService);
+                _instance.AddSingleton<IEditorService>(new EditorService());
                 logService.Info($"{System.AppDomain.CurrentDomain.FriendlyName} started");
                 return _instance ??= new ServiceDirectory();
             }

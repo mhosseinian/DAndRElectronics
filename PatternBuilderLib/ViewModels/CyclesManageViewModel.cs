@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Common;
 using Common.Helpers;
 using Microsoft.Win32;
 
-namespace PatternEditor.ViewModels
+namespace PatternBuilderLib.ViewModels
 {
     public class CyclesManageViewModel : ViewModel
     {
-        private int _numDevices = 1;
         private string _savePath = string.Empty;
         private DeviceManagerViewModel _selectedItem;
         private bool _isPreview;
@@ -25,7 +21,11 @@ namespace PatternEditor.ViewModels
         
         public string PreviewText => "Preview";
 
+       
+
         public DeviceManagerViewModel SelectedPreviewItem { get; set; }
+
+        public int NumDevices { get; set; }
 
         public DeviceManagerViewModel SelectedItem
         {
@@ -56,11 +56,11 @@ namespace PatternEditor.ViewModels
 
         #region Contructors
 
-        public CyclesManageViewModel()
+        public CyclesManageViewModel(int numDevices)
         {
-            _numDevices = 14;
+            NumDevices = numDevices;
             Cycles = new ObservableCollection<DeviceManagerViewModel>();
-            Cycles.Add(new DeviceManagerViewModel(_numDevices) {  CycleNumber = 1});
+            Cycles.Add(new DeviceManagerViewModel(NumDevices) {  CycleNumber = 1});
             SelectedItem = Cycles.First();
             AddCommand = new RelayCommand(OnAddItem);
             DeleteCommand = new RelayCommand(OnDeleteItem);
@@ -95,7 +95,7 @@ namespace PatternEditor.ViewModels
 
         private void OnAddItem(object obj)
         {
-            var item = new DeviceManagerViewModel(_numDevices) {CycleNumber = Cycles .Count+1};
+            var item = new DeviceManagerViewModel(NumDevices) {CycleNumber = Cycles .Count+1};
             Cycles.Add(item);
             SelectedItem = item;
         }
@@ -127,7 +127,7 @@ namespace PatternEditor.ViewModels
                 return;
             }
 
-            var item = new DeviceManagerViewModel(vm) { NumDevices = _numDevices, CycleNumber = Cycles.Count + 1 };
+            var item = new DeviceManagerViewModel(vm) { NumDevices = NumDevices, CycleNumber = Cycles.Count + 1 };
             Cycles.Add(item);
             SelectedItem = item;
 
@@ -176,6 +176,8 @@ namespace PatternEditor.ViewModels
         {
             var content = this.SerializeToJson();
             File.WriteAllText(_savePath, content);
+            var binaryFilename = Path.ChangeExtension(_savePath, ".bin");
+            this.SerializeBinaryToFile(binaryFilename);
         }
     }
 }

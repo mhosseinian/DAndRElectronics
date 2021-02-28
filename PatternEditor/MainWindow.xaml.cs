@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using PatternBuilderLib.ViewModels;
 
 
 namespace PatternEditor
@@ -15,6 +16,9 @@ namespace PatternEditor
         {
 
             InitializeComponent();
+            var view = new CyclesManageView{DataContext = new CyclesManageViewModel(14) };
+            AppArea.Children.Add(view);
+            
             StateChanged += MainWindowStateChangeRaised;
 
         }

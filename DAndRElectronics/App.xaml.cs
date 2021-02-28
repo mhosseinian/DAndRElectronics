@@ -22,7 +22,6 @@ namespace DAndRElectronics
         public static void ConfigureServices()
         {
             ServiceDirectory.Instance.AddSingleton<IStateService>(new StateService());
-            ServiceDirectory.Instance.AddSingleton<IEditorService>(new EditorService());
             ServiceDirectory.Instance.AddSingleton<IButtonViewModelFactoryService>(new ButtonViewModelFactoryService());
         }
     }

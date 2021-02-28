@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DAndRElectronics\DAndRElectronics.csproj" />
+    <ProjectReference Include="..\PatternBuilderLib\PatternBuilderLib.csproj" />
   </ItemGroup>
 
 </Project>

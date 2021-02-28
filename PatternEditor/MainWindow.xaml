@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PatternEditor"
-        xmlns:viewModels="clr-namespace:PatternEditor.ViewModels"
+        xmlns:viewModels="clr-namespace:PatternBuilderLib.ViewModels;assembly=PatternBuilderLib"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -15,7 +15,6 @@
     <Window.Resources>
         <ResourceDictionary>
 
-            <viewModels:CyclesManageViewModel x:Key="ViewModel"></viewModels:CyclesManageViewModel>
             <!--Base style for title bar buttons-->
             <Style x:Key="CaptionButtonStyle" TargetType="Button">
                 <Setter Property="Template">
@@ -100,9 +99,6 @@
 
             <!--App content-->
             <Grid Grid.Row="1" x:Name="AppArea">
-
-                <viewModels:CyclesManageView DataContext="{StaticResource ViewModel}"></viewModels:CyclesManageView>
-
             </Grid>
 
         </Grid>

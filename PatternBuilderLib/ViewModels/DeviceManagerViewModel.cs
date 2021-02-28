@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Documents;
 using Common;
 using Common.Helpers;
 using Newtonsoft.Json;
 
-namespace PatternEditor.ViewModels
+namespace PatternBuilderLib.ViewModels
 {
     public class DeviceManagerViewModel: ViewModel
     {

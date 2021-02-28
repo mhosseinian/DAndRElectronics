@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PatternEditor.ViewModels
+namespace PatternBuilderLib
 {
     /// <summary>
-    /// Interaction logic for Previewer.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class Previewer : UserControl
+    public partial class UserControl1 : UserControl
     {
-        public Previewer()
+        public UserControl1()
         {
             InitializeComponent();
         }

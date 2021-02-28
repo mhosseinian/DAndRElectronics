@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using Common.Services;
 using Newtonsoft.Json;
-using PatternEditor.ViewModels;
+using PatternBuilderLib.ViewModels;
 
-namespace PatternEditor
+namespace PatternBuilderLib
 {
     public static class SerializerManager
     {
+        
         public static string SerializeToJson(this CyclesManageViewModel cyclesVm)
         {
             return JsonConvert.SerializeObject(cyclesVm.Cycles, Formatting.Indented);
@@ -34,8 +35,10 @@ namespace PatternEditor
 
         public static void SerializeBinaryToFile(this CyclesManageViewModel vm, string filename)
         {
+          
             using var binWriter = new BinaryWriter(File.Open(filename, FileMode.Create));
             binWriter.Write(vm.Cycles.Count);
+            binWriter.Write(vm.NumDevices);
             foreach (var deviceManager in vm.Cycles)
             {
                 binWriter.Write(deviceManager.Delay);

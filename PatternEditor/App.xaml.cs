@@ -20,7 +20,6 @@ namespace PatternEditor
         #endregion
         public static void ConfigureServices()
         {
-            ServiceDirectory.Instance.AddSingleton<IEditorService>(new EditorService());
         }
     }
 }

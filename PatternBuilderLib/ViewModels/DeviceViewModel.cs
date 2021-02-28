@@ -7,7 +7,7 @@ using Common;
 using Common.Helpers;
 using Newtonsoft.Json;
 
-namespace PatternEditor.ViewModels
+namespace PatternBuilderLib.ViewModels
 {
     [Serializable]
     public class DeviceViewModel : ViewModel
