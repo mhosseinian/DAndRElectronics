@@ -16,40 +16,36 @@ namespace PatternBuilderLib.ViewModels
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(!(DataContext is DeviceManagerViewModel vm))
+            SetupButtons();
+        }
+
+        public void SetupButtons()
+        {
+            if (!(DataContext is DeviceManagerViewModel vm))
             {
                 return;
             }
 
-            //var num = vm.NumDevices;
-            //var start = 0;
-            //var end = 6;
-            //for (var i = start; i <= end; i++)
-            //{
-            //    var deviceViewModel = vm.Devices[i];
-            //    var child = new DeviceView { DataContext = deviceViewModel };
-            //    DeviceControl.Children.Add(child);
-            //    Canvas.SetTop(child, deviceViewModel.Top);
-            //    Canvas.SetLeft(child, deviceViewModel.Left);
-            //}
-
-
-            //start = 7;
-            //end = 10;
-            //for (var i = start; i <= end; i++)
-            //{
-            //    var deviceViewModel = vm.Devices[i];
-            //    var child = new DeviceView { DataContext = deviceViewModel };
-            //    DeviceControl.Children.Add(child);
-            //    Canvas.SetTop(child, deviceViewModel.Top);
-            //    Canvas.SetLeft(child, deviceViewModel.Left);
-            //}
-            foreach (var deviceViewModel in vm.Devices)
+            if (vm.IsLine)
             {
-                var child = new DeviceView { DataContext = deviceViewModel };
-                DeviceControl.Children.Add(child);
-                Canvas.SetTop(child, deviceViewModel.Top);
-                Canvas.SetLeft(child, deviceViewModel.Left);
+                DockControl.Children.Clear();
+                foreach (var deviceViewModel in vm.Devices)
+                {
+                    var child = new DeviceView {DataContext = deviceViewModel};
+                    DockControl.Children.Add(child);
+                    DockPanel.SetDock(child, Dock.Left);
+                }
+            }
+            else
+            {
+                CanvasControl.Children.Clear();
+                foreach (var deviceViewModel in vm.Devices)
+                {
+                    var child = new DeviceView {DataContext = deviceViewModel};
+                    CanvasControl.Children.Add(child);
+                    Canvas.SetTop(child, deviceViewModel.Top);
+                    Canvas.SetLeft(child, deviceViewModel.Left);
+                }
             }
         }
     }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Common.Helpers;
+using Common.Services;
+using Microsoft.Extensions.DependencyInjection;
 using PatternBuilderLib.ViewModels;
 
 
@@ -16,11 +19,29 @@ namespace PatternEditor
         {
 
             InitializeComponent();
-            var view = new CyclesManageView{DataContext = new CyclesManageViewModel(14) };
-            AppArea.Children.Add(view);
-            
+
+            if (FeatureAccessManager.FeatureAvailable(FeatureAccessManager.SelectLighModelFeature))
+            {
+                Loaded += (sender, args) => DisplayModels();
+            }
+            else
+            {
+                var view = new CyclesManageView { DataContext = new CyclesManageViewModel(14, false) };
+                AppArea.Children.Add(view);
+            }
+
             StateChanged += MainWindowStateChangeRaised;
 
+        }
+
+        private void DisplayModels()
+        {
+            var vm = new LightManagerViewModel();
+            var view = new LightbarManagerView {DataContext = vm};
+            var service = ServiceDirectory.Instance.GetService<IEditorService>();
+            service.SetContent(view, "Select a model", true);
+            var newView = new CyclesManageView { DataContext = new CyclesManageViewModel(vm.SelectedItem.NumLights, false) };
+            AppArea.Children.Add(newView);
         }
 
         // Can execute

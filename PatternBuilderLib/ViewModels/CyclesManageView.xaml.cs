@@ -33,5 +33,15 @@ namespace PatternBuilderLib.ViewModels
 
             vm.IsPreview = false;
         }
+
+        private void OnFlatOvalButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if (!(DataContext is CyclesManageViewModel vm))
+            {
+                return;
+            }
+
+            DeviceManagerView.SetupButtons();
+        }
     }
 }

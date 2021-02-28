@@ -6,11 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Control.Resources>
-        <Style  x:Key="MainButtonStyle1" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            
-        </Style>
-
-
+        
         <Style x:Key="MainButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
 
             <Setter Property="Template">
@@ -113,10 +109,9 @@
                  BorderBrush="Transparent"
                  BorderThickness="0" 
                  Margin="3"
+                 HorizontalAlignment="Left"
                  Style="{StaticResource MainButtonStyle}"
                  >
-
-
             <Button.Content>
                 <Rectangle x:Name="Device"  RenderTransformOrigin="0.5,0.5"
                            Height="{Binding Height}" Width="{Binding Width}" Fill="{Binding Color, Converter={StaticResource IntToBrush}}">
@@ -175,27 +170,6 @@
                             Command ="{Binding ColorCommand}" 
                             CommandParameter="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Background, Converter={StaticResource BrushToInt}}"
                         ></Button>
-
-                    <!--<Button Grid.Column="0" Grid.Row="0" Click="ColorButtonClicked" Height="20" Width="35">
-                    <Button.Content>
-                        <Rectangle  Height="20" Width="35" >
-                            <Rectangle.Fill>
-                                <VisualBrush >
-                                    <VisualBrush.Visual>
-                                        <Border 
-                                            CornerRadius="10" 
-                                            Width="35" Height="20" 
-                                            Background="Black"
-                                        >
-                                        </Border>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Button.Content>
-                </Button>-->
-
-
                 </Grid>
             </Border>
         </Popup>

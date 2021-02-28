@@ -12,10 +12,11 @@ namespace PatternBuilderLib.ViewModels
     [Serializable]
     public class DeviceViewModel : ViewModel
     {
-        
+        private static int dummy = 1;
         #region Json properties
 
         [JsonProperty(PropertyName = Constants.JsonNumDeviceColors)]
+        public string Name { get; set; }
         public int NColors { get; set; } = 1;
 
         [JsonProperty(PropertyName = Constants.JsonColorR)]
@@ -65,6 +66,8 @@ namespace PatternBuilderLib.ViewModels
 
         public DeviceViewModel()
         {
+            Name = $"{dummy}";
+            dummy++;
             AssignCommands();
         }
        

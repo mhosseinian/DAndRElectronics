@@ -12,6 +12,7 @@ namespace PatternBuilderLib.ViewModels
 {
     public class CyclesManageViewModel : ViewModel
     {
+        private bool _isLine;
         private string _savePath = string.Empty;
         private DeviceManagerViewModel _selectedItem;
         private bool _isPreview;
@@ -26,6 +27,26 @@ namespace PatternBuilderLib.ViewModels
         public DeviceManagerViewModel SelectedPreviewItem { get; set; }
 
         public int NumDevices { get; set; }
+
+        public string FlatOvalLabel => IsLine ? "Flat" : "Oval";
+        public bool IsLine
+        {
+            get => _isLine;
+            set
+            {
+                _isLine = value;
+                if (Cycles == null)
+                {
+                    return;
+                }
+                foreach (var deviceManagerViewModel in Cycles)
+                {
+                    deviceManagerViewModel.IsLine = value;
+                }
+                OnPropertyChanged(nameof(FlatOvalLabel));
+                OnPropertyChanged();
+            }
+        }
 
         public DeviceManagerViewModel SelectedItem
         {
@@ -44,6 +65,8 @@ namespace PatternBuilderLib.ViewModels
         public ICommand SaveAsCommand { get; }
         public ICommand OpenCommand { get; }
 
+        public bool ShowFlatOvalButton => FeatureAccessManager.FeatureAvailable(FeatureAccessManager.FlatOvelFeature);
+
         public bool IsPreview
         {
             get => _isPreview;
@@ -56,11 +79,13 @@ namespace PatternBuilderLib.ViewModels
 
         #region Contructors
 
-        public CyclesManageViewModel(int numDevices)
+     
+        public CyclesManageViewModel(int numDevices, bool isLine)
         {
+            IsLine = isLine;
             NumDevices = numDevices;
             Cycles = new ObservableCollection<DeviceManagerViewModel>();
-            Cycles.Add(new DeviceManagerViewModel(NumDevices) {  CycleNumber = 1});
+            Cycles.Add(new DeviceManagerViewModel(NumDevices, isLine) {  CycleNumber = 1});
             SelectedItem = Cycles.First();
             AddCommand = new RelayCommand(OnAddItem);
             DeleteCommand = new RelayCommand(OnDeleteItem);
@@ -95,7 +120,7 @@ namespace PatternBuilderLib.ViewModels
 
         private void OnAddItem(object obj)
         {
-            var item = new DeviceManagerViewModel(NumDevices) {CycleNumber = Cycles .Count+1};
+            var item = new DeviceManagerViewModel(NumDevices, IsLine) {CycleNumber = Cycles .Count+1};
             Cycles.Add(item);
             SelectedItem = item;
         }

@@ -8,14 +8,40 @@ namespace PatternBuilderLib.ViewModels
 {
     public class DeviceManagerViewModel: ViewModel
     {
-
+        [JsonProperty(PropertyName = "IsLine")]private bool _isLine;
         [JsonProperty(PropertyName = Constants.JsonDevices)]
         public List<DeviceViewModel> Devices { get; set; } = new List<DeviceViewModel>();
 
 
         public int NumDevices { get; set; } = 14;
         public int CycleNumber { get; set; }
-        [JsonIgnore]public string DeleteText => $"Delete Cycle {CycleNumber}";
+
+        [JsonIgnore]public bool IsLine
+        {
+            get => _isLine;
+            set
+            {
+                _isLine = value;
+                if (!Devices.Any())
+                {
+                    return;
+                }
+                if (value)
+                {
+                    foreach (var vm in Devices)
+                    {
+                        vm.RotateAngle = 0.0;
+                    }
+                }
+                else
+                {
+                    PopulateDevices();
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public string DeleteText => $"Delete Cycle {CycleNumber}";
         [JsonIgnore] public string CloneText => $"Clone Cycle {CycleNumber}";
         [JsonIgnore] public string Label => $"Cycle # {CycleNumber}";
 
@@ -26,14 +52,19 @@ namespace PatternBuilderLib.ViewModels
         public DeviceManagerViewModel()
         {
         }
-        public DeviceManagerViewModel(int numCycles)
+        public DeviceManagerViewModel(int numCycles, bool isLine)
         {
+            IsLine = isLine;
             NumDevices = numCycles;
             for (var i = 0; i < NumDevices; i++)
             {
                 Devices.Add(new DeviceViewModel{Index = i+1});
             }
-            PopulateDevices();
+
+            if (!IsLine)
+            {
+                PopulateDevices();
+            }
         }
         public DeviceManagerViewModel(DeviceManagerViewModel src)
         {
@@ -49,6 +80,7 @@ namespace PatternBuilderLib.ViewModels
             }
 
             NumDevices = src.NumDevices;
+            IsLine = src.IsLine;
             
             Delay = src.Delay;
         }
