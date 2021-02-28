@@ -2,6 +2,7 @@
 using Common.Helpers;
 using Common.Services;
 using Microsoft.Extensions.DependencyInjection;
+using PatternBuilderLib;
 
 namespace PatternEditor
 {
@@ -20,6 +21,7 @@ namespace PatternEditor
         #endregion
         public static void ConfigureServices()
         {
+            ServiceDirectory.Instance.AddSingleton<IButtonSelectionService>(new ButtonSelectionService());
         }
     }
 }

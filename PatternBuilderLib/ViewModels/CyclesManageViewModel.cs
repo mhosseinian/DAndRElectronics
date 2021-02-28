@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Common;
 using Common.Helpers;
+using Common.Services;
 using Microsoft.Win32;
 
 namespace PatternBuilderLib.ViewModels
@@ -94,6 +95,16 @@ namespace PatternBuilderLib.ViewModels
             SaveCommand = new RelayCommand(OnSave, o => !string.IsNullOrEmpty(_savePath));
             SaveAsCommand = new RelayCommand(OnSaveAs);
             OpenCommand = new RelayCommand(OnOpen);
+            var service = ServiceDirectory.Instance.GetService<IButtonSelectionService>();
+            service.Subscribe(this, OnColorChangedAction);
+        }
+
+        private void OnColorChangedAction(int color)
+        {
+            foreach (var vm in Cycles)
+            {
+                vm.OnColorChanged(color);
+            }
         }
 
         #endregion

@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Input;
 using Common;
 using Common.Helpers;
+using Common.Services;
 using Newtonsoft.Json;
 
 namespace PatternBuilderLib.ViewModels
@@ -41,13 +42,23 @@ namespace PatternBuilderLib.ViewModels
             get => _r << 16 | _g << 8 | _b;
             set
             {
-                byte[] values = BitConverter.GetBytes(value);
-                if (!BitConverter.IsLittleEndian) Array.Reverse(values);
-                _b = values[0];
-                _g = values[1];
-               _r = values[2];
-              OnPropertyChanged();
+                SetColor(value);
+                var service = ServiceDirectory.Instance.GetService<IButtonSelectionService>();
+                service.ButtonColorChanged(value);
             }
+        }
+
+        public void SetColor(int color)
+        {
+            byte[] values = BitConverter.GetBytes(color);
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(values);
+            }
+            _b = values[0];
+            _g = values[1];
+            _r = values[2];
+              OnPropertyChanged(nameof(Color));
         }
 
         [IgnoreDataMember] [JsonIgnore] public ICommand ColorCommand { get; set; }

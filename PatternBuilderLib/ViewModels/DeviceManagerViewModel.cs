@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Common;
 using Common.Helpers;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ namespace PatternBuilderLib.ViewModels
         [JsonProperty(PropertyName = Constants.JsonDevices)]
         public List<DeviceViewModel> Devices { get; set; } = new List<DeviceViewModel>();
 
+        
 
         public int NumDevices { get; set; } = 14;
         public int CycleNumber { get; set; }
@@ -47,6 +49,11 @@ namespace PatternBuilderLib.ViewModels
         [JsonIgnore] public string CloneText => $"Clone Cycle {CycleNumber}";
         [JsonIgnore] public string Label => $"Cycle # {CycleNumber}";
 
+        [JsonIgnore] public bool AllTop { get; set; }
+        [JsonIgnore] public bool AllBottom { get; set; }
+        [JsonIgnore] public bool AllDriver { get; set; }
+        [JsonIgnore] public bool AllPassenger { get; set; }
+
         public int Delay { get; set; }
 
         #region Contructors
@@ -54,7 +61,10 @@ namespace PatternBuilderLib.ViewModels
         public DeviceManagerViewModel()
         {
         }
-        public DeviceManagerViewModel(int numCycles, bool isLine)
+
+       
+
+        public DeviceManagerViewModel(int numCycles, bool isLine):base()
         {
             IsLine = isLine;
             NumDevices = numCycles;
@@ -89,10 +99,58 @@ namespace PatternBuilderLib.ViewModels
 
         #endregion
 
+        private int NumHorizontals => (NumDevices - 6) / 2;
+
+        private IEnumerable<DeviceViewModel> DriverDevices
+        {
+            get
+            {
+                var startLeftSide = (NumHorizontals * 2) + 3;
+                for (var i = startLeftSide; i < startLeftSide + 3; i++)
+                {
+                    yield return Devices[i];
+                }
+            }
+        }
+        private IEnumerable<DeviceViewModel> PassengerDevices
+        {
+            get
+            {
+                var start = NumHorizontals;
+                for (var i = start; i < start + 3; i++)
+                {
+                    yield return Devices[i];
+                }
+            }
+        }
+        private IEnumerable<DeviceViewModel> TopDevices
+        {
+            get
+            {
+                var end = NumHorizontals;
+                for (var i = 0; i < NumHorizontals; i++)
+                {
+                    yield return Devices[i];
+                }
+            }
+        }
+        private IEnumerable<DeviceViewModel> BottomDevices
+        {
+            get
+            {
+                var start = NumHorizontals + 3;
+                var end = start + NumHorizontals;
+                for (var i = start; i < end; i++)
+                {
+                    yield return Devices[i];
+                }
+            }
+        }
+
         public void PopulateDevices()
         {
             //Always three on each side
-            var numHorizontal = (NumDevices - 6) / 2;
+            var numHorizontal = NumHorizontals;
 
 
             var left = StartPosition;
@@ -157,5 +215,36 @@ namespace PatternBuilderLib.ViewModels
             rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights + 1) * (width);
         }
 
+        public void OnColorChanged(int color)
+        {
+            var selectedDevices = new List<DeviceViewModel>();
+            if (AllBottom)
+            {
+                selectedDevices.AddRange(BottomDevices);
+            }
+            if (AllTop)
+            {
+                selectedDevices.AddRange(TopDevices);
+            }
+            if (AllDriver)
+            {
+                selectedDevices.AddRange(DriverDevices);
+            }
+            if (AllPassenger)
+            {
+                selectedDevices.AddRange(PassengerDevices);
+            }
+
+            foreach (var device in selectedDevices)
+            {
+                device.SetColor(color);
+            }
+
+            AllBottom = AllTop = AllDriver = AllPassenger = false;
+            OnPropertyChanged(nameof(AllBottom));
+            OnPropertyChanged(nameof(AllTop));
+            OnPropertyChanged(nameof(AllDriver));
+            OnPropertyChanged(nameof(AllPassenger));
+        }
     }
 }
