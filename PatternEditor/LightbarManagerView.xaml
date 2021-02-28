@@ -6,7 +6,15 @@
              xmlns:local="clr-namespace:PatternEditor"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ComboBox ItemsSource ="{Binding Models}" DisplayMemberPath="Display" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+    <Grid Background="{StaticResource BackgroundMediumLightBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ComboBox Height="50" ItemsSource ="{Binding Models}" DisplayMemberPath="Display" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+        <DockPanel Grid.Row="1">
+<Button Click="OnCloseButtonClicked" Width="65" Height="25" Content="Ok" Margin="20"></Button>
+        </DockPanel>
     </Grid>
 </UserControl>

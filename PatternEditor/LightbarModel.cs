@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using Common;
 
@@ -43,5 +44,14 @@ namespace PatternEditor
                 _selectedItem = value;
             }
         }
+
+        #region Contructors
+
+        public LightManagerViewModel()
+        {
+            SelectedItem = _models.First();
+        }
+
+        #endregion
     }
 }

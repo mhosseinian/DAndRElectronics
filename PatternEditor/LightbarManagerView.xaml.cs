@@ -22,5 +22,11 @@ namespace PatternEditor
         {
             InitializeComponent();
         }
+
+        private void OnCloseButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = Window.GetWindow(this);
+            parentWindow.Close();
+        }
     }
 }

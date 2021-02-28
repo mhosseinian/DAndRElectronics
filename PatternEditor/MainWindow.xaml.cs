@@ -39,9 +39,10 @@ namespace PatternEditor
             var vm = new LightManagerViewModel();
             var view = new LightbarManagerView {DataContext = vm};
             var service = ServiceDirectory.Instance.GetService<IEditorService>();
-            service.SetContent(view, "Select a model", true);
+            service.SetContentWithSize(view, "Select a model", null, 400, 300, true);
             var newView = new CyclesManageView { DataContext = new CyclesManageViewModel(vm.SelectedItem.NumLights, false) };
             AppArea.Children.Add(newView);
+            this.Width = vm.SelectedItem.NumLights * 50 + 160;
         }
 
         // Can execute

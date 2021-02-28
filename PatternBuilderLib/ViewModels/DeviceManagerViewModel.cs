@@ -8,6 +8,8 @@ namespace PatternBuilderLib.ViewModels
 {
     public class DeviceManagerViewModel: ViewModel
     {
+        private const double StartPosition = 100.0;
+
         [JsonProperty(PropertyName = "IsLine")]private bool _isLine;
         [JsonProperty(PropertyName = Constants.JsonDevices)]
         public List<DeviceViewModel> Devices { get; set; } = new List<DeviceViewModel>();
@@ -93,58 +95,66 @@ namespace PatternBuilderLib.ViewModels
             var numHorizontal = (NumDevices - 6) / 2;
 
 
-            var left = 100.0;
+            var left = StartPosition;
             for (var i=0; i < numHorizontal; i++)
             {
                 Devices[i].Left = left;
                 left += Devices[i].Width;
             }
 
-            var rotation = 45;
-            //left -= Devices.First().Width;
-            var top = Devices.First().Height;
-            var counter = numHorizontal;
-            Devices[counter].RotateAngle = 90 - rotation;
-            Devices[counter].Left = left;
-            Devices[counter].Top = top;
-            
-            counter++;
-            
-            Devices[counter].RotateAngle = 90;
-            Devices[counter].Left = left + Devices[counter].Width/2 - Devices[counter].Width/12;
-            Devices[counter].Top = Devices[counter].Width* 1.416;
-            
-            counter++;
-            Devices[counter].RotateAngle = 90 + rotation;
-            Devices[counter].Left = left;
-            Devices[counter].Top = (2* Devices[counter].Width) + Devices[counter].Height;
-
             //Driver side
             var startLeftSide= (numHorizontal*2) + 3;
-            Devices[startLeftSide].RotateAngle = -135;
-            Devices[startLeftSide].Top = Devices[counter].Width * 2.416;
-            Devices[startLeftSide].Left = Devices[counter].Width*0.666;
 
-            startLeftSide++;
-            Devices[startLeftSide].RotateAngle = 90;
-            Devices[startLeftSide].Top = Devices[counter].Width* 1.4166;
-            Devices[startLeftSide].Left = Devices[counter].Width * 0.25;
-            startLeftSide++;
-            Devices[startLeftSide].RotateAngle = 135;
-            Devices[startLeftSide].Top = Devices[counter].Width * 0.3666;
-            Devices[startLeftSide].Left = Devices[counter].Width* 0.6666;
-
+            var leftSidButtons = new[]{Devices[startLeftSide], Devices[startLeftSide+1], Devices[startLeftSide+2]};
+            var rightSidButtons = new[]{Devices[numHorizontal+2], Devices[numHorizontal + 1], Devices[numHorizontal]};
+            SetSideButtons(leftSidButtons, rightSidButtons, numHorizontal);
+           
 
             var start = (numHorizontal*2) + 2;
-            var endLoop = start - 3;
-            left = 100.0;
+            var endLoop = start - numHorizontal + 1;
+            left = StartPosition;
             for (var i = start; i >= endLoop; i--)
             {
                 Devices[i].Left = left;
                 left += Devices[i].Width;
-                Devices[i].Top = Devices[counter].Width* 2.8333;
+                Devices[i].Top = Devices[0].Width* 2.8333;
             }
 
+        }
+
+        private static void SetSideButtons(DeviceViewModel[] leftsideButtons, DeviceViewModel[] rightsideButtons, int numHorizontalLights)
+        {
+            var width = leftsideButtons.First().Width;
+            
+            var counter = 0;
+            leftsideButtons[counter].RotateAngle = -135;
+            leftsideButtons[counter].Top =  leftsideButtons[counter].Width * 2.416;
+            leftsideButtons[counter].Left = leftsideButtons[counter].Width * 0.666;
+
+            counter++;
+            leftsideButtons[counter].RotateAngle = 90;
+            leftsideButtons[counter].Top =  leftsideButtons[counter].Width * 1.4166;
+            leftsideButtons[counter].Left = leftsideButtons[counter].Width * 0.25;
+            counter++;
+            leftsideButtons[counter].RotateAngle = 135;
+            leftsideButtons[counter].Top =  leftsideButtons[counter].Width * 0.3666;
+            leftsideButtons[counter].Left = leftsideButtons[counter].Width * 0.6666;
+
+            counter = 0;
+            rightsideButtons[counter].RotateAngle = -45;
+            rightsideButtons[counter].Top = leftsideButtons[counter].Top;
+            rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights + 1) * (width);
+
+            counter++;
+            rightsideButtons[counter].RotateAngle = 90;
+            rightsideButtons[counter].Top = leftsideButtons[counter].Top;
+            var diff = StartPosition - leftsideButtons[counter].Left;
+            rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights)*(width) + diff + width/2.5;
+
+            counter++;
+            rightsideButtons[counter].RotateAngle = -135;
+            rightsideButtons[counter].Top = leftsideButtons[counter].Top;
+            rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights + 1) * (width);
         }
 
     }

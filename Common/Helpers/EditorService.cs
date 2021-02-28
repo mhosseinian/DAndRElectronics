@@ -9,6 +9,8 @@ namespace Common.Helpers
         private HelperWindow _helperWindow;
         private Action _windowClosedAction;
         private bool _isModal;
+        private double _height = 640;
+        private double _width = 400;
 
         private HelperWindow EditorWindow => _helperWindow;
                
@@ -41,6 +43,15 @@ namespace Common.Helpers
             SetContent(uiElement, title, isModal);
         }
 
+        public void SetContentWithSize(object uiElement, string title, Action windowClosed, double width, double height,
+            bool isModal = false)
+        {
+            _height = height;
+            _width = width;
+            _windowClosedAction = windowClosed;
+            SetContent(uiElement, title, isModal);
+        }
+
         public void SetWidthAndHeight(double width, double height)
         {
             if (_helperWindow == null)
@@ -48,6 +59,8 @@ namespace Common.Helpers
                 return;
             }
 
+            _width = width;
+            _height = height;
             _helperWindow.Width = width;
             _helperWindow.Height = height;
         }
@@ -75,7 +88,7 @@ namespace Common.Helpers
             }
 
             var owner = Application.Current.MainWindow;
-            _helperWindow = new HelperWindow {  Height = 640, Width = 400 };
+            _helperWindow = new HelperWindow {  Height = _height, Width = _width };
             _helperWindow.WindowStartupLocation = WindowStartupLocation.Manual;
             _helperWindow.Left = owner.Left + owner.Width;
             _helperWindow.Top = owner.Top;
