@@ -31,4 +31,10 @@
     <SplashScreen Include="Images\CompanyLogo.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Styles\SliderStyle.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

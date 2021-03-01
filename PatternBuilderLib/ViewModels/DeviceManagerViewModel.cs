@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Common;
 using Common.Helpers;
@@ -10,6 +11,7 @@ namespace PatternBuilderLib.ViewModels
     public class DeviceManagerViewModel: ViewModel
     {
         private const double StartPosition = 100.0;
+        private int _width;
 
         [JsonProperty(PropertyName = "IsLine")]private bool _isLine;
         [JsonProperty(PropertyName = Constants.JsonDevices)]
@@ -39,7 +41,7 @@ namespace PatternBuilderLib.ViewModels
                 }
                 else
                 {
-                    PopulateDevices();
+                    PositionDevices();
                 }
                 OnPropertyChanged();
             }
@@ -75,7 +77,7 @@ namespace PatternBuilderLib.ViewModels
 
             if (!IsLine)
             {
-                PopulateDevices();
+                PositionDevices();
             }
         }
         public DeviceManagerViewModel(DeviceManagerViewModel src)
@@ -147,72 +149,92 @@ namespace PatternBuilderLib.ViewModels
             }
         }
 
-        public void PopulateDevices()
+
+        public void PositionDevices()
         {
             //Always three on each side
-            var numHorizontal = NumHorizontals;
+            PositionTopSide();
+            PositionPassengerSide();
+            PositionBottomSide();
+            PositionDriverSide();
+        }
+
+        private void PositionDriverSide()
+        {
+            var a = DriverDevices.First();
+            var source = BottomDevices.Last();
+            a.Top = source.Top;
+            a.RotateAngle = 45;
+            a.Left = source.Left - source.Width;
+            a.Origin = new Point(1,0);
+
+            var b = DriverDevices.Skip(1).First();
+            var m = a.Width * 0.6494480;//Sin(45)
+            b.Top = a.Top - m - a.Width;
+            b.RotateAngle = 90;
+            b.Left = a.Left + (a.Width * 0.76) - a.Height;//Cos(45)
+            b.Origin = new Point(0, 0);
 
 
+            source = TopDevices.First();
+            var c = DriverDevices.Last();
+            c.Top = source.Top;
+            c.RotateAngle = -45;
+            c.Left = source.Left - source.Width;
+            c.Origin = new Point(1,1);
+        }
+
+        private void PositionTopSide()
+        {
             var left = StartPosition;
-            for (var i=0; i < numHorizontal; i++)
+            for (var i = 0; i < NumHorizontals; i++)
             {
                 Devices[i].Left = left;
                 left += Devices[i].Width;
             }
+        }
 
-            //Driver side
-            var startLeftSide= (numHorizontal*2) + 3;
+        private void PositionBottomSide()
+        {
+            var numHorizontal = NumHorizontals;
+            double left;
+            var c = PassengerDevices.Last();
+            var top = c.Width * 0.6494480 + c.Top - c.Height / 2;
+            foreach (var device in BottomDevices)
+            {
+                device.Top = top;
+            }
 
-            var leftSidButtons = new[]{Devices[startLeftSide], Devices[startLeftSide+1], Devices[startLeftSide+2]};
-            var rightSidButtons = new[]{Devices[numHorizontal+2], Devices[numHorizontal + 1], Devices[numHorizontal]};
-            SetSideButtons(leftSidButtons, rightSidButtons, numHorizontal);
-           
-
-            var start = (numHorizontal*2) + 2;
+            var start = (numHorizontal * 2) + 2;
             var endLoop = start - numHorizontal + 1;
             left = StartPosition;
             for (var i = start; i >= endLoop; i--)
             {
                 Devices[i].Left = left;
                 left += Devices[i].Width;
-                Devices[i].Top = Devices[0].Width* 2.8333;
             }
-
         }
 
-        private static void SetSideButtons(DeviceViewModel[] leftsideButtons, DeviceViewModel[] rightsideButtons, int numHorizontalLights)
+        private void PositionPassengerSide()
         {
-            var width = leftsideButtons.First().Width;
-            
-            var counter = 0;
-            leftsideButtons[counter].RotateAngle = -135;
-            leftsideButtons[counter].Top =  leftsideButtons[counter].Width * 2.416;
-            leftsideButtons[counter].Left = leftsideButtons[counter].Width * 0.666;
+            var a = PassengerDevices.First();
+            var source = TopDevices.Last();
+            a.Top = source.Top;
+            a.Left = source.Left + source.Width;
+            a.Origin = new Point(0, 1);
+            a.RotateAngle = 45;
+            var b = PassengerDevices.Skip(1).First();
+            var m = a.Width * 0.6494480;
+            b.Top = m + a.Top;
+            b.RotateAngle = 90;
+            b.Left = a.Left + (a.Width * 0.76) - a.Height / 4;
+            b.Origin = new Point(0, 1);
 
-            counter++;
-            leftsideButtons[counter].RotateAngle = 90;
-            leftsideButtons[counter].Top =  leftsideButtons[counter].Width * 1.4166;
-            leftsideButtons[counter].Left = leftsideButtons[counter].Width * 0.25;
-            counter++;
-            leftsideButtons[counter].RotateAngle = 135;
-            leftsideButtons[counter].Top =  leftsideButtons[counter].Width * 0.3666;
-            leftsideButtons[counter].Left = leftsideButtons[counter].Width * 0.6666;
-
-            counter = 0;
-            rightsideButtons[counter].RotateAngle = -45;
-            rightsideButtons[counter].Top = leftsideButtons[counter].Top;
-            rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights + 1) * (width);
-
-            counter++;
-            rightsideButtons[counter].RotateAngle = 90;
-            rightsideButtons[counter].Top = leftsideButtons[counter].Top;
-            var diff = StartPosition - leftsideButtons[counter].Left;
-            rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights)*(width) + diff + width/2.5;
-
-            counter++;
-            rightsideButtons[counter].RotateAngle = -135;
-            rightsideButtons[counter].Top = leftsideButtons[counter].Top;
-            rightsideButtons[counter].Left = leftsideButtons[counter].Left + (numHorizontalLights + 1) * (width);
+            var c = PassengerDevices.Last();
+            c.Top = b.Top + b.Width + b.Height + b.Height / 2;
+            c.RotateAngle = 135;
+            c.Left = b.Left + b.Height - a.Height / 4;
+            c.Origin = new Point(0, 0);
         }
 
         public void OnColorChanged(int color)

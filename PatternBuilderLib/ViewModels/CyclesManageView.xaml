@@ -10,14 +10,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="listBoxStyle" TargetType="{x:Type ListBox}">
-            <Style.Resources>
-                <!-- Background of selected item when focussed -->
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red" />
-                <!-- Background of selected item when not focussed -->
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Green" />
-            </Style.Resources>
-        </Style>
+       <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common;component/Styles/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+       </ResourceDictionary>
     </UserControl.Resources>
 
     <helpers:AdornerControl IsAdorning="{Binding IsPreview}">
@@ -35,7 +32,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"  
+            <ListBox Grid.Column="0" Grid.Row="1"   
                      ItemsSource="{Binding Cycles}" 
                      SelectedItem="{Binding SelectedItem}" 
                      x:Name="MainList"  
@@ -78,7 +75,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <DockPanel Grid.Row="0" Grid.Column="1">
+            <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Button Command="{Binding AddCommand}" Width="80" HorizontalAlignment="Center" ToolTip="Add another cycle" >   +   </Button>
                 <ComboBox ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Label"></ComboBox>
                 <!--<Button Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Center" Content="{Binding PreviewText}"></Button>-->
@@ -87,6 +84,14 @@
                                 Content="{Binding FlatOvalLabel}"
                                 Visibility="{Binding ShowFlatOvalButton, Converter={StaticResource BoolToVis}}"
                                 ></ToggleButton>
+
+                <DockPanel >
+                    <Label Content="Width"/>
+                    <Slider Minimum="20" Maximum="100" Value="{Binding Width}" ValueChanged="WidthSlider_OnValueChanged" Width="90" >
+                       
+                    </Slider>
+                </DockPanel>
+
                 <Button  x:Name="PreviewButton" Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Right" Content="{Binding PreviewText}" Click="PreviewClicked"></Button>
             </DockPanel>
             <Grid Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -102,7 +107,7 @@
                 <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >
                     <viewModels:DeviceManagerView x:Name="DeviceManagerView" Margin="10,50,0,0"  Grid.Column="0" ></viewModels:DeviceManagerView>
                 </ScrollViewer>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Blue" BorderThickness="1" CornerRadius="5" Width="200" Height="150" Margin="0,60,10,0">
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" CornerRadius="5" Width="200" Height="150" Margin="0,60,10,0">
                     <StackPanel Grid.Column="1" Margin="5,30,5,5">
                         <Label Content="Repeat [100 milliseconds]"/>
                         <Slider x:Name="SL2" Minimum="1" Maximum="100" Value="{Binding Delay}" />
@@ -110,7 +115,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Blue" BorderThickness="1" CornerRadius="5" Width="400" HorizontalAlignment="Left" Margin="3">
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush="DarkGray" BorderThickness="1" CornerRadius="5" Width="400" HorizontalAlignment="Left" Margin="3">
                 <DockPanel Grid.Row="1" Grid.Column="0" Margin="5">
                     <CheckBox  Margin="3" IsChecked="{Binding AllTop}" Content="All front"></CheckBox>
                     <CheckBox Margin="3" IsChecked="{Binding AllBottom}" Content="All rear"></CheckBox>

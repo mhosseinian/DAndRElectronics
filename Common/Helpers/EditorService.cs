@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Common.Enums;
 using Common.Services;
 
 namespace Common.Helpers
@@ -7,10 +8,12 @@ namespace Common.Helpers
     public class EditorService: IEditorService
     {
         private HelperWindow _helperWindow;
+      
         private Action _windowClosedAction;
         private bool _isModal;
         private double _height = 640;
         private double _width = 400;
+        private double helperOwnerWindowPos;
 
         private HelperWindow EditorWindow => _helperWindow;
                
@@ -52,7 +55,7 @@ namespace Common.Helpers
             SetContent(uiElement, title, isModal);
         }
 
-        public void SetWidthAndHeight(double width, double height)
+        public void SetWidthAndHeight(double width, double height, EditWindowPosition position)
         {
             if (_helperWindow == null)
             {
@@ -63,6 +66,10 @@ namespace Common.Helpers
             _height = height;
             _helperWindow.Width = width;
             _helperWindow.Height = height;
+            if (position == EditWindowPosition.Left)
+            {
+                _helperWindow.Left = helperOwnerWindowPos;
+            }
         }
 
         #region Contructors
@@ -88,6 +95,7 @@ namespace Common.Helpers
             }
 
             var owner = Application.Current.MainWindow;
+            helperOwnerWindowPos = owner.Left;
             _helperWindow = new HelperWindow {  Height = _height, Width = _width };
             _helperWindow.WindowStartupLocation = WindowStartupLocation.Manual;
             _helperWindow.Left = owner.Left + owner.Width;

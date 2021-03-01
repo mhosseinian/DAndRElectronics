@@ -113,7 +113,7 @@
                  Style="{StaticResource MainButtonStyle}"
                  >
             <Button.Content>
-                <Rectangle x:Name="Device"  RenderTransformOrigin="0.5,0.5"
+                <Rectangle x:Name="Device"  RenderTransformOrigin="{Binding Origin}"
                            Height="{Binding Height}" Width="{Binding Width}" Fill="{Binding Color, Converter={StaticResource IntToBrush}}">
                     <Rectangle.RenderTransform>
                         <RotateTransform CenterX="0" CenterY="0" Angle="{Binding RotateAngle}" />

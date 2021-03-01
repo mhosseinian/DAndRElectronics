@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Common.Enums;
 using Common.Services;
 
 namespace PatternBuilderLib.ViewModels
@@ -19,7 +20,7 @@ namespace PatternBuilderLib.ViewModels
             var service = ServiceDirectory.Instance.GetService<IEditorService>();
             var view = new Previewer{DataContext = this.DataContext};
             service.SetContent(view, "Preview", OnPreviewWindowClosed, false);
-            service.SetWidthAndHeight(600, 400);
+            service.SetWidthAndHeight(600, 400, EditWindowPosition.Left);
             PreviewButton.IsEnabled = false;
         }
 
@@ -41,6 +42,15 @@ namespace PatternBuilderLib.ViewModels
                 return;
             }
 
+            DeviceManagerView.SetupButtons();
+        }
+
+        private void WidthSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!(DataContext is CyclesManageViewModel vm))
+            {
+                return;
+            }
             DeviceManagerView.SetupButtons();
         }
     }

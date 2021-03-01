@@ -17,6 +17,7 @@ namespace PatternBuilderLib.ViewModels
         private string _savePath = string.Empty;
         private DeviceManagerViewModel _selectedItem;
         private bool _isPreview;
+        private int _width = 60;
 
         public ObservableCollection<DeviceManagerViewModel> Cycles { get; set; }
 
@@ -47,6 +48,29 @@ namespace PatternBuilderLib.ViewModels
                 OnPropertyChanged(nameof(FlatOvalLabel));
                 OnPropertyChanged();
             }
+        }
+
+
+        public int Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                foreach (var deviceManager in Cycles)
+                {
+                    foreach (var device in deviceManager.Devices)
+                    {
+                        device.Width = value;
+                    }
+
+                    if (!IsLine)
+                    {
+                        deviceManager.PositionDevices();
+                    }
+                }
+            }
+
         }
 
         public DeviceManagerViewModel SelectedItem
@@ -200,7 +224,7 @@ namespace PatternBuilderLib.ViewModels
             var items = SerializerManager.Deserialize(File.ReadAllText(_savePath));
             foreach (var vm in items)
             {
-                vm.PopulateDevices();
+                vm.PositionDevices();
             }
             Cycles = new ObservableCollection<DeviceManagerViewModel>(items);
             OnPropertyChanged(nameof(Cycles));

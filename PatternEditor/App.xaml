@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Common;component/Styles/BrushStyle.xaml"/>
+                <ResourceDictionary Source="/Common;component/Styles/SliderStyle.xaml"/>
                 <ResourceDictionary Source="/Common;component/Styles/ControlStyles.xaml"/>
                 <ResourceDictionary Source="/Common;component/Converters/Converters.xaml"/>
             </ResourceDictionary.MergedDictionaries>

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
 using System.Windows.Input;
 using Common;
 using Common.Helpers;
@@ -61,9 +62,11 @@ namespace PatternBuilderLib.ViewModels
               OnPropertyChanged(nameof(Color));
         }
 
+
         [IgnoreDataMember] [JsonIgnore] public ICommand ColorCommand { get; set; }
         [IgnoreDataMember] [JsonIgnore] public ICommand ClickedCommand { get; set; }
         [JsonIgnore] public double RotateAngle { get; set; } = 0;
+        [JsonIgnore] public System.Windows.Point Origin { get; set; } = new Point(0,0);
         [JsonIgnore] public double Left { get; set; } = 0;
         [JsonIgnore] public double Top { get; set; } = 0;
         [JsonIgnore] public double Width { get; set; } = 60;
