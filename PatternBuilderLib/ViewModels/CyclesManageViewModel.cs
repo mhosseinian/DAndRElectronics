@@ -148,7 +148,7 @@ namespace PatternBuilderLib.ViewModels
                 {
                     SelectedPreviewItem = vm;
                     OnPropertyChanged(nameof(SelectedPreviewItem));
-                    Thread.Sleep(vm.Delay * 10);
+                    Thread.Sleep(vm.Delay * 100);
                 }
             }
         }
