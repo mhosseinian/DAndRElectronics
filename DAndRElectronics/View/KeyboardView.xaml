@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TabControl Background="{StaticResource BackgroundMediumLightBrush}">
+        <TabControl Background="{StaticResource BackgroundMediumLightBrush}" x:Name="TabControl" SelectionChanged="TabControl_OnSelectionChanged">
         <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.KeysTabHeader}">
             <Grid x:Name="GridKeys">
                 <Grid.ColumnDefinitions>

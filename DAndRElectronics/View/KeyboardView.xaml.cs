@@ -19,6 +19,7 @@ namespace DAndRElectronics.View
             var stateService = ServiceDirectory.Instance.GetService<IStateService>();
             stateService.Subscribe(this,OnStateChanged);
             this.DataContextChanged +=OnDataContextChanged;
+            
         }
 
         private void OnStateChanged(StateChangedTypes stateType)
@@ -69,6 +70,11 @@ namespace DAndRElectronics.View
             }
         }
 
-       
+
+        private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var editService = ServiceDirectory.Instance.GetService<IEditorService>();
+            editService.Close();
+        }
     }
 }

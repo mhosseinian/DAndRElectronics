@@ -72,6 +72,14 @@ namespace Common.Helpers
             }
         }
 
+        public void Close()
+        {
+            if (_helperWindow != null)
+            {
+                _helperWindow.Close();
+            }
+        }
+
         #region Contructors
 
         public EditorService()

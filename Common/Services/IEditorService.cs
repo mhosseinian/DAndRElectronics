@@ -9,5 +9,6 @@ namespace Common.Services
         void SetContent(object uiElement, string title, Action windowClosed, bool IsModal=false);
         void SetContentWithSize(object uiElement, string title, Action windowClosed, double width, double height,bool IsModal=false);
         void SetWidthAndHeight(double width, double height, EditWindowPosition position);
+        void Close();
     }
 }
