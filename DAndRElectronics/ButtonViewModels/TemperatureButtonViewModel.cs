@@ -1,4 +1,6 @@
-﻿using Common.Helpers;
+﻿using System;
+using System.IO;
+using Common.Helpers;
 using Newtonsoft.Json;
 
 namespace DAndRElectronics.ButtonViewModels
@@ -24,5 +26,16 @@ namespace DAndRElectronics.ButtonViewModels
         }
 
         public override bool EquipmentTypeVisible => false;
+
+        protected override void SerializeColors(BinaryWriter writer)
+        {
+            writer.Write((byte)Temperature);
+            WriteFiveBytes(writer);
+        }
+        protected override void DeserializeColors(BinaryReader reader)
+        {
+            Temperature = reader.ReadByte();
+            ReadFiveBytes(reader);
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace EngineeringTesting
         [Test]
         public void CanReadBinaryOutput()
         {
-            var vm = new CyclesManageViewModel(12);
+            var vm = new CyclesManageViewModel(12, false);
             var device = vm.SelectedItem.Devices.First();
 
             vm.SelectedItem.Delay = 22;

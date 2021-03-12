@@ -15,7 +15,7 @@ namespace DAndRElectronics.View
 {
     public class KeyboardViewModel:ViewModel
     {
-        private string _savePath = string.Empty;
+        public string _savePath = string.Empty;
         private List<ButtonViewModel> _keyButtons = new List<ButtonViewModel>();
         private List<ButtonViewModel> _inputButtons = new List<ButtonViewModel>();
         private List<ButtonViewModel> _eventButtons = new List<ButtonViewModel>();
@@ -82,7 +82,7 @@ namespace DAndRElectronics.View
         #endregion
 
 
-        private void OnAddEvent(object obj)
+        public void OnAddEvent(object obj)
         {
            
             var col = 0;
@@ -110,11 +110,16 @@ namespace DAndRElectronics.View
                 return;
             }
 
-            _savePath = openFileDialog.FileName;
+            OpenJson(openFileDialog.FileName);
+        }
+
+        public void OpenJson(string filename)
+        {
+            _savePath = filename;
             var service = ServiceDirectory.Instance.GetService<IButtonViewModelFactoryService>();
             var allItems = service.ReadFile(_savePath);
 
-            
+
             _keyButtons = allItems.Where(i => i.ButtonName.StartsWith(Constants.KeyBaseName)).ToList();
             _inputButtons = allItems.Where(i => i.ButtonName.StartsWith(Constants.InputBaseName)).ToList();
             _eventButtons = allItems.Where(i => i.ButtonName.StartsWith(Constants.EventBaseName)).ToList();
@@ -134,8 +139,8 @@ namespace DAndRElectronics.View
             SetRowColumnForButtons(_eventButtons);
 
             stateService.OnStateChanged(StateChangedTypes.ProjectOpened);
-
         }
+
         private void OnSaveAs(object obj)
         {
             var saveFileDialog = new SaveFileDialog {Filter = "Json files (*.json)|*.json|All files (*.*)|*.*"};
@@ -148,18 +153,11 @@ namespace DAndRElectronics.View
             SaveInternal();
         }
 
-        private void SaveInternal()
+        public void SaveInternal()
         {
-            var allItems = _keyButtons.
-                Concat(_inputButtons).
-                Concat(_eventButtons).
-                Concat(_analogButtons).
-                Concat(_slideButtons).
-                Concat(_timerButtons).
-                Concat(_temperatureButtons).
-                Concat(_sensorButtons)
-                .ToList();
-            
+
+            var allItems = AllButtons.SelectMany(l => l).ToList();
+
             var serializedContents = new List<string>();
             foreach (var buttonViewModel in allItems)
             {
@@ -167,7 +165,9 @@ namespace DAndRElectronics.View
             }
             var content = "[" + Environment.NewLine + string.Join(",", serializedContents) + "]";
             File.WriteAllText(_savePath, content);
-            //File.WriteAllText(_savePath, JsonConvert.SerializeObject(allItems, Formatting.Indented));
+            var binaryFilename = Path.ChangeExtension(_savePath, ".bin");
+            using var binWriter = new BinaryWriter(File.Open(binaryFilename, FileMode.Create));
+            Serialize(binWriter);
         }
 
         private static void SetRowColumnForButtons(List<ButtonViewModel> viewModels)
@@ -218,7 +218,90 @@ namespace DAndRElectronics.View
             }
         }
 
+        public IEnumerable<IEnumerable<ButtonViewModel>> AllButtons
+        {
+            get
+            {
+                yield return _slideButtons;
+                yield return _analogButtons;
+                yield return _sensorButtons;
+                yield return _temperatureButtons;
+                yield return _timerButtons;
+                yield return _inputButtons;
+                yield return _keyButtons;
+                yield return _eventButtons;
+            }
+        }
 
-       
+        public void Serialize(BinaryWriter writer)
+        {
+            //first two Bytes are empty
+            writer.Write((byte)0);
+            writer.Write((byte)0);
+            writer.Write((byte)0);
+            foreach (var keyBtn in _keyButtons)
+            {
+                writer.Write(keyBtn.GetEquipmentTypeCode());
+            }
+
+            writer.Seek(51, SeekOrigin.Begin);
+            
+
+            foreach (var keyButtons in AllButtons)
+            {
+                foreach (var keyBtn in keyButtons)
+                {
+                    keyBtn.Serialize(writer);
+                }
+            }
+
+            //Serialize additional sequence keys
+            foreach (var keyBtn in _keyButtons.Where(b=> b.EquipmentType == Constants.SEQUENTIAL && b.NumSequences > 0 && b.IsSubKey))
+            {
+                foreach (var buttonViewModel in keyBtn.SubButtons)
+                {
+                    if (buttonViewModel.EquipmentType == null)
+                    {
+                        buttonViewModel.EquipmentType = Constants.NOTUSE;
+                    }
+                    buttonViewModel.Serialize(writer);
+                }
+            }
+        }
+
+        public void Deserialize(BinaryReader reader)
+        {
+            var b = reader.ReadByte();
+            b = reader.ReadByte();
+            b = reader.ReadByte();
+
+            //21 pattern types
+            foreach (var keyBtn in _keyButtons)
+            {
+                keyBtn.SetEquipmentTypeCode(reader.ReadByte());
+               
+            }
+
+            //Skip over the reserved fields
+            reader.BaseStream.Seek(51, SeekOrigin.Begin);
+            foreach (var keyButtons in AllButtons)
+            {
+                foreach (var keyBtn in keyButtons)
+                {
+                    keyBtn.Deserialize(reader);
+                }
+            }
+
+            //deserialize additional sequence keys
+            foreach (var keyBtn in _keyButtons.Where(b => b.EquipmentType == Constants.SEQUENTIAL && b.NumSequences > 0 && b.IsSubKey))
+            {
+                foreach (var buttonViewModel in keyBtn.SubButtons)
+                {
+                    buttonViewModel.Deserialize(reader);
+                }
+            }
+        }
+
+
     }
 }

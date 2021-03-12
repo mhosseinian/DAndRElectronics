@@ -1,4 +1,6 @@
-﻿using Common.Helpers;
+﻿using System;
+using System.IO;
+using Common.Helpers;
 using Newtonsoft.Json;
 
 namespace DAndRElectronics.ButtonViewModels
@@ -16,7 +18,7 @@ namespace DAndRElectronics.ButtonViewModels
             PatternVisible = false;
             PriorityVisible = false;
             SensorVisible = true;
-            OutTabVisible = false;
+            OutTabVisible = true;
         }
 
         public override bool EquipmentTypeVisible => false;
@@ -24,6 +26,17 @@ namespace DAndRElectronics.ButtonViewModels
         public override ButtonViewModel Deserialize(string content)
         {
             return JsonConvert.DeserializeObject<SensorButtonViewModel>(content);
+        }
+
+        protected override void SerializeColors(BinaryWriter writer)
+        {
+            writer.Write((byte)GValue);
+            WriteFiveBytes(writer);
+        }
+        protected override void DeserializeColors(BinaryReader reader)
+        {
+            GValue = reader.ReadByte();
+            ReadFiveBytes(reader);
         }
     }
 }

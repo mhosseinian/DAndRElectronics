@@ -1,4 +1,6 @@
-﻿using Common.Helpers;
+﻿using System;
+using System.IO;
+using Common.Helpers;
 using Newtonsoft.Json;
 
 namespace DAndRElectronics.ButtonViewModels
@@ -21,11 +23,36 @@ namespace DAndRElectronics.ButtonViewModels
             OutTabVisible = false;
         }
 
+        public override void Serialize(BinaryWriter writer)
+        {
+            writer.Seek(570, SeekOrigin.Begin);
+            writer.Write((byte)Timer);
+        }
+
+      
+
         public override ButtonViewModel Deserialize(string content)
         {
             return JsonConvert.DeserializeObject<TimerButtonViewModel>(content);
         }
 
+        protected override void SpecialHandlingAtBeginning(BinaryWriter writer)
+        {
+            writer.Write((byte)Timer);
+        }
+
         public override bool EquipmentTypeVisible => false;
+
+        protected override void SerializeColors(BinaryWriter writer)
+        {
+            writer.Write((byte)0);
+            WriteFiveBytes(writer);
+        }
+
+        protected override void DeserializeColors(BinaryReader reader)
+        {
+            Timer = reader.ReadByte();
+            ReadFiveBytes(reader);
+        }
     }
 }

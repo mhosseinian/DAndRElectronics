@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Security;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Common;
@@ -16,7 +19,8 @@ namespace DAndRElectronics.ButtonViewModels
 {
     public class ButtonViewModel:ViewModel, IOutputs
     {
-        private const int MaxOuts = 21;
+        public const int MaxOuts = 22;
+        public const int MaxKeys = 21;
         [JsonIgnore] private List<OutViewModel> _outViewModels = new List<OutViewModel>();
         [JsonIgnore] private bool _tempCentigrade = true;
 
@@ -24,7 +28,7 @@ namespace DAndRElectronics.ButtonViewModels
 
         [JsonProperty(PropertyName = Constants.JsonButtonName)] private string _buttonName;
         [JsonProperty(PropertyName = Constants.JsonName)] private string _name;
-        [JsonProperty(PropertyName = Constants.JsonEquipmentType)] private string _equipmentType;
+        [JsonProperty(PropertyName = Constants.JsonEquipmentType)] private string _equipmentType = Constants.NOTUSE;
         [JsonProperty(PropertyName = Constants.JsonPriority)] private int _priority;
         [JsonProperty(PropertyName = Constants.JsonOffBackgroundColor)] private int _offBackgroundColor;
         [JsonProperty(PropertyName = Constants.JsonOnBackgroundColor)] private int _onBackgroundColor;
@@ -34,8 +38,14 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonProperty(PropertyName = Constants.JsonLed1)] private int _led1;
         [JsonProperty(PropertyName = Constants.JsonLed2)] private int _led2;
         [JsonProperty(PropertyName = Constants.JsonLed3)] private int _led3;
+
+        [JsonProperty(PropertyName = Constants.JsonSyncTone)] private bool _SyncTone;
+        [JsonProperty(PropertyName = Constants.JsonSyncLed1)] private bool _SyncLed1;
+        [JsonProperty(PropertyName = Constants.JsonSyncLed2)] private bool _SyncLed2;
+        [JsonProperty(PropertyName = Constants.JsonSyncLed3)] private bool _SyncLed3;
+
         [JsonProperty(PropertyName = Constants.JsonVoltage)] private int _voltage;
-        [JsonProperty(PropertyName = Constants.JsonVoltageGt)] private bool _voltageGreaterThan;
+        [JsonProperty(PropertyName = Constants.JsonVoltageGt)] protected bool _voltageGreaterThan;
         [JsonProperty(PropertyName = Constants.JsonTimer)] private int _timer;
         [JsonProperty(PropertyName = Constants.JsonG)] private float _gValue;
         [JsonProperty(PropertyName = Constants.JsonTemperature)] private float _temperature;
@@ -43,7 +53,7 @@ namespace DAndRElectronics.ButtonViewModels
 
         [JsonProperty(PropertyName = Constants.JsonOuts)] private bool[] _outs = new bool[MaxOuts];
         [JsonProperty(PropertyName = Constants.JsonOutsPercent)] private int[] _outPercents = new int[MaxOuts];
-        [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = Enumerable.Repeat(2, MaxOuts).ToArray();//Not use
+        [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = Enumerable.Repeat(2, MaxKeys).ToArray();//Not use
         [JsonProperty(PropertyName = Constants.JsonNumSequence)] private int _numSequences;
         [JsonProperty(PropertyName = Constants.JsonSequence)] public ObservableCollection<ButtonViewModel> SubButtons { get; set; } = new ObservableCollection<ButtonViewModel>();
         [JsonProperty(PropertyName = Constants.JsonSync)] private bool _sync;
@@ -167,6 +177,12 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore]public int LED1 { get => _led1; set => _led1 = value; }
         [JsonIgnore]public int LED2 { get => _led2; set => _led2 = value; }
         [JsonIgnore]public int LED3 { get => _led3; set => _led3 = value; }
+
+        [JsonIgnore]public bool SyncTone { get => _SyncTone; set => _SyncTone = value; }
+        [JsonIgnore]public bool SyncLED1 { get => _SyncLed1; set => _SyncLed1 = value; }
+        [JsonIgnore]public bool SyncLED2 { get => _SyncLed2; set => _SyncLed2 = value; }
+        [JsonIgnore]public bool SyncLED3 { get => _SyncLed3; set => _SyncLed3 = value; }
+
         [JsonIgnore]public int Voltage { get => _voltage; set => _voltage = value; }
         [JsonIgnore]public int Timer { get => _timer; set => _timer = value; }
         [JsonIgnore]public int EventNr { get => _eventNr; set => _eventNr = value; }
@@ -336,8 +352,8 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public static List<int> PossiblePriorities { get; } = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9};
        
 
-        [JsonIgnore] public static IEnumerable<int> PossibleTones { get; } = Enumerable.Range(1, 255);
-        [JsonIgnore] public static IEnumerable<int> PossibleLedValues { get; } = Enumerable.Range(1, 255);
+        [JsonIgnore] public static IEnumerable<int> PossibleTones { get; } = Enumerable.Range(1, 127);
+        [JsonIgnore] public static IEnumerable<int> PossibleLedValues { get; } = Enumerable.Range(1, 127);
 
         [JsonIgnore] public static List<string> PossibleColors { get; }=new List<string>
         {
@@ -365,7 +381,7 @@ namespace DAndRElectronics.ButtonViewModels
             ButtonName = buttonName;
             Column = col;
             Row = row;
-            
+            Array.Fill(_outPercents, 100);
             AllOnOffCommand = new RelayCommand(OnAllOnOrOff, AllOnOffEnabled);
             OffColorPickerCommand = new RelayCommand(OnOffColor);
             OnColorPickerCommand = new RelayCommand(OnOnColor);
@@ -521,6 +537,244 @@ namespace DAndRElectronics.ButtonViewModels
         }
 
         #endregion
+
+        public virtual void Serialize(BinaryWriter writer)
+        {
+            SpecialHandlingAtBeginning(writer);
+            //a6 Bytes
+            writer.Write(GetNameInChars(),0,16);
+            writer.Write((byte)Priority);
+            SerializeColors(writer);
+            var pattern = Sync ? Pattern + 128 : Pattern;
+            writer.Write((byte)pattern);
+            writer.Write((byte)DelayTime);
+            writer.Write(GetSyncLedToneValue(_SyncLed1, _led1));
+            writer.Write(GetSyncLedToneValue(_SyncLed2, _led2));
+            writer.Write(GetSyncLedToneValue(_SyncLed3, _led3));
+            writer.Write(GetSyncLedToneValue(_SyncTone, _tone));
+            writer.Write((byte)_ignition);
+            for (var i = 0; i < MaxOuts - 1; i++)
+            {
+                if (_outs[i])
+                {
+                    writer.Write((byte)_outPercents[i]);
+                }
+                else
+                {
+                    writer.Write((byte)0);
+                }
+            }
+            //For the last key, write 0 or 100
+            writer.Write((byte)(_outs[MaxOuts - 1] ? 100: 0));
+
+            for (var i = 0; i < MaxKeys ; i++)
+            {
+                writer.Write((byte)_outsKeys[i]);
+            }
+
+            
+
+            SpecialHandlingAtEnd(writer);
+        }
+
+
+        protected virtual void SpecialHandlingAtBeginning(BinaryWriter writer)
+        {
+
+        }
+        protected virtual void SpecialHandlingAtEnd(BinaryWriter writer)
+        {
+
+        }
+
+        public void Deserialize(BinaryReader reader)
+        {
+            var nameChars = reader.ReadChars(16);
+            if (nameChars.Length == 0 || nameChars[0] == '\0')
+            {
+                Name = null;
+            }
+            else
+            {
+                Name = new string(nameChars);
+            }
+           
+            Priority = reader.ReadByte();
+            DeserializeColors(reader);
+            var pattern =  reader.ReadByte();
+            if (pattern >= 128)
+            {
+                Pattern = pattern - 128;
+                Sync = true;
+            }
+            else
+            {
+                Pattern = pattern;
+                Sync = false;
+            }
+            DelayTime = reader.ReadByte();
+            
+            SetSyncLedToneValue(reader, ref _SyncLed1, ref _led1);
+            SetSyncLedToneValue(reader, ref _SyncLed2, ref _led2);
+            SetSyncLedToneValue(reader, ref _SyncLed3, ref _led3);
+            SetSyncLedToneValue(reader, ref _SyncTone, ref _tone);
+            _ignition = reader.ReadByte();
+
+            for (var i = 0; i < MaxOuts - 1; i++)
+            {
+                var o = reader.ReadByte();
+                if (o > 0)
+                {
+                    _outs[i] = true;
+                    _outPercents[i] = o;
+                }
+                else
+                {
+                    _outs[i] = false;
+                    _outPercents[i] = 0;
+                }
+            }
+            //For the last key, it will always be 0 or 100
+            var b = reader.ReadByte();
+            if (b > 0)
+            {
+                _outPercents[MaxOuts - 1] = 100;
+                _outs[MaxOuts - 1] = true;
+            }
+            else
+            {
+                _outPercents[MaxOuts - 1] = 0;
+                _outs[MaxOuts - 1] = false;
+            }
+            
+
+            for (var i = 0; i < MaxKeys; i++)
+            {
+                _outsKeys[i] = reader.ReadByte();
+            }
+        }
+
+        protected virtual void SerializeColors(BinaryWriter writer)
+        {
+            var colorConverter = new ColorHelper(OffColor);
+            colorConverter.Serialize(writer);
+            colorConverter.Color = OnColor;
+            colorConverter.Serialize(writer);
+        }
+
+        protected virtual void DeserializeColors(BinaryReader reader)
+        {
+            var colorConverter = new ColorHelper(reader);
+            OffColor = colorConverter.Color;
+            colorConverter = new ColorHelper(reader);
+            OnColor = colorConverter.Color;
+        }
+
+        protected void WriteFiveBytes(BinaryWriter writer)
+        {
+            for (var i = 0; i < 5; i++)
+            {
+                writer.Write((byte)0);
+            }
+        }
+        protected void ReadFiveBytes(BinaryReader reader)
+        {
+            for (var i = 0; i < 5; i++)
+            {
+                reader.ReadByte();
+            }
+        }
+
+        private byte GetSyncLedToneValue(bool sync, int value)
+        {
+            if (sync)
+            {
+                value += 128;
+            }
+
+            return (byte) value;
+        }
+
+        private void SetSyncLedToneValue(BinaryReader reader,  ref bool sync, ref int value)
+        {
+            var b = reader.ReadByte();
+            if (b >= 128)
+            {
+                sync = true;
+                value = b - 128;
+            }
+            else
+            {
+                value = b;
+            }
+        }
+
+        private char[] GetNameInChars()
+        {
+            var name = new char[16];
+            if (string.IsNullOrEmpty(Name))
+            {
+                return name;
+            }
+            for(var i=0; i <16; i++)
+            {
+                if (i >= Name.Length)
+                {
+                    break;
+                }
+
+                name[i] = Name[i];
+            }
+
+            return name;
+        }
+
+        public byte GetEquipmentTypeCode()
+        {
+            switch (_equipmentType)
+            {
+                case Constants.MOMENTARY:
+                    return 16;
+                case Constants.TOGGLE:
+                    return 32;
+                case Constants.DELAY:
+                    return 64;
+                case Constants.NOTUSE:
+                    return 0;
+                    
+                case Constants.SEQUENTIAL:
+                    return (byte)(128 + NumSequences);
+                    break;
+                default:
+                    return 0;
+            }
+        }
+
+        public void SetEquipmentTypeCode(byte code)
+        {
+            switch (code)
+            {
+                case 16:
+                    _equipmentType = Constants.MOMENTARY;
+                    break;
+                case 32:
+                    _equipmentType = Constants.TOGGLE;
+                    break;
+                case 64:
+                    _equipmentType = Constants.DELAY;
+                    break;
+                case 0:
+                    _equipmentType = Constants.NOTUSE;
+                    break;
+                default:
+                    if (code >= 128)
+                    {
+                        _equipmentType = Constants.SEQUENTIAL;
+                        NumSequences = code - 128;
+                    }
+                    break;
+            }
+        }
 
     }
 }

@@ -41,16 +41,16 @@ namespace Common.Helpers
 
         public static Dictionary<string, int> OnOffNotUseMappings = new Dictionary<string, int>
         {
-            {OFF, 0},
-            {ON, 1},
-            {NOTUSED, 2},
+            {OFF, 1},
+            {ON, 2},
+            {NOTUSED, 0},
         };
 
         public static Dictionary<int, string> OnOffNotUseMappingsReversed = new Dictionary<int, string>
         {
-            {0, OFF},
-            {1, ON},
-            {2, NOTUSED},
+            {1, OFF},
+            {2, ON},
+            {0, NOTUSED},
         };
 
 
@@ -74,6 +74,11 @@ namespace Common.Helpers
         public const string JsonLed1 = "led1";
         public const string JsonLed2 = "led2";
         public const string JsonLed3 = "led3";
+
+        public const string JsonSyncTone = "JsonSyncTone";
+        public const string JsonSyncLed1 = "JsonSyncLed1";
+        public const string JsonSyncLed2 = "JsonSyncLed2";
+        public const string JsonSyncLed3 = "JsonSyncLed3";
         public const string JsonVoltage = "voltage";
         public const string JsonVoltageGt = "voltageGT";
         public const string JsonTimer = "timer";

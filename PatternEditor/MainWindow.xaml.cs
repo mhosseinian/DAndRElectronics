@@ -26,7 +26,7 @@ namespace PatternEditor
             }
             else
             {
-                var view = new CyclesManageView { DataContext = new CyclesManageViewModel(14, false) };
+                var view = new CyclesManageView { DataContext = new CyclesManageViewModel(18, false) };
                 AppArea.Children.Add(view);
             }
 
