@@ -233,12 +233,13 @@ namespace DAndRElectronics.View
             }
         }
 
+        private const byte Version = 1;
         public void Serialize(BinaryWriter writer)
         {
             //first two Bytes are empty
             writer.Write((byte)0);
             writer.Write((byte)0);
-            writer.Write((byte)0);
+            writer.Write((byte)Version);
             foreach (var keyBtn in _keyButtons)
             {
                 writer.Write(keyBtn.GetEquipmentTypeCode());

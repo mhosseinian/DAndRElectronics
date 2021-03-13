@@ -53,16 +53,23 @@
 
 
         
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"  Visibility="{Binding NameVisible, Converter={StaticResource BoolToVis}}"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}"  
+                 Visibility="{Binding NameVisible, Converter={StaticResource BoolToVis}}"
+                 IsEnabled="{Binding EditFieldsEnabled}"
+                 ></TextBox>
 
         <DockPanel  Grid.Row="1" Grid.Column="1" Visibility="{Binding EquipmentTypeVisible, Converter={StaticResource BoolToVis}}">
             <ComboBox ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding EquipmentType}" ></ComboBox>
             <ComboBox ItemsSource="{Binding PossibleSequences}" SelectedItem="{Binding NumSequences}" Visibility="{Binding SubButtonsEnabled, Converter={StaticResource BoolToVis}}" ></ComboBox>
         </DockPanel>
 
-        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossibleDelays}" SelectedItem="{Binding DelayTime}" Visibility="{Binding DelayVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
+        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PossibleDelays}" 
+                  SelectedItem="{Binding DelayTime}" 
+                  IsEnabled="{Binding EditFieldsEnabled}"
+                  Visibility="{Binding DelayVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
         <ComboBox Grid.Row="3" Grid.Column="1" 
                   ItemsSource="{Binding PossiblePriorities}" 
+                  IsEnabled="{Binding EditFieldsEnabled}"
                   SelectedItem="{Binding Priority}"
                   Visibility="{Binding PriorityVisible, Converter={StaticResource BoolToVis}}"
                   ></ComboBox>
@@ -89,7 +96,7 @@
             </Button.Content>
         </Button>
 
-        <DockPanel  Grid.Row="6" Grid.Column="1"   Visibility="{Binding PatternVisible, Converter={StaticResource BoolToVis}}">
+        <DockPanel  Grid.Row="6" Grid.Column="1"   Visibility="{Binding PatternVisible, Converter={StaticResource BoolToVis}}" IsEnabled="{Binding EditFieldsEnabled}">
             <ComboBox ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}"></ComboBox>
             <CheckBox Margin="6"
                 Content="{x:Static dAndRElectronics:ResourceStrings.SyncLabel}" 
@@ -98,7 +105,10 @@
                 ></CheckBox>
         </DockPanel>
         <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleVoltages}" SelectedItem="{Binding Voltage}" Visibility="{Binding VoltageVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
-        <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleEvents}" SelectedItem="{Binding EventNr}" Visibility="{Binding EventVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
+        <ComboBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding PossibleEvents}" 
+                  SelectedItem="{Binding EventNr}" 
+                  IsEnabled="{Binding EditFieldsEnabled}"
+                  Visibility="{Binding EventVisible, Converter={StaticResource BoolToVis}}"></ComboBox>
 
         <DockPanel Grid.Row="7" Grid.Column="1"  Visibility="{Binding TimerVisible, Converter={StaticResource BoolToVis}}">
             <ComboBox ItemsSource="{Binding PossibleTimerValues}" SelectedItem="{Binding Timer}"></ComboBox>

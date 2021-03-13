@@ -194,6 +194,8 @@ namespace DAndRElectronics.ButtonViewModels
             set => _ignition = Constants.OnOffNotUseMappings[value];
         }
 
+        [JsonIgnore] public bool EditFieldsEnabled => NumSequences == 0;
+
         [JsonIgnore]
         public bool Sync
         {
@@ -383,8 +385,8 @@ namespace DAndRElectronics.ButtonViewModels
             Row = row;
             Array.Fill(_outPercents, 100);
             AllOnOffCommand = new RelayCommand(OnAllOnOrOff, AllOnOffEnabled);
-            OffColorPickerCommand = new RelayCommand(OnOffColor);
-            OnColorPickerCommand = new RelayCommand(OnOnColor);
+            OffColorPickerCommand = new RelayCommand(OnOffColor,o => EditFieldsEnabled);
+            OnColorPickerCommand = new RelayCommand(OnOnColor,o => EditFieldsEnabled);
             VoltageSignCommand = new RelayCommand(OnVoltageSign);
             TemperatureSignCommand = new RelayCommand(OnTemperatureSign);
             PopulateOutViewModels();
@@ -460,6 +462,7 @@ namespace DAndRElectronics.ButtonViewModels
             SelectedViewModel = this;
             OnPropertyChanged(nameof(SubButtons));
             OnPropertyChanged(nameof(SelectedViewModel));
+            OnPropertyChanged(nameof(EditFieldsEnabled));
         }
         private bool AllOnOffEnabled(object obj)
         {
@@ -538,43 +541,64 @@ namespace DAndRElectronics.ButtonViewModels
 
         #endregion
 
-        public virtual void Serialize(BinaryWriter writer)
+        private IEnumerable<ButtonViewModel> ViewModelsToWriteInBinary
         {
-            SpecialHandlingAtBeginning(writer);
-            //a6 Bytes
-            writer.Write(GetNameInChars(),0,16);
-            writer.Write((byte)Priority);
-            SerializeColors(writer);
-            var pattern = Sync ? Pattern + 128 : Pattern;
-            writer.Write((byte)pattern);
-            writer.Write((byte)DelayTime);
-            writer.Write(GetSyncLedToneValue(_SyncLed1, _led1));
-            writer.Write(GetSyncLedToneValue(_SyncLed2, _led2));
-            writer.Write(GetSyncLedToneValue(_SyncLed3, _led3));
-            writer.Write(GetSyncLedToneValue(_SyncTone, _tone));
-            writer.Write((byte)_ignition);
-            for (var i = 0; i < MaxOuts - 1; i++)
+            get
             {
-                if (_outs[i])
+                if (EquipmentType == Constants.SEQUENTIAL && NumSequences > 0)
                 {
-                    writer.Write((byte)_outPercents[i]);
+                    for (var i = 1; i < SubButtons.Count; i++)
+                    {
+                        yield return SubButtons[i];
+                    }
                 }
                 else
                 {
-                    writer.Write((byte)0);
+                    yield return this;
                 }
             }
-            //For the last key, write 0 or 100
-            writer.Write((byte)(_outs[MaxOuts - 1] ? 100: 0));
+        }
 
-            for (var i = 0; i < MaxKeys ; i++)
+        public virtual void Serialize(BinaryWriter writer)
+        {
+            SpecialHandlingAtBeginning(writer);
+            //If this is sequential, write only the sequential keys. Skip the original key
+            foreach (var viewModel in ViewModelsToWriteInBinary)
             {
-                writer.Write((byte)_outsKeys[i]);
+
+
+                writer.Write(viewModel.GetNameInChars(), 0, 16);
+                writer.Write((byte)viewModel.Priority);
+                viewModel.SerializeColors(writer);
+                var pattern = viewModel.Sync ? viewModel.Pattern + 128 : viewModel.Pattern;
+                writer.Write((byte) pattern);
+                writer.Write((byte)viewModel.DelayTime);
+                writer.Write(viewModel.GetSyncLedToneValue(viewModel._SyncLed1, viewModel._led1));
+                writer.Write(viewModel.GetSyncLedToneValue(viewModel._SyncLed2, viewModel._led2));
+                writer.Write(viewModel.GetSyncLedToneValue(viewModel._SyncLed3, viewModel._led3));
+                writer.Write(viewModel.GetSyncLedToneValue(viewModel._SyncTone, viewModel._tone));
+                writer.Write((byte)viewModel._ignition);
+                for (var i = 0; i < MaxOuts - 1; i++)
+                {
+                    if (viewModel._outs[i])
+                    {
+                        writer.Write((byte)viewModel._outPercents[i]);
+                    }
+                    else
+                    {
+                        writer.Write((byte) 0);
+                    }
+                }
+
+                //For the last key, write 0 or 100
+                writer.Write((byte) (viewModel._outs[MaxOuts - 1] ? 100 : 0));
+
+                for (var i = 0; i < MaxKeys; i++)
+                {
+                    writer.Write((byte)viewModel._outsKeys[i]);
+                }
+                viewModel.SpecialHandlingAtEnd(writer);
             }
-
-            
-
-            SpecialHandlingAtEnd(writer);
         }
 
 
