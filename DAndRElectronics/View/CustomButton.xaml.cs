@@ -32,6 +32,7 @@ namespace DAndRElectronics.View
         {
             var editorService = ServiceDirectory.Instance.GetService<IEditorService>();
             var view = new CopyButtonsView() { DataContext = new CopyButtonsViewModel(DataContext) };
+            editorService.Close();
             editorService.SetContent(view, "Copy to other devices", true);
         }
     }

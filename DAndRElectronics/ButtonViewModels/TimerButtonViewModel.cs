@@ -36,6 +36,8 @@ namespace DAndRElectronics.ButtonViewModels
             return JsonConvert.DeserializeObject<TimerButtonViewModel>(content);
         }
 
+        public override bool CanCopyFrom => false;
+
         protected override void SpecialHandlingAtBeginning(BinaryWriter writer)
         {
             writer.Write((byte)Timer);

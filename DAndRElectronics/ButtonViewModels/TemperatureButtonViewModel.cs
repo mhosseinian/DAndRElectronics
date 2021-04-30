@@ -27,6 +27,8 @@ namespace DAndRElectronics.ButtonViewModels
 
         public override bool EquipmentTypeVisible => false;
 
+        public override bool CanCopyFrom => false;
+
         protected override void SerializeColors(BinaryWriter writer)
         {
             writer.Write((byte)Temperature);

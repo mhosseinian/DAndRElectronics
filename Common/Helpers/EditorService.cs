@@ -83,7 +83,14 @@ namespace Common.Helpers
         {
             if (_helperWindow != null)
             {
+                if (EditorWindow != null)
+                {
+                    EditorWindow.Unloaded -= EditorWindowUnLoaded;
+                }
                 _helperWindow.Close();
+
+                _windowClosedAction?.Invoke();
+                _helperWindow = null;
             }
         }
 
@@ -110,7 +117,11 @@ namespace Common.Helpers
        
         private void EditorWindowUnLoaded(object sender, RoutedEventArgs e)
         {
-            EditorWindow.Unloaded -= EditorWindowUnLoaded;
+            if (EditorWindow != null)
+            {
+                EditorWindow.Unloaded -= EditorWindowUnLoaded;
+            }
+
             _windowClosedAction?.Invoke();
             _helperWindow = null;
         }

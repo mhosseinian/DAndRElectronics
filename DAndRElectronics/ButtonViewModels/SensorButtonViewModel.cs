@@ -21,6 +21,8 @@ namespace DAndRElectronics.ButtonViewModels
             OutTabVisible = true;
         }
 
+        public override bool CanCopyFrom => false;
+
         public override bool EquipmentTypeVisible => false;
 
         public override ButtonViewModel Deserialize(string content)
