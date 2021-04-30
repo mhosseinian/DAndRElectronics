@@ -29,9 +29,9 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonProperty(PropertyName = Constants.JsonButtonName)] private string _buttonName;
         [JsonProperty(PropertyName = Constants.JsonName)] private string _name;
         [JsonProperty(PropertyName = Constants.JsonEquipmentType)] private string _equipmentType = Constants.NOTUSE;
-        [JsonProperty(PropertyName = Constants.JsonPriority)] private int _priority;
-        [JsonProperty(PropertyName = Constants.JsonOffBackgroundColor)] private int _offBackgroundColor;
-        [JsonProperty(PropertyName = Constants.JsonOnBackgroundColor)] private int _onBackgroundColor;
+        [JsonProperty(PropertyName = Constants.JsonPriority)] private int _priority = 5;
+        [JsonProperty(PropertyName = Constants.JsonOffBackgroundColor)] private int _offBackgroundColor = 9;
+        [JsonProperty(PropertyName = Constants.JsonOnBackgroundColor)] private int _onBackgroundColor = 30;
         [JsonProperty(PropertyName = Constants.JsonPattern)] private int _pattern;
         [JsonProperty(PropertyName = Constants.JsonDelayTime)] private Int32 _delayTime;
         [JsonProperty(PropertyName = Constants.JsonTone)] private int _tone;
@@ -53,7 +53,7 @@ namespace DAndRElectronics.ButtonViewModels
 
         [JsonProperty(PropertyName = Constants.JsonOuts)] private bool[] _outs = new bool[MaxOuts];
         [JsonProperty(PropertyName = Constants.JsonOutsPercent)] private int[] _outPercents = new int[MaxOuts];
-        [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = Enumerable.Repeat(2, MaxKeys).ToArray();//Not use
+        [JsonProperty(PropertyName = Constants.JsonOutsKeys)] private int[] _outsKeys = Enumerable.Repeat(0, MaxKeys).ToArray();//Not use
         [JsonProperty(PropertyName = Constants.JsonNumSequence)] private int _numSequences;
         [JsonProperty(PropertyName = Constants.JsonSequence)] public ObservableCollection<ButtonViewModel> SubButtons { get; set; } = new ObservableCollection<ButtonViewModel>();
         [JsonProperty(PropertyName = Constants.JsonSync)] private bool _sync;
@@ -118,6 +118,10 @@ namespace DAndRElectronics.ButtonViewModels
                 PopulateAdditionalViewModels();
             }
         }
+
+        [JsonIgnore] public bool IsEnabled { get; set; } = true;
+        
+        
 
         [JsonIgnore]public string Name { get => _name; set => _name = value; }
 
@@ -230,26 +234,7 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public string DeleteText => $"Delete {ButtonName}";
         [JsonIgnore] public bool GValueHasError => GValue < 0 || GValue > 10;
 
-        
-        [JsonIgnore]public SupportedColors OffBackgroundColor
-        {
-            get
-            {
-                return ((SupportedColors) _offBackgroundColor);
-            } set => _offBackgroundColor = (int)value;
-        }
-
-
-        [JsonIgnore]
-        public SupportedColors OnBackgroundColor
-        {
-            get
-            {
-                return ((SupportedColors)_onBackgroundColor);
-            }
-            set => _onBackgroundColor = (int)value;
-        }
-
+      
         [JsonIgnore]
         public int Pattern
         {
@@ -282,53 +267,54 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public int Column { get; set; }
         [JsonIgnore] public int Row { get; set; }
 
-        [JsonIgnore] private Color _offColor =Colors.Transparent;
-        [JsonIgnore]public Color OffColor
-        {
-            get
-            {
-                if(_offColor == Colors.Transparent)
-                {
-                    _offColor = IntToColor(_offBackgroundColor);
-                }
+        [JsonIgnore] public ColorViewModel OffColor { get; set; }
+        [JsonIgnore] public ColorViewModel OnColor { get; set; }
+        //[JsonIgnore]public Color OffColor
+        //{
+        //    get
+        //    {
+        //        if(_offColor == Colors.Transparent)
+        //        {
+        //            _offColor = IntToColor(_offBackgroundColor);
+        //        }
 
-                return _offColor;
-            }
-            set
-            {
-                _offColor = value;
-                _offBackgroundColor = _offColor.R << 16 | _offColor.G << 8 | _offColor.B;
-            }
-        }
+        //        return _offColor;
+        //    }
+        //    set
+        //    {
+        //        _offColor = value;
+        //        _offBackgroundColor = _offColor.R << 16 | _offColor.G << 8 | _offColor.B;
+        //    }
+        //}
 
-        private static Color IntToColor(int colorValue)
-        {
-            var blueValue = colorValue / 65536;
-            var greenValue = (colorValue - blueValue * 65536) / 256;
-            var redValue = colorValue - blueValue * 65536 - greenValue * 256;
-            var color = Color.FromRgb(Convert.ToByte(redValue), Convert.ToByte(greenValue), Convert.ToByte(blueValue));
-            return color;
-        }
+        //private static Color IntToColor(int colorValue)
+        //{
+        //    var blueValue = colorValue / 65536;
+        //    var greenValue = (colorValue - blueValue * 65536) / 256;
+        //    var redValue = colorValue - blueValue * 65536 - greenValue * 256;
+        //    var color = Color.FromRgb(Convert.ToByte(redValue), Convert.ToByte(greenValue), Convert.ToByte(blueValue));
+        //    return color;
+        //}
 
-        [JsonIgnore] private Color _onColor = Colors.Transparent;
-        [JsonIgnore]
-        public Color OnColor
-        {
-            get
-            {
-                if (_onColor == Colors.Transparent)
-                {
-                    _onColor = IntToColor(_onBackgroundColor);
-                }
+        //[JsonIgnore] private Color _onColor = Colors.Transparent;
+        //[JsonIgnore]
+        //public Color OnColor
+        //{
+        //    get
+        //    {
+        //        if (_onColor == Colors.Transparent)
+        //        {
+        //            _onColor = IntToColor(_onBackgroundColor);
+        //        }
 
-                return _onColor;
-            }
-            set
-            {
-                _onColor = value;
-                _onBackgroundColor = _onColor.R << 16 | _onColor.G << 8 | _onColor.B;
-            }
-        }
+        //        return _onColor;
+        //    }
+        //    set
+        //    {
+        //        _onColor = value;
+        //        _onBackgroundColor = _onColor.R << 16 | _onColor.G << 8 | _onColor.B;
+        //    }
+        //}
         #endregion
 
         #region Possible dropdown values
@@ -392,6 +378,19 @@ namespace DAndRElectronics.ButtonViewModels
             PopulateOutViewModels();
             SubButtons.Add(this);
             SelectedViewModel = this;
+            InitColors();
+        }
+
+        public void InitColors()
+        {
+            OffColor = new ColorViewModel(_offBackgroundColor);
+            OnColor = new ColorViewModel(_onBackgroundColor);
+        }
+
+        public void AssignColorsForSerialization()
+        {
+            _offBackgroundColor = OffColor.IntColor;
+            _onBackgroundColor = OnColor.IntColor;
         }
 
         #endregion
@@ -478,7 +477,7 @@ namespace DAndRElectronics.ButtonViewModels
                 return;
             }
 
-            OffColor = color.Value;
+            OffColor.Color = color.Value;
             OnPropertyChanged(nameof(OffColor));
         }
         private void OnOnColor(object obj)
@@ -489,7 +488,7 @@ namespace DAndRElectronics.ButtonViewModels
                 return;
             }
 
-            OnColor = color.Value;
+            OnColor.Color = color.Value;
             OnPropertyChanged(nameof(OnColor));
         }
 
@@ -680,18 +679,14 @@ namespace DAndRElectronics.ButtonViewModels
 
         protected virtual void SerializeColors(BinaryWriter writer)
         {
-            var colorConverter = new ColorHelper(OffColor);
-            colorConverter.Serialize(writer);
-            colorConverter.Color = OnColor;
-            colorConverter.Serialize(writer);
+            OffColor.Serialize(writer);
+            OnColor.Serialize(writer);
         }
 
         protected virtual void DeserializeColors(BinaryReader reader)
         {
-            var colorConverter = new ColorHelper(reader);
-            OffColor = colorConverter.Color;
-            colorConverter = new ColorHelper(reader);
-            OnColor = colorConverter.Color;
+            OffColor = new ColorViewModel(reader);
+            OnColor = new ColorViewModel(reader);
         }
 
         protected void WriteFiveBytes(BinaryWriter writer)

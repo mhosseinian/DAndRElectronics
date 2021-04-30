@@ -76,25 +76,36 @@
 
 
 
-        <Button Grid.Row="4" Grid.Column="1" Command="{Binding OffColorPickerCommand}"  Visibility="{Binding OffColorVisible, Converter={StaticResource BoolToVis}}">
-            <Button.Content>
-                <Rectangle Height="20" Width="100">
+        <Button Grid.Row="4" Grid.Column="1" Command="{Binding OffColorPickerCommand}" 
+                Visibility="{Binding OffColorVisible, Converter={StaticResource BoolToVis}}"
+                >
+            <Button.Content >
+                <Rectangle Height="20" Width="100" DataContext="{Binding OffColor}">
                 <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding OffColor}" />
+                    <SolidColorBrush Color="{Binding Color}" />
                 </Rectangle.Fill>
                 </Rectangle>
             </Button.Content>
         </Button>
 
-        <Button Grid.Row="5" Grid.Column="1" Command="{Binding OnColorPickerCommand}" Visibility="{Binding OnColorVisible, Converter={StaticResource BoolToVis}}">
+        <ContentControl  Grid.Row="4" Grid.Column="2"  Visibility="{Binding OffColorVisible, Converter={StaticResource BoolToVis}}">
+            <local:RgbFieldsView DataContext="{Binding OffColor}"></local:RgbFieldsView>
+        </ContentControl>
+
+        <Button Grid.Row="5" Grid.Column="1" Command="{Binding OnColorPickerCommand}" 
+                Visibility="{Binding OnColorVisible, Converter={StaticResource BoolToVis}}">
             <Button.Content>
-                <Rectangle Height="20" Width="100">
+                <Rectangle Height="20" Width="100"  DataContext="{Binding OnColor}">
                     <Rectangle.Fill>
-                        <SolidColorBrush Color="{Binding OnColor}" />
+                        <SolidColorBrush Color="{Binding Color}" />
                     </Rectangle.Fill>
                 </Rectangle>
             </Button.Content>
         </Button>
+
+        <ContentControl  Grid.Row="5" Grid.Column="2"  Visibility="{Binding OnColorVisible, Converter={StaticResource BoolToVis}}">
+            <local:RgbFieldsView DataContext="{Binding OnColor}"></local:RgbFieldsView>
+        </ContentControl>
 
         <DockPanel  Grid.Row="6" Grid.Column="1"   Visibility="{Binding PatternVisible, Converter={StaticResource BoolToVis}}" IsEnabled="{Binding EditFieldsEnabled}">
             <ComboBox ItemsSource="{Binding PossiblePatterns}" SelectedItem="{Binding Pattern}"></ComboBox>

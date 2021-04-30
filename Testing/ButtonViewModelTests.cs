@@ -29,7 +29,7 @@ namespace EngineeringTesting
         public void ReadWriteButtonViewModel()
         {
 
-            var vm = new ButtonViewModel($"{Constants.AnalogBaseName}1", 0, 1) { OffBackgroundColor = SupportedColors.Blue, EquipmentType = Constants.DELAY, Pattern = 3, Priority = 3, Name = "MyName" };
+            var vm = new ButtonViewModel($"{Constants.AnalogBaseName}1", 0, 1) {  EquipmentType = Constants.DELAY, Pattern = 3, Priority = 3, Name = "MyName" };
             var filename = Path.GetTempFileName();
             File.WriteAllText(filename, vm.Serialize());
 
@@ -37,7 +37,6 @@ namespace EngineeringTesting
             {
                 string json = r.ReadToEnd();
                 var vmNew = JsonConvert.DeserializeObject<ButtonViewModel>(json);
-                Assert.IsTrue(vmNew.OffBackgroundColor.Equals(SupportedColors.Blue));
                 Assert.IsTrue(vmNew.EquipmentType.Equals(Constants.DELAY));
                 Assert.IsTrue(vmNew.Pattern.Equals(3));
                 Assert.IsTrue(vmNew.Priority.Equals(3));
@@ -51,7 +50,7 @@ namespace EngineeringTesting
         [Test]
         public void CanSerializeSubKeys()
         {
-            var vm = new ButtonViewModel($"{Constants.KeyBaseName}_1", 0, 1) { OffBackgroundColor = SupportedColors.Blue, EquipmentType = Constants.SEQUENTIAL, Pattern = 3, Priority = 3, Name = "MyName" };
+            var vm = new ButtonViewModel($"{Constants.KeyBaseName}_1", 0, 1) {  EquipmentType = Constants.SEQUENTIAL, Pattern = 3, Priority = 3, Name = "MyName" };
             vm.NumSequences = 3;
             Assert.AreEqual(vm.SubButtons.Count, 4);
             var content = vm.Serialize();

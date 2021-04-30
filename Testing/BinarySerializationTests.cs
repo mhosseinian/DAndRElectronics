@@ -92,8 +92,6 @@ namespace EngineeringTesting
             nameof(ButtonViewModel.VoltageSignCommand),
             nameof(ButtonViewModel.TemperatureSignCommand),
             nameof(ButtonViewModel.Outs),
-            nameof(ButtonViewModel.OffBackgroundColor),
-            nameof(ButtonViewModel.OnBackgroundColor),
         };
 
         private void CompareButtons(PropertyInfo[] properties, ButtonViewModel origBtn, ButtonViewModel binaryBtn)

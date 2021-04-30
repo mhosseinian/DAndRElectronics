@@ -64,6 +64,7 @@ namespace DAndRElectronics.View
             foreach (var buttonVm in buttons)
             {
                 var buttonView = new CustomButton { DataContext = buttonVm };
+                buttonView.IsEnabled = buttonVm.IsEnabled;
                 grid.Children.Add(buttonView);
                 Grid.SetColumn(buttonView, buttonVm.Column);
                 Grid.SetRow(buttonView, buttonVm.Row);

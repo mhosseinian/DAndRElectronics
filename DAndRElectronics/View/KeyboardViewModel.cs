@@ -49,6 +49,10 @@ namespace DAndRElectronics.View
             AddEventCommand = new RelayCommand(OnAddEvent);
             PopulateButtons(_keyButtons, 21, Constants.KeyBaseName);
             PopulateButtons(_inputButtons, 17, Constants.InputBaseName);
+            for (var i = 12; i < 16; i++)
+            {
+                _inputButtons[i].IsEnabled = false;
+            }
             //PopulateButtons(_eventButtons, 5, Constants.EventBaseName);
             PopulateButtons(_slideButtons, 3, Constants.SlideBaseName);
             PopulateButtons(_analogButtons, 2, Constants.AnalogBaseName);

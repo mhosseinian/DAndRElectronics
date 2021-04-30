@@ -35,7 +35,7 @@ namespace Common.Helpers
         public static List<string> PossibleTypesSlider { get; } = new List<string>
         {
             MOMENTARY,
-            DELAY,
+            //DELAY,
             NOTUSE,
         };
 

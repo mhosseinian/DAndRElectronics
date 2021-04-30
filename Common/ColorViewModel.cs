@@ -2,27 +2,31 @@
 using System.IO;
 using System.Windows.Media;
 
-namespace Common.Helpers
+namespace Common
 {
-    public class ColorHelper
+    public class ColorViewModel : ViewModel
     {
-        public byte R { get; private set; }
-        public byte G { get; private set; }
-        public byte B { get; private set; }
+        #region Private fields
+
+        private byte _r;
+        private byte _g;
+        private byte _b;
+        private Color _color;
+       
 
         private int _intColor;
 
+        #endregion
+
+
+        #region Public properties
+
         public int IntColor
         {
-            get => _intColor;
-            set
-            {
-                _intColor = value;
-                SetColors(_intColor);
-            }
+            get => R << 16 | G << 8 | B;
+            set => SetColors(value);
         }
 
-        private Color _color;
 
         public Color Color
         {
@@ -35,24 +39,50 @@ namespace Common.Helpers
             }
         }
 
+        public byte R
+        {
+            get => _r;
+            set
+            {
+                _r = value; OnPropertyChanged();OnPropertyChanged(nameof(Color));
+            }
+        }
+
+        public byte G
+        {
+            get => _g;
+            set { _g = value; OnPropertyChanged(); OnPropertyChanged(nameof(Color)); }
+        }
+
+        public byte B
+        {
+            get => _b;
+            set { _b = value; OnPropertyChanged(); OnPropertyChanged(nameof(Color)); }
+        }
+
+        #endregion
+
+
         #region Contructors
 
-        public ColorHelper(int intColor)
+        public ColorViewModel(int intColor)
         {
             IntColor = intColor;
         }
-        public ColorHelper(Color color)
+        public ColorViewModel(Color color)
         {
             Color = color;
         }
 
-        public ColorHelper(BinaryReader reader)
+        public ColorViewModel(BinaryReader reader)
         {
             Deserialize(reader);
         }
 
 
         #endregion
+
+        #region Serialization
 
         public void Serialize(BinaryWriter writer)
         {
@@ -68,6 +98,9 @@ namespace Common.Helpers
             B = reader.ReadByte();
         }
 
+        #endregion
+
+
         private void SetColors(int color)
         {
             var values = BitConverter.GetBytes(color);
@@ -80,5 +113,6 @@ namespace Common.Helpers
             G = values[1];
             R = values[2];
         }
+
     }
 }
