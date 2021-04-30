@@ -12,7 +12,7 @@
              
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource BackgroundMediumLightBrush}">
 
-    
+
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -20,20 +20,20 @@
         </Grid.RowDefinitions>
 
         <DockPanel>
-            
-                    <ComboBox 
-                              ItemsSource="{Binding SubButtons}" Width="100"
-                              DisplayMemberPath="ButtonName" 
-                              IsEnabled="{Binding SubButtonsEnabled}"
-                              SelectedItem="{Binding SelectedViewModel}">
 
-                    </ComboBox>
-               
-            
+            <ComboBox 
+                ItemsSource="{Binding SubButtons}" Width="100"
+                DisplayMemberPath="ButtonName" 
+                IsEnabled="{Binding SubButtonsEnabled}"
+                SelectedItem="{Binding SelectedViewModel}">
+
+            </ComboBox>
+
+
         </DockPanel>
-        
-            <TabControl Grid.Row="1" Background="{StaticResource BackgroundMediumLightBrush}" DataContext="{Binding SelectedViewModel}">
-            
+
+        <TabControl Grid.Row="1" Background="{StaticResource BackgroundMediumLightBrush}" DataContext="{Binding SelectedViewModel}">
+
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="{x:Static dAndRElectronics:ResourceStrings.PropsTabHeader}" FontSize="16" />

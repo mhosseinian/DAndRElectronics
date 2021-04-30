@@ -103,7 +103,7 @@
             <!--App content-->
             <Grid Grid.Row="1" x:Name="AppArea">
                
-                <view:KeyboardView DataContext="{StaticResource ViewModel}"></view:KeyboardView>
+                <view:KeyboardView DataContext="{StaticResource ViewModel}" x:Name="KeyboardView"></view:KeyboardView>
 
             </Grid>
 

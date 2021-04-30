@@ -23,6 +23,7 @@ namespace DAndRElectronics
         {
             ServiceDirectory.Instance.AddSingleton<IStateService>(new StateService());
             ServiceDirectory.Instance.AddSingleton<IButtonViewModelFactoryService>(new ButtonViewModelFactoryService());
+            
         }
     }
 

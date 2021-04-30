@@ -27,5 +27,12 @@ namespace DAndRElectronics.View
             var service = ServiceDirectory.Instance.GetService<IStateService>();
             service.OnDeleteButton(DataContext);
         }
+
+        private void OnCopyToClicked(object sender, RoutedEventArgs e)
+        {
+            var editorService = ServiceDirectory.Instance.GetService<IEditorService>();
+            var view = new CopyButtonsView() { DataContext = new CopyButtonsViewModel(DataContext) };
+            editorService.SetContent(view, "Copy to other devices", true);
+        }
     }
 }

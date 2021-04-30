@@ -26,6 +26,8 @@ namespace Common.Services
             }
         }
 
+        public IButtonService ButtonService { get; set; }
+
         private IServiceProvider _serviceProvider;
 
         public IServiceProvider ServiceProvider

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Common.Services;
 
 namespace DAndRElectronics.View
 {
@@ -26,7 +27,7 @@ namespace DAndRElectronics.View
 
         private void KeyCombo_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-           // KeyCombo.IsDropDownOpen = true;
+        
         }
     }
 }

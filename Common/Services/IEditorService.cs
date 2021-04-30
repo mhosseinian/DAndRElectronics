@@ -10,5 +10,12 @@ namespace Common.Services
         void SetContentWithSize(object uiElement, string title, Action windowClosed, double width, double height,bool IsModal=false);
         void SetWidthAndHeight(double width, double height, EditWindowPosition position);
         void Close();
+        void Subscribe(IEditorEventsSubscriber subscriber);
+        void Unsubscribe(IEditorEventsSubscriber subscriber);
+    }
+
+    public interface IEditorEventsSubscriber
+    {
+        void OnEditorEvent(EditorEventTypes subsType);
     }
 }

@@ -13,7 +13,7 @@ using Microsoft.Win32;
 
 namespace DAndRElectronics.View
 {
-    public class KeyboardViewModel:ViewModel
+    public class KeyboardViewModel:ViewModel, IButtonService, IEditorEventsSubscriber
     {
         public string _savePath = string.Empty;
         private List<ButtonViewModel> _keyButtons = new List<ButtonViewModel>();
@@ -62,6 +62,9 @@ namespace DAndRElectronics.View
 
             var service = ServiceDirectory.Instance.GetService<IStateService>();
             service.SubscribeButtonDelete(this, OnButtonDelete);
+            ServiceDirectory.Instance.ButtonService = this;
+            ;
+            
         }
 
         private void OnButtonDelete(object obj)
@@ -308,5 +311,37 @@ namespace DAndRElectronics.View
         }
 
 
+        public void OnEditorEvent(EditorEventTypes subsType)
+        {
+            if (subsType != EditorEventTypes.ContentChanged)
+            {
+                return;
+            }
+        }
+
+        public IEnumerable<IButton> Buttons(object selectedBtn)
+        {
+            if (!(selectedBtn is ButtonViewModel btn))
+            {
+                return Enumerable.Empty<IButton>();
+            }
+
+            ButtonViewModel[] currentBtns = new[] {btn};
+           
+            foreach (var buttonList in AllButtons)
+            {
+                if (!buttonList.Any())
+                {
+                    continue;
+                }
+
+                if (buttonList.First().ButtonType == btn.ButtonType)
+                {
+                    return buttonList.Except(currentBtns).Where(b=> b.IsEnabled);
+                }
+            }
+           
+            return Enumerable.Empty<IButton>();
+        }
     }
 }

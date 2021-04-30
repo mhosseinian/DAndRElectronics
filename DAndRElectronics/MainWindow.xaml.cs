@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using DAndRElectronics.View;
+using Common.Services;
+using DAndRElectronics.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DAndRElectronics
 {
@@ -10,13 +12,11 @@ namespace DAndRElectronics
     /// </summary>
     public partial class MainWindow : Window
     {
-        public KeyboardViewModel ViewModel { get; set; } = new KeyboardViewModel();
         public MainWindow()
         {
             
             InitializeComponent();
             StateChanged += MainWindowStateChangeRaised;
-
         }
 
         // Can execute

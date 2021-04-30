@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using Common.Enums;
 using Common.Services;
@@ -7,6 +8,7 @@ namespace Common.Helpers
 {
     public class EditorService: IEditorService
     {
+        private HashSet<IEditorEventsSubscriber> _subscribers = new HashSet<IEditorEventsSubscriber>();
         private HelperWindow _helperWindow;
       
         private Action _windowClosedAction;
@@ -28,6 +30,11 @@ namespace Common.Helpers
             }
 
             EditorWindow.SetContent(view);
+            foreach (var editorEventsSubscriber in _subscribers)
+            {
+                editorEventsSubscriber.OnEditorEvent(EditorEventTypes.ContentChanged);
+            }
+
             EditorWindow.Title = title;
             if (_isModal)
             {
@@ -77,6 +84,19 @@ namespace Common.Helpers
             if (_helperWindow != null)
             {
                 _helperWindow.Close();
+            }
+        }
+
+        public void Subscribe(IEditorEventsSubscriber subscriber)
+        {
+            _subscribers.Add(subscriber);
+        }
+
+        public void Unsubscribe(IEditorEventsSubscriber subscriber)
+        {
+            if (_subscribers.Contains(subscriber))
+            {
+                _subscribers.Remove(subscriber);
             }
         }
 

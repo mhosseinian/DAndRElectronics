@@ -20,6 +20,21 @@ namespace Common.Helpers
         public const string TemperatureBaseName = "TEMPERATURE";
         public const string SensorBaseName = "G SENSOR";
 
+        public static IEnumerable<string> PossibleButtonTypes
+        {
+            get
+            {
+                yield return KeyBaseName;
+                yield return InputBaseName;
+                yield return EventBaseName;
+                yield return SlideBaseName;
+                yield return AnalogBaseName;
+                yield return TimerBaseName;
+                yield return TemperatureBaseName;
+                yield return SensorBaseName;
+            }
+        }
+
         public const string ON = "On";
         public const string OFF = "Off";
         public const string NOTUSED = "Not used";

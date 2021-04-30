@@ -16,7 +16,7 @@ namespace DAndRElectronics.ButtonViewModels
         public static string Serialize(this ButtonViewModel vm)
         {
             var jsonResolver = new PropertyRenameAndIgnoreSerializerContractResolver();
-            vm.AssignColorsForSerialization();
+            vm.BeforeSerialization();
 
             foreach (var vmIgnoreProperty in vm.IgnoreProperties)
             {
@@ -37,7 +37,7 @@ namespace DAndRElectronics.ButtonViewModels
         {
             var service = ServiceDirectory.Instance.GetService<IButtonViewModelFactoryService>();
             var vm = service.CreateViewModelFromString(content);
-            vm.InitColors();
+            vm.AfterSerialization();
             //Handle the subButtons
             vm.SubButtons.Clear();
             vm.SubButtons.Add(vm);

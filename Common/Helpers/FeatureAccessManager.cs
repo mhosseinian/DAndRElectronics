@@ -8,12 +8,14 @@ namespace Common.Helpers
     {
         public const string FlatOvelFeature = "DandR_FEAT_SHOW_FLAT_OVAL";
         public const string SelectLighModelFeature = "DandR_FEAT_SELECT_LIGHT_MODEL";
+        public const string CopyMultipleFeature = "DandR_FEAT_COPY_MULTIPLE";
 
 
         private static readonly HashSet<string> FeaturesLockFileMap = new HashSet<string>
         {
             FlatOvelFeature,
             SelectLighModelFeature,
+            CopyMultipleFeature,
         };
 
 

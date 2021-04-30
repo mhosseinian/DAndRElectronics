@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace DAndRElectronics.ButtonViewModels
 {
-    public class ButtonViewModel:ViewModel, IOutputs
+    public class ButtonViewModel:ViewModel, IOutputs, IButton
     {
         public const int MaxOuts = 22;
         public const int MaxKeys = 21;
@@ -106,7 +106,8 @@ namespace DAndRElectronics.ButtonViewModels
 
         #region Public properties
 
-        
+
+        [JsonIgnore] public string ButtonType { get; private set; }
 
         [JsonIgnore]
         public int NumSequences
@@ -120,10 +121,51 @@ namespace DAndRElectronics.ButtonViewModels
         }
 
         [JsonIgnore] public bool IsEnabled { get; set; } = true;
-        
-        
+
+        [JsonIgnore]
+        public virtual bool CanCopyFrom => IsEnabled && FeatureAccessManager.FeatureAvailable(FeatureAccessManager.CopyMultipleFeature);
 
         [JsonIgnore]public string Name { get => _name; set => _name = value; }
+
+        public void CopyTo(IButton button)
+        {
+            if (!(button is ButtonViewModel target))
+            {
+                return;
+            }
+
+            target.DelayTime = DelayTime;
+            target.EquipmentType = EquipmentType;
+            target.EventNr = EventNr;
+            target.GValue = GValue;
+            target.Ignition = Ignition;
+            target.LED1 = LED1;
+            target.LED2 = LED2;
+            target.LED3 = LED3;
+            target.OffColor = OffColor;
+            target.OnColor = OnColor;
+            target.Pattern = Pattern;
+            target.Priority = Priority;
+            target.SyncLED1 = SyncLED1;
+            target.SyncLED2 = SyncLED2;
+            target.SyncLED3 = SyncLED3;
+            target.SyncTone = SyncTone;
+            target.Temperature = Temperature;
+            target._tempCentigrade = _tempCentigrade;
+            target.Sync = Sync;
+            target.Timer = Timer;
+            target.Voltage = Voltage;
+            target._voltageGreaterThan = _voltageGreaterThan;
+            for (var i = 0; i < MaxOuts; i++)
+            {
+                target._outs[i] = _outs[i];
+                target._outPercents[i] = _outPercents[i];
+            }
+            for (var i = 0; i < MaxKeys; i++)
+            {
+                target._outsKeys[i] = _outsKeys[i];
+            }
+        }
 
         [JsonIgnore]
         public string EquipmentType
@@ -379,25 +421,49 @@ namespace DAndRElectronics.ButtonViewModels
             SubButtons.Add(this);
             SelectedViewModel = this;
             InitColors();
+            SetButtonType();
         }
 
-        public void InitColors()
+
+
+        public virtual void BeforeSerialization()
         {
-            OffColor = new ColorViewModel(_offBackgroundColor);
-            OnColor = new ColorViewModel(_onBackgroundColor);
+            AssignColorsForSerialization();
+        }
+        public virtual void AfterSerialization()
+        {
+            InitColors();
+            SetButtonType();
         }
 
-        public void AssignColorsForSerialization()
-        {
-            _offBackgroundColor = OffColor.IntColor;
-            _onBackgroundColor = OnColor.IntColor;
-        }
 
         #endregion
 
         #region Private methods
 
+        private void InitColors()
+        {
+            OffColor = new ColorViewModel(_offBackgroundColor);
+            OnColor = new ColorViewModel(_onBackgroundColor);
+        }
 
+        private void AssignColorsForSerialization()
+        {
+            _offBackgroundColor = OffColor.IntColor;
+            _onBackgroundColor = OnColor.IntColor;
+        }
+
+        private void SetButtonType()
+        {
+            foreach (var possibleButtonType in Constants.PossibleButtonTypes)
+            {
+                if (_buttonName.StartsWith(possibleButtonType))
+                {
+                    ButtonType = possibleButtonType;
+                    break;
+                }
+            }
+        }
 
         private void DisableOuts()
         {

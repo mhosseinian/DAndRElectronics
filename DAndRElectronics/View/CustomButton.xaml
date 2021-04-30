@@ -61,6 +61,12 @@
                     </Border>
                     <!--</ControlTemplate>-->
                 </Button.Content>
+
+                <Button.ContextMenu>
+                    <ContextMenu Visibility="{Binding CanCopyFrom, Converter={StaticResource BoolToVis}}">
+                        <MenuItem Header="Copy to ..." Click="OnCopyToClicked"></MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
             </Button>
         </Grid>
 
