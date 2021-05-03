@@ -37,11 +37,11 @@ namespace PatternBuilderLib
         {
           
             using var binWriter = new BinaryWriter(File.Open(filename, FileMode.Create));
-            binWriter.Write(vm.Cycles.Count);
-            binWriter.Write(vm.NumDevices);
+            binWriter.Write((byte)vm.Cycles.Count);
+            binWriter.Write((byte)vm.NumDevices);
             foreach (var deviceManager in vm.Cycles)
             {
-                binWriter.Write(deviceManager.Delay);
+                binWriter.Write((byte)deviceManager.Delay);
                 foreach (var deviceVm in deviceManager.Devices)
                 {
                     deviceVm.SerializeBinary(binWriter);
