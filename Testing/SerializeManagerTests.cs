@@ -47,7 +47,7 @@ namespace EngineeringTesting
             var vm = new CyclesManageViewModel(12, false);
             var device = vm.SelectedItem.Devices.First();
 
-            vm.SelectedItem.Delay = 22;
+            vm.Delay = 22;
             device.Color = ColorToInt(Colors.Red);
 
             device = vm.SelectedItem.Devices.Skip(1).First();
@@ -55,7 +55,7 @@ namespace EngineeringTesting
 
             //Add another cycle
             vm.AddCommand.Execute(null);
-            vm.SelectedItem.Delay = 44;
+            vm.Delay = 44;
             device = vm.SelectedItem.Devices.First();
 
             device.Color = ColorToInt(Colors.Green);

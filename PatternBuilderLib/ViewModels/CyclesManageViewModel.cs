@@ -8,10 +8,11 @@ using Common;
 using Common.Helpers;
 using Common.Services;
 using Microsoft.Win32;
+using PatternBuilderLib.ViewModels.OutPattern;
 
 namespace PatternBuilderLib.ViewModels
 {
-    public class CyclesManageViewModel : ViewModel
+    public class CyclesManageViewModel : ViewModel, ICycleManagerView
     {
         private bool _isLine;
         private string _savePath = string.Empty;
@@ -91,6 +92,7 @@ namespace PatternBuilderLib.ViewModels
         public ICommand OpenCommand { get; }
 
         public bool ShowFlatOvalButton => FeatureAccessManager.FeatureAvailable(FeatureAccessManager.FlatOvelFeature);
+        public bool IsOutputPattern => false;
 
         public bool IsPreview
         {
@@ -102,9 +104,12 @@ namespace PatternBuilderLib.ViewModels
             }
         }
 
+
+        public int Delay { get; set; }
+
         #region Contructors
 
-     
+
         public CyclesManageViewModel(int numDevices, bool isLine)
         {
             IsLine = isLine;
@@ -148,7 +153,7 @@ namespace PatternBuilderLib.ViewModels
                 {
                     SelectedPreviewItem = vm;
                     OnPropertyChanged(nameof(SelectedPreviewItem));
-                    Thread.Sleep(vm.Delay * 100);
+                    Thread.Sleep(Delay * 100);
                 }
             }
         }
@@ -221,7 +226,7 @@ namespace PatternBuilderLib.ViewModels
 
             _savePath = openFileDialog.FileName;
 
-            var items = SerializerManager.Deserialize(File.ReadAllText(_savePath));
+            var items = SerializerManager.DeserializeDeviceManagers(File.ReadAllText(_savePath));
             foreach (var vm in items)
             {
                 vm.PositionDevices();

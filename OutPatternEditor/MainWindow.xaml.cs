@@ -3,47 +3,25 @@ using System.Windows;
 using System.Windows.Input;
 using Common.Helpers;
 using Common.Services;
-using Microsoft.Extensions.DependencyInjection;
+using PatternBuilderLib.Models;
+using PatternBuilderLib.ViewModels.OutPattern;
 using PatternBuilderLib.ViewModels;
 
-
-namespace PatternEditor
+namespace OutPatternEditor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public KeyboardViewModel ViewModel { get; set; } = new KeyboardViewModel();
         public MainWindow()
         {
-
             InitializeComponent();
-
-            if (FeatureAccessManager.FeatureAvailable(FeatureAccessManager.SelectLighModelFeature))
-            {
-                Loaded += (sender, args) => DisplayModels();
-            }
-            else
-            {
-                var view = new CyclesManageView { DataContext = new CyclesManageViewModel(18, false) };
-                AppArea.Children.Add(view);
-                this.Width = 18 * 50 + 360;
-            }
-
+            var models = new OutPatternModels();
+            var view = new CyclesManageView { DataContext = new OutPatternManagerViewModel(models) };
+            AppArea.Children.Add(view);
+            this.Width = 18 * 50 + 360;
             StateChanged += MainWindowStateChangeRaised;
-
-        }
-
-        private void DisplayModels()
-        {
-            var vm = new LightManagerViewModel();
-            var view = new LightbarManagerView {DataContext = vm};
-            var service = ServiceDirectory.Instance.GetService<IEditorService>();
-            service.SetContentWithSize(view, "Select a model", null, 400, 300, true);
-            var newView = new CyclesManageView { DataContext = new CyclesManageViewModel(vm.SelectedItem.NumLights, false) };
-            AppArea.Children.Add(newView);
-            this.Width = vm.SelectedItem.NumLights * 50 + 360;
         }
 
         // Can execute

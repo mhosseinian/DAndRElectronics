@@ -6,7 +6,10 @@
              xmlns:viewModels="clr-namespace:PatternBuilderLib.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible">
-        <viewModels:DeviceManagerView DataContext="{Binding SelectedPreviewItem}"  Margin="70,70,0,0"></viewModels:DeviceManagerView>
-    </ScrollViewer>
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible"  Visibility="{Binding IsOutputPattern, Converter={StaticResource InvBoolToVis}}">
+            <viewModels:DeviceManagerView DataContext="{Binding SelectedPreviewItem}"  Margin="70,70,0,0"></viewModels:DeviceManagerView>
+        </ScrollViewer>
+        <viewModels:CyclesOutView    Visibility="{Binding IsOutputPattern, Converter={StaticResource BoolToVis}}"></viewModels:CyclesOutView>
+    </Grid>
 </UserControl>
