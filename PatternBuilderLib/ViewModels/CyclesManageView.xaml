@@ -32,98 +32,29 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <ListBox Grid.Column="0" Grid.Row="1"   
-                     ItemsSource="{Binding Cycles}" 
-                     SelectedItem="{Binding SelectedItem}" 
-                     x:Name="MainList"  
-                     Background="{StaticResource BackgroundMediumLightBrush}"
-
-                     >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Margin="3">
-                                <TextBlock Text="{Binding Label}" VerticalAlignment="Center" Margin="3"/>
-                            </Border>
-                            <Button HorizontalAlignment="Left" VerticalContentAlignment="Center"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0" 
-                                Height="25" Width="25" Margin="5" ToolTip="{Binding DeleteText}"
-                                Command="{Binding Path=DataContext.DeleteCommand, ElementName=MainList}"
-                                CommandParameter="{Binding Path=DataContext,  RelativeSource={markup:Static RelativeSource.Self}}"
-                                >
-                                <Button.Content>
-                                    <Image Source="/Common;component/Images/cancel_16.png" Height="15" Width="25"/>
-                                </Button.Content>
-                            </Button>
-                            <Button HorizontalAlignment="Left" VerticalContentAlignment="Center"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0" 
-                                Height="25" Width="25" Margin="5" ToolTip="{Binding CloneText}"
-                                Command="{Binding Path=DataContext.CloneCommand, ElementName=MainList}"
-                                CommandParameter="{Binding Path=DataContext,  RelativeSource={x:Static RelativeSource.Self}}"
-                                >
-                                <Button.Content>
-                                    <Image Source="/Common;component/Images/clone.png" Height="15" Width="25"/>
-                                </Button.Content>
-                            </Button>
-                        </DockPanel>
-
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <viewModels:CycleListView Grid.Column="0" Grid.Row="1"></viewModels:CycleListView>
 
             <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Button Command="{Binding AddCommand}" Width="80" HorizontalAlignment="Center" ToolTip="Add another cycle" >   +   </Button>
                 <ComboBox ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Label"></ComboBox>
                 <!--<Button Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Center" Content="{Binding PreviewText}"></Button>-->
-                <ToggleButton   IsChecked="{Binding IsLine}"  Width="80" HorizontalAlignment="Right" 
+                <!--<ToggleButton   IsChecked="{Binding IsLine}"  Width="80" HorizontalAlignment="Right" 
                                 Click="OnFlatOvalButtonClicked" 
                                 Content="{Binding FlatOvalLabel}"
                                 Visibility="{Binding ShowFlatOvalButton, Converter={StaticResource BoolToVis}}"
-                                ></ToggleButton>
+                                ></ToggleButton>-->
 
-                <DockPanel >
+                <!--<DockPanel Visibility="{Binding ShowFlatOvalButton, Converter={StaticResource BoolToVis}}">
                     <Label Content="Width"/>
                     <Slider Minimum="20" Maximum="100" Value="{Binding Width}" ValueChanged="WidthSlider_OnValueChanged" Width="90" >
                        
                     </Slider>
-                </DockPanel>
+                </DockPanel>-->
 
                 <Button  x:Name="PreviewButton" Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Right" Content="{Binding PreviewText}" Click="PreviewClicked"></Button>
             </DockPanel>
-            <Grid Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-
-                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >
-                    <viewModels:DeviceManagerView x:Name="DeviceManagerView" Margin="10,50,0,0"  Grid.Column="0" ></viewModels:DeviceManagerView>
-                </ScrollViewer>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" CornerRadius="5" Width="200" Height="150" Margin="0,60,10,0">
-                    <StackPanel Grid.Column="1" Margin="5,30,5,5">
-                        <Label Content="Repeat [100 milliseconds]"/>
-                        <Slider x:Name="SL2" Minimum="1" Maximum="100" Value="{Binding Delay}" />
-                        <TextBox  Text="{Binding ElementName=SL2, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="DarkGray" BorderThickness="1" CornerRadius="5" Width="400" HorizontalAlignment="Left" Margin="3">
-                <DockPanel Grid.Row="1" Grid.Column="0" Margin="5">
-                    <CheckBox  Margin="3" IsChecked="{Binding AllTop}" Content="All front"></CheckBox>
-                    <CheckBox Margin="3" IsChecked="{Binding AllBottom}" Content="All rear"></CheckBox>
-                    <CheckBox Margin="3" IsChecked="{Binding AllPassenger}" Content="All passenger corner"></CheckBox>
-                    <CheckBox Margin="3" IsChecked="{Binding AllDriver}" Content="All Driver corner"></CheckBox>
-                </DockPanel>
-                </Border>
-            </Grid>
+            <viewModels:CyclesDeviceView Grid.Row="1" Grid.Column="1"  Visibility="{Binding IsOutputPattern, Converter={StaticResource InvBoolToVis}}"></viewModels:CyclesDeviceView>
+            <viewModels:CyclesOutView Grid.Row="1" Grid.Column="1"  Visibility="{Binding IsOutputPattern, Converter={StaticResource BoolToVis}}"></viewModels:CyclesOutView>
 
             <helpers:SaveOpenView Grid.Row="2" Grid.ColumnSpan="2"></helpers:SaveOpenView>
         </Grid>

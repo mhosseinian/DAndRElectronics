@@ -57,7 +57,7 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonProperty(PropertyName = Constants.JsonNumSequence)] private int _numSequences;
         [JsonProperty(PropertyName = Constants.JsonSequence)] public ObservableCollection<ButtonViewModel> SubButtons { get; set; } = new ObservableCollection<ButtonViewModel>();
         [JsonProperty(PropertyName = Constants.JsonSync)] private bool _sync;
-        [JsonProperty(PropertyName = Constants.JsonIgnition)] private int _ignition = 2;//Not used
+        [JsonProperty(PropertyName = Constants.JsonIgnition)] private int _ignition = 0;//Not used
 
 
         #endregion
@@ -309,54 +309,20 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonIgnore] public int Column { get; set; }
         [JsonIgnore] public int Row { get; set; }
 
-        [JsonIgnore] public ColorViewModel OffColor { get; set; }
-        [JsonIgnore] public ColorViewModel OnColor { get; set; }
-        //[JsonIgnore]public Color OffColor
-        //{
-        //    get
-        //    {
-        //        if(_offColor == Colors.Transparent)
-        //        {
-        //            _offColor = IntToColor(_offBackgroundColor);
-        //        }
+        [JsonIgnore] private ColorViewModel _offColor;
+        [JsonIgnore]public ColorViewModel OffColor
+        {
+            get => _offColor ??= new ColorViewModel(_offBackgroundColor);
+            set => _offColor = value;
+        }
 
-        //        return _offColor;
-        //    }
-        //    set
-        //    {
-        //        _offColor = value;
-        //        _offBackgroundColor = _offColor.R << 16 | _offColor.G << 8 | _offColor.B;
-        //    }
-        //}
-
-        //private static Color IntToColor(int colorValue)
-        //{
-        //    var blueValue = colorValue / 65536;
-        //    var greenValue = (colorValue - blueValue * 65536) / 256;
-        //    var redValue = colorValue - blueValue * 65536 - greenValue * 256;
-        //    var color = Color.FromRgb(Convert.ToByte(redValue), Convert.ToByte(greenValue), Convert.ToByte(blueValue));
-        //    return color;
-        //}
-
-        //[JsonIgnore] private Color _onColor = Colors.Transparent;
-        //[JsonIgnore]
-        //public Color OnColor
-        //{
-        //    get
-        //    {
-        //        if (_onColor == Colors.Transparent)
-        //        {
-        //            _onColor = IntToColor(_onBackgroundColor);
-        //        }
-
-        //        return _onColor;
-        //    }
-        //    set
-        //    {
-        //        _onColor = value;
-        //        _onBackgroundColor = _onColor.R << 16 | _onColor.G << 8 | _onColor.B;
-        //    }
-        //}
+        [JsonIgnore] private ColorViewModel _onColor;
+        [JsonIgnore]public ColorViewModel OnColor
+        {
+            get => _onColor ??= new ColorViewModel(_onBackgroundColor);
+            set => _onColor = value;
+        }
+        
         #endregion
 
         #region Possible dropdown values
@@ -420,7 +386,6 @@ namespace DAndRElectronics.ButtonViewModels
             PopulateOutViewModels();
             SubButtons.Add(this);
             SelectedViewModel = this;
-            InitColors();
             SetButtonType();
         }
 
@@ -428,11 +393,19 @@ namespace DAndRElectronics.ButtonViewModels
 
         public virtual void BeforeSerialization()
         {
-            AssignColorsForSerialization();
+            foreach (var buttonViewModel in SubButtons)
+            {
+                buttonViewModel.AssignColorsForSerialization();
+            }
+            
         }
+
         public virtual void AfterSerialization()
         {
-            InitColors();
+            foreach (var buttonViewModel in SubButtons)
+            {
+                buttonViewModel.SetButtonType();
+            }
             SetButtonType();
         }
 
@@ -441,11 +414,6 @@ namespace DAndRElectronics.ButtonViewModels
 
         #region Private methods
 
-        private void InitColors()
-        {
-            OffColor = new ColorViewModel(_offBackgroundColor);
-            OnColor = new ColorViewModel(_onBackgroundColor);
-        }
 
         private void AssignColorsForSerialization()
         {
@@ -623,6 +591,8 @@ namespace DAndRElectronics.ButtonViewModels
                 }
             }
         }
+
+        
 
         public virtual void Serialize(BinaryWriter writer)
         {

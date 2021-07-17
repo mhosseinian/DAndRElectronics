@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Common.Enums;
 using Common.Services;
+using PatternBuilderLib.ViewModels.OutPattern;
 
 namespace PatternBuilderLib.ViewModels
 {
@@ -20,14 +21,14 @@ namespace PatternBuilderLib.ViewModels
             var service = ServiceDirectory.Instance.GetService<IEditorService>();
             var view = new Previewer{DataContext = this.DataContext};
             service.SetContent(view, "Preview", OnPreviewWindowClosed, false);
-            service.SetWidthAndHeight(600, 400, EditWindowPosition.Left);
+            service.SetWidthAndHeight(ActualWidth, 400, EditWindowPosition.Left);
             PreviewButton.IsEnabled = false;
         }
 
         private void OnPreviewWindowClosed()
         {
             PreviewButton.IsEnabled = true;
-            if (!(DataContext is CyclesManageViewModel vm))
+            if (!(DataContext is ICycleManagerView vm))
             {
                 return;
             }
@@ -35,23 +36,6 @@ namespace PatternBuilderLib.ViewModels
             vm.IsPreview = false;
         }
 
-        private void OnFlatOvalButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if (!(DataContext is CyclesManageViewModel vm))
-            {
-                return;
-            }
-
-            DeviceManagerView.SetupButtons();
-        }
-
-        private void WidthSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (!(DataContext is CyclesManageViewModel vm))
-            {
-                return;
-            }
-            DeviceManagerView.SetupButtons();
-        }
+        
     }
 }

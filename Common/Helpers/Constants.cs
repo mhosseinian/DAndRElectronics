@@ -73,6 +73,10 @@ namespace Common.Helpers
         {
             return Enumerable.Range(min, max - min + 1).Where(i => (i - min) % step == 0);
         }
+        public static IEnumerable<byte> RangedByteEnumeration(byte min, byte max, int step)
+        {
+            return Enumerable.Range(min, max - min + 1).Where(i => (i - min) % step == 0).Select(i => (byte)i);
+        }
 
         public const string JsonButtonName = "buttonName";
         public const string JsonName = "name";
@@ -112,6 +116,5 @@ namespace Common.Helpers
         public const string JsonColorR = "R";
         public const string JsonColorG = "G";
         public const string JsonColorB = "B";
-
     }
 }

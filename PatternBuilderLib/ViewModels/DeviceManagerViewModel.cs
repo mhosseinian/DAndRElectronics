@@ -56,7 +56,6 @@ namespace PatternBuilderLib.ViewModels
         [JsonIgnore] public bool AllDriver { get; set; }
         [JsonIgnore] public bool AllPassenger { get; set; }
 
-        public int Delay { get; set; }
 
         #region Contructors
 
@@ -95,8 +94,6 @@ namespace PatternBuilderLib.ViewModels
 
             NumDevices = src.NumDevices;
             IsLine = src.IsLine;
-            
-            Delay = src.Delay;
         }
 
         #endregion

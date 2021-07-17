@@ -124,7 +124,7 @@ namespace DAndRElectronics.View
         {
             _savePath = filename;
             var service = ServiceDirectory.Instance.GetService<IButtonViewModelFactoryService>();
-            var allItems = service.ReadFile(_savePath);
+            var allItems = service.ReadFile(_savePath).ToList();
 
 
             _keyButtons = allItems.Where(i => i.ButtonName.StartsWith(Constants.KeyBaseName)).ToList();
