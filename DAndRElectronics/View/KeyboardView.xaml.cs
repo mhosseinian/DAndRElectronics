@@ -45,7 +45,7 @@ namespace DAndRElectronics.View
         {
             var vm = DataContext as KeyboardViewModel;
             
-            SetupGrid(GridKeys, vm.KeyButtons);
+            //SetupGrid(GridKeys, vm.KeyButtons);
             SetupGrid(GridInputs, vm.InputButtons);
             SetupGrid(GridEvents, vm.EventButtons);
             SetupGrid(GridSlide, vm.SlideButtons);

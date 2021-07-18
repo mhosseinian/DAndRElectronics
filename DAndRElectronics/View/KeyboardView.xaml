@@ -17,23 +17,7 @@
 
         <TabControl Background="{StaticResource BackgroundMediumLightBrush}" x:Name="TabControl" SelectionChanged="TabControl_OnSelectionChanged">
         <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.KeysTabHeader}">
-            <Grid x:Name="GridKeys">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70"></ColumnDefinition>
-                    <ColumnDefinition Width="70"></ColumnDefinition>
-                    <ColumnDefinition Width="70"></ColumnDefinition>
-                    <ColumnDefinition Width="70"></ColumnDefinition>
-                    <ColumnDefinition Width="70"></ColumnDefinition>
-                    <ColumnDefinition Width="70"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                </Grid.RowDefinitions>
-            </Grid>
+                <local:KeysTabView></local:KeysTabView>
         </TabItem>
         <TabItem Header="{x:Static dAndRElectronics:ResourceStrings.SlideresTabHeader}">
             <Grid x:Name="GridSlide">
