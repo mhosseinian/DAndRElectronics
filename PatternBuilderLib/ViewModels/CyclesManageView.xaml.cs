@@ -18,11 +18,22 @@ namespace PatternBuilderLib.ViewModels
 
         private void PreviewClicked(object sender, RoutedEventArgs e)
         {
-            var service = ServiceDirectory.Instance.GetService<IEditorService>();
-            var view = new Previewer{DataContext = this.DataContext};
-            service.SetContent(view, "Preview", OnPreviewWindowClosed, false);
-            service.SetWidthAndHeight(ActualWidth, 400, EditWindowPosition.Left);
-            PreviewButton.IsEnabled = false;
+            if (!(DataContext is ICycleManagerView vm))
+            {
+                return;
+            }
+
+            if (vm.SupportsPreviewWindow)
+            {
+                var service = ServiceDirectory.Instance.GetService<IEditorService>();
+                var view = new Previewer {DataContext = this.DataContext};
+                service.SetContent(view, "Preview", OnPreviewWindowClosed, false);
+                service.SetWidthAndHeight(ActualWidth, 400, EditWindowPosition.Left);
+                PreviewButton.IsEnabled = false;
+            }
+           
+                vm.IsPreview = !vm.IsPreview;
+            
         }
 
         private void OnPreviewWindowClosed()

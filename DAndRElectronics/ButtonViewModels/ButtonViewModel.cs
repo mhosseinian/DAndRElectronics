@@ -30,8 +30,8 @@ namespace DAndRElectronics.ButtonViewModels
         [JsonProperty(PropertyName = Constants.JsonName)] private string _name;
         [JsonProperty(PropertyName = Constants.JsonEquipmentType)] private string _equipmentType = Constants.NOTUSE;
         [JsonProperty(PropertyName = Constants.JsonPriority)] private int _priority = 5;
-        [JsonProperty(PropertyName = Constants.JsonOffBackgroundColor)] private int _offBackgroundColor = 9;
-        [JsonProperty(PropertyName = Constants.JsonOnBackgroundColor)] private int _onBackgroundColor = 30;
+        [JsonProperty(PropertyName = Constants.JsonOffBackgroundColor)] private int _offBackgroundColor = 90; //0 0 90
+        [JsonProperty(PropertyName = Constants.JsonOnBackgroundColor)] private int _onBackgroundColor = 16711680;//255,0, 
         [JsonProperty(PropertyName = Constants.JsonPattern)] private int _pattern;
         [JsonProperty(PropertyName = Constants.JsonDelayTime)] private Int32 _delayTime;
         [JsonProperty(PropertyName = Constants.JsonTone)] private int _tone;

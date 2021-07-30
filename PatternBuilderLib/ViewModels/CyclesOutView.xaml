@@ -13,60 +13,77 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Visible">
         <StackPanel>
-        <!--Key names-->
-            <ItemsControl ItemsSource="{Binding KeyNames}" Margin="62,0,0,0">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <DockPanel ></DockPanel>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" Width="50" HorizontalAlignment="Left"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            <ContentControl Margin="60,0,0,0" Visibility="{Binding IsPreview, Mode=TwoWay, Converter={StaticResource BoolToVis}}">
+                <ContentControl DataContext="{Binding PreviewOutPatternModelViewModel, Mode=TwoWay}">
+                    <ItemsControl ItemsSource="{Binding ViewModels}" VerticalAlignment="top">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <DockPanel ></DockPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
 
-        </ItemsControl>
+                            <DataTemplate>
+                                <outPattern:PreviewSingleOutPatterView></outPattern:PreviewSingleOutPatterView>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ContentControl>
+            </ContentControl>
+            <!--Key names-->
+            <ItemsControl ItemsSource="{Binding KeyNames}" Margin="62,0,0,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <DockPanel ></DockPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Width="50" HorizontalAlignment="Left"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
 
             <helpers:ListBoxScrollToView 
             ItemsSource="{Binding Cycles}" 
             SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
             x:Name="MainList"  
             Background="{StaticResource BackgroundMediumLightBrush}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel>
-                       <Grid Height="80" VerticalAlignment="top">
-                           <Grid.RowDefinitions>
-                                <RowDefinition ></RowDefinition>
-                               <RowDefinition ></RowDefinition>
-                               <RowDefinition></RowDefinition>
-                               <RowDefinition></RowDefinition>
-                           </Grid.RowDefinitions>
-                            <Label  Grid.Row="0" Content="Off" VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8"   Margin="0,-3,0,0"></Label>
-                            <Label Grid.Row="1"   Content="On"  VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8"  Margin="0,-10,0,0"></Label>
-                            <Label Grid.Row="2"   Content="Not used"  VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8"  Margin="0,-16,0,0"></Label>
-                            <Label Grid.Row="3"   Content="Percent"  VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8" Margin="0,-20,0,0"></Label>
-                       </Grid>
-                        
-                        <ItemsControl ItemsSource="{Binding ViewModels}" VerticalAlignment="top">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <DockPanel ></DockPanel>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Grid Height="80" VerticalAlignment="top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label  Grid.Row="0" Content="Off" VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8"   Margin="0,-3,0,0"></Label>
+                                <Label Grid.Row="1"   Content="On"  VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8"  Margin="0,-10,0,0"></Label>
+                                <Label Grid.Row="2"   Content="Not used"  VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8"  Margin="0,-16,0,0"></Label>
+                                <Label Grid.Row="3"   Content="Percent"  VerticalContentAlignment="top" VerticalAlignment="Top" FontSize="8" Margin="0,-20,0,0"></Label>
+                            </Grid>
 
-                                <DataTemplate>
-                                    <outPattern:SingleOutPatterView></outPattern:SingleOutPatterView>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </helpers:ListBoxScrollToView>
-       
-    </StackPanel>
+                            <ItemsControl ItemsSource="{Binding ViewModels}" VerticalAlignment="top">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <DockPanel ></DockPanel>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+
+                                    <DataTemplate>
+                                        <outPattern:SingleOutPatterView></outPattern:SingleOutPatterView>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </helpers:ListBoxScrollToView>
+
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

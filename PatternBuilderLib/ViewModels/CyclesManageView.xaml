@@ -16,8 +16,10 @@
             </ResourceDictionary.MergedDictionaries>
        </ResourceDictionary>
     </UserControl.Resources>
+<DockPanel LastChildFill="true" >
 
-    <helpers:AdornerControl IsAdorning="{Binding IsPreview}">
+    <Button  DockPanel.Dock="Top" x:Name="PreviewButton" Command="{Binding PreviewCommand}" Width="80" Height="40" HorizontalAlignment="Right" Content="{Binding PreviewText}" Click="PreviewClicked"></Button>
+        <helpers:AdornerControl IsAdorning="{Binding IsPreview}" DockPanel.Dock="Bottom">
         <helpers:AdornerControl.AdorningContent>
             <helpers:BusyView />
         </helpers:AdornerControl.AdorningContent>
@@ -37,21 +39,8 @@
             <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 <Button Command="{Binding AddCommand}" Width="80" HorizontalAlignment="Center" ToolTip="Add another cycle" >   +   </Button>
                 <ComboBox ItemsSource="{Binding Cycles}" SelectedItem="{Binding SelectedItem}" DisplayMemberPath="Label"></ComboBox>
-                <!--<Button Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Center" Content="{Binding PreviewText}"></Button>-->
-                <!--<ToggleButton   IsChecked="{Binding IsLine}"  Width="80" HorizontalAlignment="Right" 
-                                Click="OnFlatOvalButtonClicked" 
-                                Content="{Binding FlatOvalLabel}"
-                                Visibility="{Binding ShowFlatOvalButton, Converter={StaticResource BoolToVis}}"
-                                ></ToggleButton>-->
 
-                <!--<DockPanel Visibility="{Binding ShowFlatOvalButton, Converter={StaticResource BoolToVis}}">
-                    <Label Content="Width"/>
-                    <Slider Minimum="20" Maximum="100" Value="{Binding Width}" ValueChanged="WidthSlider_OnValueChanged" Width="90" >
-                       
-                    </Slider>
-                </DockPanel>-->
 
-                <Button  x:Name="PreviewButton" Command="{Binding PreviewCommand}" Width="80" HorizontalAlignment="Right" Content="{Binding PreviewText}" Click="PreviewClicked"></Button>
             </DockPanel>
             <viewModels:CyclesDeviceView Grid.Row="1" Grid.Column="1"  Visibility="{Binding IsOutputPattern, Converter={StaticResource InvBoolToVis}}"></viewModels:CyclesDeviceView>
             <viewModels:CyclesOutView Grid.Row="1" Grid.Column="1"  Visibility="{Binding IsOutputPattern, Converter={StaticResource BoolToVis}}"></viewModels:CyclesOutView>
@@ -59,4 +48,5 @@
             <helpers:SaveOpenView Grid.Row="2" Grid.ColumnSpan="2"></helpers:SaveOpenView>
         </Grid>
     </helpers:AdornerControl>
+</DockPanel>
 </UserControl>

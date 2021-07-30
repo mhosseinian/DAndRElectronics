@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.Xml;
@@ -21,6 +22,7 @@ namespace PatternBuilderLib.ViewModels.OutPattern
         bool ShowFlatOvalButton { get; }
         bool IsOutputPattern { get; }
         bool IsPreview { get; set; }
+        bool SupportsPreviewWindow { get; }
     }
     public class OutPatternManagerViewModel: ViewModel , ICycleManagerView
     {
@@ -101,14 +103,18 @@ namespace PatternBuilderLib.ViewModels.OutPattern
             }
         }
 
+        public bool SupportsPreviewWindow => false;
+
         public string PreviewText => "Preview";
         public OutPatternModelViewModel SelectedPreviewItem { get; set; }
+
+        public PreviewOutPatternModelViewModel PreviewOutPatternModelViewModel { get; set; }
 
         public int Delay { get; set; } = 50;
 
         private void OnPreview(object obj)
         {
-            IsPreview = true;
+           
             OnPropertyChanged(nameof(PreviewText));
             Task.Factory.StartNew(DoPreview);
         }
@@ -120,17 +126,19 @@ namespace PatternBuilderLib.ViewModels.OutPattern
             {
                 foreach (var vm in Cycles)
                 {
-                    SelectedItem = vm;
-                    vm.Preview(true);
-                    OnPropertyChanged(nameof(SelectedItem));
+                    //SelectedItem = vm;
+                    PreviewOutPatternModelViewModel = new PreviewOutPatternModelViewModel(vm);
+                    OnPropertyChanged(nameof(PreviewOutPatternModelViewModel));
+                    //vm.Preview(true);
+                   // OnPropertyChanged(nameof(SelectedItem));
                     Thread.Sleep(Delay * 10);
-                    vm.Preview(false);
+                    //vm.Preview(false);
                 }
             }
-            foreach (var outPatternModelViewModel in Cycles)
-            {
-                outPatternModelViewModel.Preview(false);
-            }
+            //foreach (var outPatternModelViewModel in Cycles)
+            //{
+            //    outPatternModelViewModel.Preview(false);
+            //}
         }
 
         private void OnAddItem(object obj)

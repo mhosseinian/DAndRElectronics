@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace PatternBuilderLib.Models
@@ -25,7 +26,8 @@ namespace PatternBuilderLib.Models
 
         public OutPatternModel NewOutPatternModel()
         {
-            var model = new OutPatternModel(new byte[MaxOuts]);
+            var outs =  Enumerable.Repeat((byte)127, MaxOuts).ToArray();
+            var model = new OutPatternModel(outs);
             Models.Add(model);
             return model;
         }

@@ -104,6 +104,8 @@ namespace PatternBuilderLib.ViewModels
             }
         }
 
+        public bool SupportsPreviewWindow => true;
+
 
         public int Delay { get; set; }
 

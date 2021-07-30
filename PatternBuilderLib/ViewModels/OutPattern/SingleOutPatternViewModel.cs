@@ -67,6 +67,7 @@ namespace PatternBuilderLib.ViewModels.OutPattern
 
         public bool CanShowLight => IsInPreview && IsOn;
 
+
         private Color _color
         {
             get
@@ -107,7 +108,7 @@ namespace PatternBuilderLib.ViewModels.OutPattern
                     }
                     else
                     {
-                        Value = 5;
+                        Value = 100;
                     }
                     NotifyUpdate();
                 }

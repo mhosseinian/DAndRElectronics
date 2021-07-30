@@ -20,7 +20,7 @@ namespace OutPatternEditor
             var models = new OutPatternModels();
             var view = new CyclesManageView { DataContext = new OutPatternManagerViewModel(models) };
             AppArea.Children.Add(view);
-            this.Width = 18 * 50 + 360;
+            this.Width = 18 * 50 + 560;
             StateChanged += MainWindowStateChangeRaised;
         }
 
