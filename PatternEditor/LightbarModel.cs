@@ -5,7 +5,7 @@ using Common;
 
 namespace PatternEditor
 {
-    public class LightbarModel
+    public class LightbarModel : ViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -42,6 +42,19 @@ namespace PatternEditor
             set
             {
                 _selectedItem = value;
+            }
+        }
+
+
+        private bool _isline = true;
+
+        public bool IsLine
+        {
+            get => _isline;
+            set
+            {
+                _isline = value;
+                OnPropertyChanged(nameof(IsLine));
             }
         }
 

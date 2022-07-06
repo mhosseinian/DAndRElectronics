@@ -10,11 +10,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <ComboBox Height="50" ItemsSource ="{Binding Models}" DisplayMemberPath="Display" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
         <DockPanel Grid.Row="1">
-<Button Click="OnCloseButtonClicked" Width="65" Height="25" Content="Ok" Margin="20"></Button>
+            <RadioButton Content="Line" IsChecked ="{Binding IsLine}"></RadioButton>
+            <RadioButton Content="Oval" IsChecked ="{Binding IsLine, Converter={StaticResource BoolToVis}}"></RadioButton>
+        </DockPanel>
+
+
+        <DockPanel Grid.Row="2">
+            <Button Click="OnCloseButtonClicked" Width="65" Height="25" Content="Ok" Margin="20"></Button>
         </DockPanel>
     </Grid>
 </UserControl>

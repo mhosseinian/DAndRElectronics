@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	<UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
@@ -20,6 +21,8 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
+  
+  
 
   <ItemGroup>
     <Page Update="ViewModels\CyclesManageView.xaml">

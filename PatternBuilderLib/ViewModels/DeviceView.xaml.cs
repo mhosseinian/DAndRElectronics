@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Common.Converters;
+using Common.Helpers;
 
 namespace PatternBuilderLib.ViewModels
 {
@@ -14,6 +16,7 @@ namespace PatternBuilderLib.ViewModels
         {
             InitializeComponent();
         }
+        
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
@@ -24,22 +27,6 @@ namespace PatternBuilderLib.ViewModels
             DropDownPopup.IsOpen = true;
         }
 
-
-
-        private void ColorButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if (!(sender is Button button))
-            {
-                return;
-            }
-            var color = ((SolidColorBrush)button.Background).Color;
-
-            Device.Fill = button.Background;
-            DropDownPopup.IsOpen = false;
-        }
-
-
-
         private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
         {
         }
@@ -47,5 +34,47 @@ namespace PatternBuilderLib.ViewModels
         private void MainButton_OnLostFocus(object sender, RoutedEventArgs e)
         {
         }
+
+        private void ColorBtn_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn == null)
+            {
+                return;
+            }
+
+            var brush = PickBrush();
+            if (brush == null)
+            {
+                return;
+            }
+
+            btn.Background = brush;
+            var color = ((SolidColorBrush)btn.Background).Color;
+            var colorInt = color.R << 16 | color.G << 8 | color.B;
+            btn.Command.Execute(colorInt);
+            Device.Fill = btn.Background;
+            DropDownPopup.IsOpen = false;
+        }
+
+        private SolidColorBrush? PickBrush()
+        {
+            using (new DisposableToken(() => DropDownPopup.StaysOpen = true, () => DropDownPopup.StaysOpen = false,
+                       true))
+            {
+                System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
+                colorDialog.SolidColorOnly = true;
+                if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    var color = Color.FromRgb(colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
+                    var brush = new SolidColorBrush(color);
+                    return brush;
+                }
+            }
+
+            return null;
+        }
+
+
     }
 }

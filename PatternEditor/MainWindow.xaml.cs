@@ -26,7 +26,7 @@ namespace PatternEditor
             }
             else
             {
-                var view = new CyclesManageView { DataContext = new CyclesManageViewModel(18, false) };
+                var view = new CyclesManageView { DataContext = new CyclesManageViewModel(18, true) };
                 AppArea.Children.Add(view);
                 this.Width = 18 * 50 + 360;
             }
@@ -41,7 +41,7 @@ namespace PatternEditor
             var view = new LightbarManagerView {DataContext = vm};
             var service = ServiceDirectory.Instance.GetService<IEditorService>();
             service.SetContentWithSize(view, "Select a model", null, 400, 300, true);
-            var newView = new CyclesManageView { DataContext = new CyclesManageViewModel(vm.SelectedItem.NumLights, false) };
+            var newView = new CyclesManageView { DataContext = new CyclesManageViewModel(vm.SelectedItem.NumLights, vm.IsLine) };
             AppArea.Children.Add(newView);
             this.Width = vm.SelectedItem.NumLights * 50 + 360;
         }

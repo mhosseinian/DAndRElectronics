@@ -69,6 +69,7 @@ namespace PatternBuilderLib.ViewModels
         {
             IsLine = isLine;
             NumDevices = numCycles;
+           
             for (var i = 0; i < NumDevices; i++)
             {
                 Devices.Add(new DeviceViewModel{Index = i+1});
